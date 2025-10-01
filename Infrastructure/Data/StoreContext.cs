@@ -1,0 +1,20 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Core.Entities;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace Infrastructure.Data
+{
+    public class StoreContext(DbContextOptions<StoreContext> option) : IdentityDbContext<User>(option)
+    {
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+        public  DbSet<Student> Students { get; set; }
+    }
+
+   
+}

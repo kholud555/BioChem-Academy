@@ -1,0 +1,13 @@
+D:\CourseProject\CoursesWebsite\Core\bin\Debug\net9.0\Core.deps.json
+D:\CourseProject\CoursesWebsite\Core\bin\Debug\net9.0\Core.dll
+D:\CourseProject\CoursesWebsite\Core\bin\Debug\net9.0\Core.pdb
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.csproj.AssemblyReference.cache
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.AssemblyInfoInputs.cache
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.AssemblyInfo.cs
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.csproj.CoreCompileInputs.cache
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.sourcelink.json
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.dll
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\refint\Core.dll
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.pdb
+D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\ref\Core.dll

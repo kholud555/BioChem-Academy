@@ -27,8 +27,9 @@ namespace API
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            // Register Identity
+            
             builder.Services.AddAuthentication();
+            // Register Identity
             builder.Services.AddIdentityApiEndpoints<User>()
                 .AddEntityFrameworkStores<StoreContext>();
             
@@ -44,10 +45,9 @@ namespace API
                 app.UseSwaggerUI();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
             app.MapIdentityApi<User>();//To Use Endpoints Of Identity

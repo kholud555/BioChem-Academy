@@ -10,5 +10,10 @@ namespace Core.Entities
    {
         public float Grade { get; set; }
         public string ParentPhone { get; set; }
+        public int UserId { get; set; }
+
+        public User User { get; set; }
+        public ICollection<AccessControl> AccessControls { get; set; } = new List<AccessControl>();
+        public ICollection<StudentExam> StudentExam { get; set; } = new List<StudentExam>();
     }
 }

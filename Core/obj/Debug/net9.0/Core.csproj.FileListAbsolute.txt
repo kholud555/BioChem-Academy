@@ -11,3 +11,16 @@ D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.dll
 D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\refint\Core.dll
 D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\Core.pdb
 D:\CourseProject\CoursesWebsite\Core\obj\Debug\net9.0\ref\Core.dll
+D:\website\Backend\Core\bin\Debug\net9.0\Core.deps.json
+D:\website\Backend\Core\bin\Debug\net9.0\Core.dll
+D:\website\Backend\Core\bin\Debug\net9.0\Core.pdb
+D:\website\Backend\Core\obj\Debug\net9.0\Core.csproj.AssemblyReference.cache
+D:\website\Backend\Core\obj\Debug\net9.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\website\Backend\Core\obj\Debug\net9.0\Core.AssemblyInfoInputs.cache
+D:\website\Backend\Core\obj\Debug\net9.0\Core.AssemblyInfo.cs
+D:\website\Backend\Core\obj\Debug\net9.0\Core.csproj.CoreCompileInputs.cache
+D:\website\Backend\Core\obj\Debug\net9.0\Core.sourcelink.json
+D:\website\Backend\Core\obj\Debug\net9.0\Core.dll
+D:\website\Backend\Core\obj\Debug\net9.0\refint\Core.dll
+D:\website\Backend\Core\obj\Debug\net9.0\Core.pdb
+D:\website\Backend\Core\obj\Debug\net9.0\ref\Core.dll

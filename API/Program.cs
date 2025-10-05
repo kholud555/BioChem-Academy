@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Core.Interfaces;
 
 namespace API
 {
@@ -16,6 +17,11 @@ namespace API
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            //Register AutoMapper
+            builder.Services.AddAutoMapper(typeof(MappingProfiles));
+            //Register IstudentRepository
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+
 
             //Add Swagger settings 
             builder.Services.AddEndpointsApiExplorer();

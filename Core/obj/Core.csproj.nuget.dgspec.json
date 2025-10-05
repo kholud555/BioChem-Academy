@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {}
+    "D:\\website\\Backend\\Core\\Core.csproj": {}
   },
   "projects": {
-    "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {
+    "D:\\website\\Backend\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\website\\Backend\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\khokha\\.nuget\\packages\\",
-        "outputPath": "D:\\CourseProject\\CoursesWebsite\\Core\\obj\\",
+        "projectPath": "D:\\website\\Backend\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\2025\\.nuget\\packages\\",
+        "outputPath": "D:\\website\\Backend\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\khokha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2025\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -31,7 +31,11 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\website\\Backend\\Application\\Application.csproj": {
+                "projectPath": "D:\\website\\Backend\\Application\\Application.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -71,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

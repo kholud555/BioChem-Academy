@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
         /*inherited from IdentityUser<string>*/
         // Remove UserId - use base.Id

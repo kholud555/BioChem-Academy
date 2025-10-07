@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -60,15 +59,5 @@ namespace API.Controllers
                 return StatusCode(500, new { error = ex.Message });
             }
         }
-
-        [HttpGet("GetProfile")]
-        [Authorize(Roles = "Student")]
-        public async Task<ActionResult> GetProfile()
-        {
-            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var profile = await _service.GetProfileAsync(UserId);
-            return Ok(profile);
-        }
-      
     }
 }

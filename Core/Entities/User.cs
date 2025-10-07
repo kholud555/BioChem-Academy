@@ -14,12 +14,9 @@ namespace Core.Entities
         // Remove UserId - use base.Id
         // Remove UserName, Email, Password 
 
-       
-
         [EnumDataType(typeof(RoleEnum))]
         public RoleEnum Role { get; set; }
         public DateTime CreatedAt { get; set; }
-
         public Student Student { get; set; }
 
     }

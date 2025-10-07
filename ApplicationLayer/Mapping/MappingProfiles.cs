@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using API.DTOS;
+using AutoMapper;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,8 @@ namespace Infrastructure.Data
     {
         public MappingProfiles() {
 
-
+            //CreateMap<Student,StudentRegisterDTO>()
+                
         }
     }
 }

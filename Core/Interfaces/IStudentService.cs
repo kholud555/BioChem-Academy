@@ -11,5 +11,6 @@ namespace Core.Interfaces
     public interface IStudentService
     {
         Task <Student> Registration(StudentRegistrationModel model );
+        Task<Student> GetProfileAsync(string id);
     }
 }

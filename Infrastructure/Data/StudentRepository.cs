@@ -29,5 +29,13 @@ namespace Infrastructure.Data
             await _Context.SaveChangesAsync();
             return student;
         }
+       
+
+        public async Task<Student> GetStudentByIdAsync(int id)
+        {
+            var student = await _Context.Students.FindAsync(id);
+            if (student == null) throw new KeyNotFoundException($" student with  id {id} not found");
+            return student;
+        }
     }
 }

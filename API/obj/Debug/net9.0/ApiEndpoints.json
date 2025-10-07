@@ -17,6 +17,16 @@
   },
   {
     "ContainingType": "API.Controllers.StudentController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Student/GetProfile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.StudentController",
     "Method": "Registration",
     "RelativePath": "api/Student/RegisterStudent",
     "HttpMethod": "POST",

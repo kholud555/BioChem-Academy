@@ -24,13 +24,14 @@ namespace Application.Services
         {
             var jwtSettings = _config.GetSection("JwtSettings");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!));
-           
+
 
             var claims = new List<Claim>
             {
-                 new Claim(JwtRegisteredClaimNames.Sub, UserId.ToString()),
-                 new Claim(ClaimTypes.Name, Email),                       
-                 new Claim(ClaimTypes.Role, Role)                      
+               
+                new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
+                 new Claim(ClaimTypes.Name, Email),
+                 new Claim(ClaimTypes.Role, Role)
             };
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -26,6 +26,8 @@ namespace Application.Services
             _mapper = mapper;
             _repo = repo;
         }
+
+        
         #endregion
 
         public async Task<Student> Registration(StudentRegistrationModel studentModel)
@@ -102,6 +104,14 @@ namespace Application.Services
 
                 throw; // rethrow error
             }
+        }
+
+        public  async Task<Student> GetProfileAsync(string id)
+        {
+            
+            if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("Id must be provided");
+            int ID = int.Parse(id);
+            return await _repo.GetStudentByIdAsync(ID);
         }
     }
 }

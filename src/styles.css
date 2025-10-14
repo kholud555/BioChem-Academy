@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --footer-light-color: #2d4073;
-  --footer-dark-color: #223668;
+
+  --primary-teal: #17a2b8;
+  --primary-orange: #ff6b35;
+  --hover-teal: #138496;
+  --hover-orange: #ff8c5f;
+
+
+  
+  --main-bg-color: #17a2b8;
+  --main-text-color: #D5ECC2;
+  --footer-light-color: #17a2b8;
+  --footer-dark-color: #D5ECC2;
 
   --bs-primary: #0d6efd;
   --bs-secondary: #6c757d;
@@ -9,12 +19,12 @@
   --bs-danger: #dc3545;
   --bs-warning: #ffc107;
   /* Button Color */
-  --bs-info: #0dcaf0;
+  --bs-info: linear-gradient(90deg, #00B6B0, #F37B2A);
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
 }
 *{
-    direction: rtl;
+    /* direction: rtl; */
     margin: 0;
     padding: 0;
 }

@@ -1,4 +1,4 @@
-<!-- Section: Design Block -->
+ <!-- Section: Design Block -->
 <section class="background-radial-gradient overflow-hidden" style="height: 100vh;">
   
 
@@ -6,11 +6,12 @@
     <div class="row gx-lg-5 align-items-center mb-5">
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
         <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-          نقدم لك افضل العروض <br />
-          <span style="color: hsl(218, 81%, 75%)">اهلا بعودتك</span>
+         Your way to the top 
+          <br />
+          <span style="color: hsl(218, 81%, 75%)">Welcome Back</span>
         </h1>
         <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-        نضمن لك التفوق فى الكمياء
+          Sign in to continue to your account
         </p>
       </div>
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
@@ -19,28 +20,28 @@
 
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
-            <form>
+            <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()" >
               <!-- 2 column grid layout with text inputs for the first and last names -->
               
 
               <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
-                <label class="form-label" for="form3Example3">البريد الالكترونى</label>
-                <input type="email" id="form3Example3" class="form-control" />
+                <label class="form-label" for="form3Example3">E-mail</label>
+                <input type="email" id="form3Example3" class="form-control" formControlName="email" />
                 
               </div>
 
               <!-- Password input -->
               <div data-mdb-input-init class="form-outline mb-4">
-                 <label class="form-label" for="form3Example4">كلمه المرور</label>
-                <input type="password" id="form3Example4" class="form-control" />
+                 <label class="form-label" for="form3Example4">password</label>
+                <input type="password" id="form3Example4" class="form-control" formControlName="password" />
                
               </div>
 
 
               <!-- Submit button -->
               <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="width: 100%;">
-               تسجيل دخول
+             Login
               </button>
 
             

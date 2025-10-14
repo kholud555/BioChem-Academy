@@ -6,11 +6,11 @@
     <div class="row gx-lg-5 align-items-center mb-5">
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
         <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-         انضم الينا الان <br />
-          <span style="color: hsl(218, 81%, 75%)">طريقك نحو القمه</span>
+        Join US Now<br />
+          <span style="color: hsl(218, 81%, 75%)">Your way to the top</span>
         </h1>
         <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-         نضمن لك التفوق فى الكمياء 
+        We guarantee your excellence in chemistry
         </p>
       </div>
 
@@ -20,58 +20,116 @@
 
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
-            <form>
+            <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
               <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                     <label class="form-label" for="form3Example1">الاسم الاول </label>
-                    <input type="text" id="form3Example1" class="form-control" />
-                   
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-
-                       <label class="form-label" for="form3Example2">الاسم الثانى</label>
-                    <input type="text" id="form3Example2" class="form-control" />
-                 
-                  </div>
-                </div>
+              
+<div data-mdb-input-init class="form-outline mb-4">
+                 <label class="form-label" for="form3Example3"
+                 >
+              Name
+                </label>
+                <input type="email" id="form3Example3" class="form-control" formControlName="userName" placeholder="Full Name" />
+               
               </div>
+
   <div data-mdb-input-init class="form-outline mb-4">
-                 <label class="form-label" for="form3Example3">رقم هاتف الطالب</label>
-                <input type="email" id="form3Example3" class="form-control" />
+                 <label class="form-label" for="form3Example3">Student Phone Number</label>
+                <input type="text" id="form3Example3" class="form-control" formControlName="phoneNumber"  placeholder="01xxxxxxxxx"/>
                
               </div>
                 <div data-mdb-input-init class="form-outline mb-4">
                  <label class="form-label" for="form3Example3">
-               رقم هاتف ولى الامر
-                </label>
-                <input type="email" id="form3Example3" class="form-control" />
-               
-              </div>
-              <!-- Email input -->
-              <div data-mdb-input-init class="form-outline mb-4">
-                 <label class="form-label" for="form3Example3">البريد الالكترونى</label>
-                <input type="email" id="form3Example3" class="form-control" />
+               Parent Phone Number </label>
+                <input type="text" id="form3Example3" class="form-control"  formControlName="parentPhone" placeholder=" 01xxxxxxxxx"/>
                
               </div>
 
-              <!-- Password input -->
-              <div data-mdb-input-init class="form-outline mb-4">
-                   <label class="form-label" for="form3Example4">كلمه المرور</label>
-                <input type="password" id="form3Example4" class="form-control" />
-             
+                <div data-mdb-input-init class="form-outline mb-4">
+                 <label class="form-label" for="form3Example3">
+              Grade</label>
+                <input type="text" id="form3Example3" class="form-control"  formControlName="grade" placeholder="Grade"/>
+               
               </div>
 
               
+              <!-- Email input -->
+              <div data-mdb-input-init class="form-outline mb-4">
+                 <label class="form-label" for="form3Example3">E-mail</label>
+                <input type="email" id="form3Example3" class="form-control" formControlName="email" placeholder="your@gmail.com"/>
+               
+              </div>
+
+            <!-- Password input --> 
+<div class="mb-3 position-relative"> 
+  <label for="passwordInput" class="form-label fw-semibold">Password</label> 
+  <input 
+    [type]="showPassword ? 'text' : 'password'" 
+    class="form-control" 
+    id="passwordInput" 
+    placeholder="Enter your password" 
+    formControlName="password"
+  > 
+  <button 
+    type="button" 
+    class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2 p-0 mt-3" 
+    (click)="togglePassword()" 
+  > 
+    <i class="bi" 
+     [class.bi-eye-slash]="showPassword" 
+     [class.bi-eye]="!showPassword"></i> 
+  </button> 
+</div> 
+
+<!-- Confirm Password input --> 
+<div class="mb-4 position-relative"> 
+  <label class="form-label fw-semibold" for="confirmPasswordInput">Confirm password</label> 
+  <input 
+    [type]="showConfirmPassword ? 'text' : 'password'" 
+    id="confirmPasswordInput" 
+    class="form-control"  
+    formControlName="confirmPassword" 
+    placeholder="Confirm Password"
+  /> 
+  <button 
+    type="button" 
+    class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2 p-0 mt-3" 
+    (click)="toggleConfirmPassword()" 
+  > 
+    <i class="bi" 
+     [class.bi-eye-slash]="showConfirmPassword" 
+     [class.bi-eye]="!showConfirmPassword"></i> 
+  </button> 
+</div>
+              
 
               <!-- Submit button -->
-              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4 " style="width: 100%;">
-               انشاء حساب
-              </button>
+               @if(isLoading){
+                 <button 
+  type="submit" 
+  class="btn btn-primary btn-block mb-4 d-flex align-items-center justify-content-center"
+  style="width: 100%;">
+  
+  <span class="spinner-border spinner-border-sm text-light me-2"></span>
+  Submit
+</button>
+<p class="text-dark">Already have an account?  <a class="log"> Log In</a></p>
+               }
+               @else {
+                 <button 
+  type="submit" 
+  class="btn btn-primary btn-block mb-4 d-flex align-items-center justify-content-center"
+  style="width: 100%;">
+  
+ 
+  Submit
+</button>
+<p class="text-dark">Already have an account?  <a class="log">Log In</a></p>
 
+               }
+            
+
+
+             
               <!-- Register buttons -->
               <!-- <div class="text-center">
                 <p>سجل دخول باستخدام</p>

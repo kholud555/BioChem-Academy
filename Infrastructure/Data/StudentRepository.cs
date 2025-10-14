@@ -34,7 +34,7 @@ namespace Infrastructure.Data
         public async Task<Student> GetStudentByIdAsync(int id)
         {
             var student = await _Context.Students.FindAsync(id);
-            if (student == null) throw new KeyNotFoundException($" student with  id {id} not found");
+            if (student == null) throw new KeyNotFoundException($"student with  id {id} not found");
             return student;
         }
     }

@@ -1,6 +1,6 @@
 
 using API.Filters;
-using API.Middleware;
+using API.Exceptions;
 using Application.Services;
 using Core.Entities;
 using Core.Interfaces;
@@ -20,9 +20,6 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllers();
-
             //Add Filers To Controllers
             builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
           
@@ -33,9 +30,24 @@ namespace API
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentService , StudentServices>();
 
+            // Register Grade service and repository 
+            builder.Services.AddScoped<IGradeRepository , GradeRepository>();
+            builder.Services.AddScoped<GradeService>();
+
+            // Register Term service and repository 
+            builder.Services.AddScoped<ITermRepository, TermRepository>();
+            builder.Services.AddScoped<TermService>();
+
+            //=========================================
+            // Register R2 Cloud Flare Service
+            builder.Services.AddSingleton<R2CloudFlareService>();
+
             // Register Jwt Token Service  
             builder.Services.AddScoped<JwtTokenService>();
 
+            // Register Global Exception Handler 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
             //Add Swagger configuration 
             builder.Services.AddEndpointsApiExplorer();
@@ -69,10 +81,66 @@ namespace API
                 });
             });
 
-            // Register EF DbContext 
+            // Register EF DbContext  & Admin seedings
             builder.Services.AddDbContext<StoreContext>( opt =>
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseSeeding((context, _) =>
+                {
+                    var isAdminExist = context.Set<User>().Any(U => U.Email == "BioChem_Academy111@gmail.com");
+
+                    if (!isAdminExist)
+                    {
+                        var adminUser = new User
+                        {
+                            UserName = "Admin",
+                            NormalizedUserName = "ADMIN",
+                            Email = "BioChem_Academy111@gmail.com",
+                            NormalizedEmail = "BIOCHEM_ACADEMY111@GMAIL.COM",
+                            EmailConfirmed = true,
+                            Role = RoleEnum.Admin,
+                            CreatedAt = DateTime.Now,
+                            LockoutEnabled = false,
+                            AccessFailedCount = 0,
+                            PhoneNumberConfirmed = true,
+
+                        };
+
+                        adminUser.PasswordHash = new PasswordHasher<User>().HashPassword(adminUser, "CL_NA_$_#5");
+
+                        context.Set<User>().Add(adminUser);
+                        context.SaveChanges();
+                    }
+                });
+
+                opt.UseAsyncSeeding(async (context, _, CancellationToken) =>
+                {
+                    var isAdminExist = await context.Set<User>().AnyAsync(U => U.Email == "BioChem_Academy111@gmail.com");
+
+                    if (!isAdminExist)
+                    {
+                        var adminUser = new User
+                        {
+                            UserName = "Admin",
+                            NormalizedUserName = "ADMIN",
+                            Email = "BioChem_Academy111@gmail.com",
+                            NormalizedEmail = "BIOCHEM_ACADEMY111@GMAIL.COM",
+                            EmailConfirmed = true,
+                            Role = RoleEnum.Admin,
+                            CreatedAt = DateTime.Now,
+                            LockoutEnabled = false,
+                            AccessFailedCount = 0,
+                            PhoneNumberConfirmed = true,
+
+                        };
+
+                        adminUser.PasswordHash = new PasswordHasher<User>().HashPassword(adminUser, "CL_NA_$_#5");
+
+                        context.Set<User>().Add(adminUser);
+                        await context.SaveChangesAsync();
+                    }
+                }
+                );
             });
 
             // JWT Configurations
@@ -140,15 +208,16 @@ namespace API
 
             var app = builder.Build();
 
-            //Register Custom ExceptionMiddleware
-            app.UseMiddleware<API.Middleware.ExceptionMiddleware>();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            //add Global Exception
+            app.UseExceptionHandler();
+
 
             app.UseHttpsRedirection();
 
@@ -176,6 +245,7 @@ namespace API
                         await roleManager.CreateAsync(new IdentityRole<int>(role));
                     }
                 }
+
             }
 
             await SeedRolesAsync(app);

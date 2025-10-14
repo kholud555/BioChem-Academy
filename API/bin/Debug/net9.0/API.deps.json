@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v9.0": {
       "API/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "4.0.7.7",
           "Application": "1.0.0",
           "Core": "1.0.0",
           "Infrastructure": "1.0.0",
@@ -40,6 +41,25 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {
             "assemblyVersion": "12.0.0.0",
             "fileVersion": "12.0.1.0"
+          }
+        }
+      },
+      "AWSSDK.Core/4.0.0.32": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.32"
+          }
+        }
+      },
+      "AWSSDK.S3/4.0.7.7": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.0.32"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.7.7"
           }
         }
       },
@@ -1123,6 +1143,7 @@
       },
       "Application/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "4.0.7.7",
           "Core": "1.0.0",
           "Infrastructure": "1.0.0"
         },
@@ -1179,6 +1200,20 @@
       "sha512": "sha512-+g/K+Vpe3gGMKGzjslMOdqNlkikScDjWfVvmWTayrDHaG/n2pPmFBMa+jKX1r/h6BDGFdkyRjAuhFE3ykW+r1g==",
       "path": "automapper.extensions.microsoft.dependencyinjection/12.0.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512"
+    },
+    "AWSSDK.Core/4.0.0.32": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n6F8wdQA0ss0rxEUivp5U3L2RRmU1KLIUCmPEFwPsyIiUPS/XtsPaN4W3Ru09p7C9RCghbqmHLQchMARwGpfgQ==",
+      "path": "awssdk.core/4.0.0.32",
+      "hashPath": "awssdk.core.4.0.0.32.nupkg.sha512"
+    },
+    "AWSSDK.S3/4.0.7.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-weqERmihe8yL2pirRjtbOvCOcRd+W61i28IIso0RoJZNu+ImWjB57fCz+8WHk+0T8e4YgnS0iLYkgpNiNJBAVA==",
+      "path": "awssdk.s3/4.0.7.7",
+      "hashPath": "awssdk.s3.4.0.7.7.nupkg.sha512"
     },
     "Azure.Core/1.38.0": {
       "type": "package",

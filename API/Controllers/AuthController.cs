@@ -42,13 +42,15 @@ namespace API.Controllers
                 return Unauthorized("Invalid  Email or password");
 
             // Generate token
-            var token = _jwtTokenService.GenerateJwtToken(user.Id, user.UserName, user.Role.ToString());
+            var token = _jwtTokenService.GenerateJwtToken(user.Id, user.Email ,user.Role.ToString());
 
             return Ok(new
             {
                 Token = token,
                 Role = user.Role.ToString(),
+                UserName = user.UserName,
                 UserId = user.Id
+
             });
         }
     }

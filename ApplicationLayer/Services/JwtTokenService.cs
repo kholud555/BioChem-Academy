@@ -29,7 +29,7 @@ namespace Application.Services
             var claims = new List<Claim>
             {
                
-                new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
+                 new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
                  new Claim(ClaimTypes.Name, Email),
                  new Claim(ClaimTypes.Role, Role)
             };

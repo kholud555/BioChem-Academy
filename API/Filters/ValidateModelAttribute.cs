@@ -8,7 +8,7 @@ namespace API.Filters
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            if(! context.ModelState.IsValid )
+            if(!context.ModelState.IsValid )
             {
                 var httpContext = context.HttpContext;
 

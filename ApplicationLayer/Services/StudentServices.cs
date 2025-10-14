@@ -49,7 +49,6 @@ namespace Application.Services
             {
                 var newUser = new User()
                 {
-
                     UserName = studentModel.UserName,
                     Email = studentModel.Email,
                     PhoneNumber = studentModel.PhoneNumber,

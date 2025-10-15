@@ -1,7 +1,90 @@
 .cards{
     color:var( --footer-dark-color);
-   
 }
+
 img{
     margin-top: 100px;
+}
+
+h3{
+    color:var( --primary-teal );
+    transform: translateY(-2px);
+}
+
+/* Animation للنص من اليسار */
+@keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+}
+
+/* Animation للصورة من اليمين */
+@keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+}
+
+/* Animation للعنوان من أعلى */
+@keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+/* Animation للنص Fade In */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+
+
+/* ✅ تطبيق الأنيميشن - دائم (loop) */
+.fade-in-left {
+  animation: fadeInLeft 1.5s ease-in-out forwards ;
+  -webkit-animation: fadeInLeft 1.5s ease-in-out forwards ;
+}
+
+.fade-in-right {
+  animation: fadeInRight 1.5s ease-in-out forwards;
+  -webkit-animation: fadeInRight 1.5s ease-in-out forwards;
+}
+
+.slide-up {
+  animation: slideUp 1.5s ease-in-out forwards ;
+  -webkit-animation: slideUp 1.5s ease-in-out forwards ;
+}
+
+.fade-in {
+  animation: fadeIn 2s ease-in-out  forwards;
+  -webkit-animation: fadeIn 2s ease-in-out  forwards;
+}
+
+
+/* Hover effect بسيط للصورة */
+.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: scale(1.03);
 }

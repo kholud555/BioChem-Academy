@@ -1,28 +1,9 @@
- <!-- Section: Design Block -->
-<section class="background-radial-gradient overflow-hidden" style="height: 100vh;">
   
-
-  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-    <div class="row gx-lg-5 align-items-center mb-5">
-      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-         Your way to the top 
-          <br />
-          <span style="color: hsl(218, 81%, 75%)">Welcome Back</span>
-        </h1>
-        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-          Sign in to continue to your account
-        </p>
-      </div>
-      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-
-        <div class="card bg-glass">
-          <div class="card-body px-4 py-5 px-md-5">
-            <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()" >
+  <div class="signup-container">
+  <form class="signup-form mt-5" [formGroup]="LoginForm" (ngSubmit)="onSubmit()" >
               <!-- 2 column grid layout with text inputs for the first and last names -->
-              
+                <h2 class="text-center mb-4">Login </h2>
+
 
               <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
@@ -40,19 +21,14 @@
 
 
               <!-- Submit button -->
-              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="width: 100%;">
-             Login
-              </button>
-
+            <button type="submit" class="btn-submit" >Login</button>
+    <p class="mt-2">
+      Create an account ?
+      <a style="color: var(--primary-teal); cursor: pointer;" routerLink="/signup">Sign Up</a>
+    </p>
             
 
                 
             
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Section: Design Block -->
+            </div>

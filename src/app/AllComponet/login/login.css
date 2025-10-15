@@ -1,40 +1,88 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+ 
+ background-image: linear-gradient(rgb(32, 172, 172), rgb(83, 223, 223));
 
-    .background-radial-gradient {
-      background-color: hsl(218, 41%, 15%);
-      background-image: radial-gradient(650px circle at 0% 0%,
-          hsl(218, 41%, 35%) 15%,
-          hsl(218, 41%, 30%) 35%,
-          hsl(218, 41%, 20%) 75%,
-          hsl(218, 41%, 19%) 80%,
-          transparent 100%),
-        radial-gradient(1250px circle at 100% 100%,
-          hsl(218, 41%, 45%) 15%,
-          hsl(218, 41%, 30%) 35%,
-          hsl(218, 41%, 20%) 75%,
-          hsl(218, 41%, 19%) 80%,
-          transparent 100%);
-    }
 
-    #radius-shape-1 {
-      height: 220px;
-      width: 220px;
-      top: -60px;
-      left: -130px;
-      background: radial-gradient(#44006b, #ad1fff);
-      overflow: hidden;
-    }
+}
+.error-message{
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.signup-form {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px;
+}
 
-    #radius-shape-2 {
-      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-      bottom: -60px;
-      right: -110px;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(#44006b, #ad1fff);
-      overflow: hidden;
-    }
+.signup-form h2 {
+  font-weight: 600;
+  color: var(--primary-teal);
+  text-align: center;
+}
 
-    .bg-glass {
-      background-color: hsla(0, 0%, 100%, 0.9) !important;
-      backdrop-filter: saturate(200%) blur(25px);
-    }
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.form-group input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 4px rgba(13, 110, 253, 0.3);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.password-wrapper i:hover {
+  color: #0d6efd;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: var(--primary-orange);
+}

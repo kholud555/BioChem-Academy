@@ -1,39 +1,56 @@
-<!-- <div class="carousel-inner rounded-5 shadow-4-strong">
+<!-- ✅ Slider Section -->
+<div class="carousel-container mt-0">
   <mdb-carousel [controls]="true" [indicators]="true" [animation]="'fade'">
+    
+    <!-- Slide 1 -->
     <mdb-carousel-item>
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/041.jpg"
-        class="d-block w-100"
-        alt="..."
+      <img 
+        src="./Assets/slider3.jpg" 
+        class="d-block w-100 slider-img" 
+        alt="BioChem Academy" 
       />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      <div class="carousel-caption text-center">
+        <h2 class="fw-bold">
+          Welcome to <span class="text-info">BioChem Academy</span>
+        </h2>
+        <p>Your journey to knowledge starts here.</p>
+        <button class="btn btn-info text-white fw-semibold mt-2 px-4 py-2" routerLink="/Courses">
+          Explore Courses
+        </button>
       </div>
     </mdb-carousel-item>
 
+    <!-- Slide 2 -->
     <mdb-carousel-item>
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/042.jpg"
-        class="d-block w-100"
-        alt="..."
+      <img 
+        src="./Assets/CH1.jpg" 
+        class="d-block w-100 slider-img" 
+        alt="Learning" 
       />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div class="carousel-caption text-center">
+        <h2 class="fw-bold">Learn at Your Own Pace</h2>
+        <p>Quality education accessible to everyone.</p>
+        <button class="btn btn-info text-white fw-semibold mt-2 px-4 py-2" routerLink="/login">
+          Join Now
+        </button>
       </div>
     </mdb-carousel-item>
 
+    <!-- Slide 3 -->
     <mdb-carousel-item>
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/043.jpg"
-        class="d-block w-100"
-        alt="..."
+      <img 
+        src="./Assets/CH2.png" 
+        class="d-block w-100 slider-img" 
+        alt="Success" 
       />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      <div class="carousel-caption text-center">
+        <h2 class="fw-bold">Achieve Your Goals</h2>
+        <p>Empowering individuals through learning.</p>
+        <button class="btn btn-info text-white fw-semibold mt-2 px-4 py-2" routerLink="/login">  
+          Get Started
+        </button>
       </div>
     </mdb-carousel-item>
+
   </mdb-carousel>
-</div> -->
+</div>

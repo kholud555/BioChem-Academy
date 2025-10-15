@@ -1,195 +1,88 @@
-/* BioChem Academy Sign Up Page - CSS كامل */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+ 
+ background-image: linear-gradient(rgb(32, 172, 172), rgb(83, 223, 223));
 
-/* الخلفية الرئيسية بتدرجات التركواز */
-.background-radial-gradient {
-  background-color: #0d5c5c;
-  background-image: radial-gradient(650px circle at 0% 0%,
-      #00d4cd 15%,
-      #00b6b0 35%,
-      #008f8a 75%,
-      #007b77 80%,
-      transparent 100%),
-    radial-gradient(1250px circle at 100% 100%,
-      #1a7d7a 15%,
-      #00b6b0 35%,
-      #0d7e7a 75%,
-      #0a6663 80%,
-      transparent 100%);
+
 }
-
-/* الدائرة البرتقالي (شمال) */
-#radius-shape-1 {
-  height: 220px;
-  width: 220px;
-  top: -60px;
-  left: -130px;
-  background: radial-gradient(#ff9d33, #ff8c00);
-  overflow: hidden;
-  position: absolute;
-  border-radius: 50%;
+.error-message{
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }
-
-/* الدائرة التركواز (يمين) */
-#radius-shape-2 {
-  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-  bottom: -60px;
-  right: -110px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(#00d4cd, #00b6b0);
-  overflow: hidden;
-  position: absolute;
-}
-
-/* الكارد (صندوق الفورم) */
-.bg-glass {
-  background-color: hsla(0, 0%, 100%, 0.9) !important;
-  backdrop-filter: saturate(200%) blur(25px);
-  border-radius: 1rem;
-  box-shadow: 0 8px 32px rgba(0, 182, 176, 0.15);
-}
-
-/* العناوين */
-.background-radial-gradient h1 {
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.background-radial-gradient h1 span {
-  color: #ff8c00;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* النصوص */
-.background-radial-gradient p {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* Labels الفورم */
-.form-label {
-  color: #0d5c5c;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-/* حقول الإدخال */
-.form-control {
-  border: 2px solid #e0e0e0;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  transition: all 0.3s ease;
-  background-color: #ffffff;
-}
-
-.form-control:focus {
-  border-color: #00b6b0 !important;
-  box-shadow: 0 0 0 0.2rem rgba(0, 182, 176, 0.25) !important;
-  outline: none;
-  background-color: #ffffff;
-}
-
-.form-control::placeholder {
-  color: #adb5bd;
-}
-
-/* زر Submit */
-.btn-primary {
-  background: linear-gradient(135deg, #00b6b0 0%, #00a99d 100%) !important;
-  border: none !important;
-  border-radius: 0.5rem;
-  padding: 0.875rem 1.75rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 182, 176, 0.3);
-  color: #ffffff;
+.signup-form {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   width: 100%;
-}
-button.btn-link {
-  text-decoration: none;
-  color: #495057;
+  max-width: 420px;
 }
 
-button.btn-link:hover {
+.signup-form h2 {
+  font-weight: 600;
+  color: var(--primary-teal);
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.form-group input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 4px rgba(13, 110, 253, 0.3);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.password-wrapper i:hover {
   color: #0d6efd;
 }
 
-.btn-primary:hover {
-  background: linear-gradient(135deg, #ff8c00 0%, #ff9d33 100%) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
-}
-.log{
-  text-decoration: underline;
-}
-.log:hover {
-  color: #ff8c00;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  
-}
-.btn-primary:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(0, 182, 176, 0.3);
-}
-
-.btn-primary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 182, 176, 0.5);
-}
-
-/* Spinner في زر التحميل */
-.spinner-border {
-  width: 1.2rem;
-  height: 1.2rem;
-  border-width: 0.2rem;
-  border-color: rgba(255, 255, 255, 0.3);
-  border-right-color: #ffffff;
-  margin-right: 0.5rem;
-}
-
-.spinner-border-sm {
-  width: 1rem;
-  height: 1rem;
-  border-width: 0.15rem;
-}
-
-/* تنسيقات إضافية */
-.card {
+.btn-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-teal);
+  color: white;
   border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
-.card-body {
-  padding: 2.5rem;
-}
-
-.form-outline {
-  margin-bottom: 1.5rem;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-  .background-radial-gradient h1 {
-    font-size: 2.5rem;
-  }
-  
-  .card-body {
-    padding: 2rem;
-  }
-  
-  #radius-shape-1,
-  #radius-shape-2 {
-    opacity: 0.5;
-  }
-}
-
-@media (max-width: 576px) {
-  .background-radial-gradient h1 {
-    font-size: 2rem;
-  }
-  
-  .btn-primary {
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-  }
+.btn-submit:hover {
+  background-color: var(--primary-orange);
 }

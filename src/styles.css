@@ -7,24 +7,21 @@
   --hover-orange: #ff8c5f;
 
 
-  
-  --main-bg-color: #17a2b8;
-  --main-text-color: #D5ECC2;
-  --footer-light-color: #17a2b8;
-  --footer-dark-color: #D5ECC2;
-
-  --bs-primary: #0d6efd;
-  --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-danger: #dc3545;
-  --bs-warning: #ffc107;
+          
+            --bg-cream: #f0f8fa;
+            --card-bg: #fff;
+            --text-dark: #333;
+            --text-light: #666;
+            --border-color: #e0e0e0;
+        
   /* Button Color */
   --bs-info: linear-gradient(90deg, #00B6B0, #F37B2A);
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
 }
-*{
-    /* direction: rtl; */
-    margin: 0;
-    padding: 0;
-}
+
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { StudentService } from '../../service/Student/student-service';
-
+import { ToastrService } from 'ngx-toastr';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 @Component({
   selector: 'app-nav-bar',
   imports: [RouterLink ,NgbCollapseModule ],
@@ -11,7 +12,7 @@ import { StudentService } from '../../service/Student/student-service';
 })
 export class NavBar {
   
-  constructor(private router: Router , private auth:StudentService ) {}
+  constructor(private router: Router , private auth:StudentService , private toast :ToastrService ) {}
   isCollapsed = true;
  isLoggedIn(): boolean {
     return this.auth.iSlogin();
@@ -23,7 +24,7 @@ export class NavBar {
   this.auth.clearToken();
   
   this.router.navigate(['/home']);
-  alert("LogOut Successfully");
+  this.toast.info("LogOut Successfully");
  }
 
 }

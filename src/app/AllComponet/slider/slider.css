@@ -1,0 +1,67 @@
+/* ✅ Slider Container */
+.carousel-container {
+  margin-top: 0;
+}
+
+/* ✅ Image styling */
+.slider-img {
+  height: 750px;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(75%);
+  border-radius: 0 !important;
+}
+
+/* ✅ Caption styling */
+.carousel-caption {
+  bottom: 35%;
+  transform: translateY(50%);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 25px 40px;
+  border-radius: 15px;
+  backdrop-filter: blur(6px);
+}
+
+.carousel-caption h2 {
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-caption p {
+  font-size: 1.2rem;
+  color: #eaeaea;
+  margin-top: 10px;
+}
+
+/* ✅ Button Styling */
+.carousel-caption .btn {
+  border-radius: 30px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease;
+}
+
+.carousel-caption .btn:hover {
+  transform: scale(1.05);
+  background-color: #0dcaf0; /* لون الـ info */
+}
+
+/* ✅ Responsive (Mobile) */
+@media (max-width: 768px) {
+  .slider-img {
+    height: 500px;
+  }
+
+  .carousel-caption {
+    bottom: 20%;
+    padding: 15px 20px;
+  }
+
+  .carousel-caption h2 {
+    font-size: 1.5rem;
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+}

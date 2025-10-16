@@ -22,46 +22,44 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/courses/{courseId}/terms
-        [HttpGet("~/api/courses/{courseId}/terms")]
-        public async Task<ActionResult<IEnumerable<Term>>> GetTermsByCourse(int courseId)
+
+        [HttpGet("GetTermsByGrade")]
+        public async Task<ActionResult<IEnumerable<TermDTO>>> GetTermsByGrade(int gradeId)
         {
-            var terms = await _termService.GetTermsByCourseAsync(courseId);
-            return Ok(terms);
+            var terms = await _termService.GetTermsByGradeAsync(gradeId);
+            var dto = _mapper.Map<IEnumerable<TermDTO>>(terms);
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Term>> GetTermById(int id)
+        public async Task<ActionResult<TermDTO>> GetTermById(int id)
         {
             var term = await _termService.GetTermByIdAsync(id);
             var dto = _mapper.Map<TermDTO>(term);
             return Ok(dto);
         }
 
-        // POST: api/terms
-        [HttpPost]
-        public async Task<ActionResult> AddTerm([FromBody] Term term)
+        
+        [HttpPost("AddTerm")]
+        public async Task<ActionResult> AddTerm([FromBody] CreateTermDTO dto)
         {
-            var newTerm = await _termService.CreateTermAsync(term.TermOrder, term.GradeId);
-            return CreatedAtAction(nameof(GetTermById), new { id = newTerm.Id }, newTerm);
+            var newTerm = await _termService.CreateTermAsync(dto);
+            var finalNewTermDto = _mapper.Map<TermDTO>(newTerm);
+            return  CreatedAtAction(nameof(GetTermById),new { id = finalNewTermDto.Id },finalNewTermDto);
         }
 
-        // PUT: api/terms/{id}
-        [HttpPut("{id:int}")]
-
-        public async Task<ActionResult> UpdateTerm(int id, [FromBody] Term updated)
+        [HttpPut("UpdateTerm")]
+        public async Task<ActionResult> UpdateTerm([FromBody] TermDTO dto)
         {
-            var success = await _termService.UpdateTermAsync(id, updated.TermOrder);
-            if (!success) return NotFound();
+            var term = await _termService.UpdateTermAsync(dto);
             return NoContent();
         }
 
-        // DELETE: api/terms/{id}
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteTerm(int id)
         {
             var success = await _termService.DeleteTermAsync(id);
-            if (!success) return NotFound();
+            if (!success) return NotFound("Term failed to delete");
             return NoContent();
         }
     }

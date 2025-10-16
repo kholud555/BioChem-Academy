@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class TermDTO  : CreateTermDTO
+    public class UnitDTO : CreateUnitDTO
     {
         [Required(ErrorMessage = "ID is required")]
-        public  int Id { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -20,6 +20,15 @@ namespace Infrastructure.Data
             return grade;
         }
 
+        public async Task<IEnumerable<Grade>> GetAllGradesAsync ()
+        {
+           var grades = await _context.Grades.ToListAsync();
+
+            if (grades.Count == 0) throw new KeyNotFoundException(nameof(grades));
+
+            return grades;
+        }
+
         public async Task<Grade> GetGradeByIdAsync(int id)
         {
             return await GetGradeByIdInternalAsync(id);
@@ -31,26 +40,30 @@ namespace Infrastructure.Data
             var existing = await _context.Grades
                 .FirstOrDefaultAsync(g => g.GradeName == gradeName);
             if (existing != null)
-                throw new InvalidOperationException ($"conflict Grade with name '{gradeName}' already exists");
+                throw new InvalidOperationException ("Conflict: Grade  name already exists.");
             var newGrade = new Grade { GradeName = gradeName};
             _context.Grades.Add(newGrade);
             await _context.SaveChangesAsync();
             return newGrade;
         }
 
-        public async Task<Grade> UpdateGradeNameAsync (Grade grade)
+        public async Task<bool> UpdateGradeNameAsync (Grade grade)
         {
-            var existing = await GetGradeByIdInternalAsync(grade.Id);
+            var existing =  await _context.Grades.FindAsync(grade.Id);
+            if(existing == null) return false;
+
             existing.GradeName = grade.GradeName;
-            await _context.SaveChangesAsync();
-            return existing;
+  
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteGradeAsync (int id)
+        public async Task<bool> DeleteGradeAsync (int id)
         {
-            var grade = await GetGradeByIdInternalAsync(id);
+            var grade = await _context.Grades.FindAsync(id);
+            if (grade == null) return false;
+            
             _context.Grades.Remove(grade);
-            await _context.SaveChangesAsync();
+           return await _context.SaveChangesAsync() > 0;
         }
 
     }

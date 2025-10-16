@@ -24,7 +24,7 @@ namespace API.Controllers
         }
       
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Grade>> GetGradeById (int id )
+        public async Task<ActionResult<GradeDTO>> GetGradeById (int id )
         {
             var grade =  await _service.GetGradeByIdAsync (id);
             var dto = _mapper.Map<GradeDTO>(grade);
@@ -36,7 +36,9 @@ namespace API.Controllers
         {
             var newGrade = await _service.CreateGradeAsync(gradeName);
 
-            return CreatedAtAction(nameof(GetGradeById), new { id = newGrade.Id }, newGrade);
+            var newGradeDto = _mapper.Map<GradeDTO> (newGrade);
+
+            return CreatedAtAction(nameof(GetGradeById), new { id = newGradeDto.ID }, newGradeDto);
         }
 
         [HttpPatch("Update Grade")]
@@ -48,14 +50,23 @@ namespace API.Controllers
                 GradeName = dto.GradeName
             };
             var existGrade = await _service.UpdateGradeAsync(grade);
-            return Ok();
+            return Ok(dto);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteGrade (int id)
         {
-            await _service.DeleteGradeAsync(id);
+            var success = await _service.DeleteGradeAsync(id);
+            if (!success) return NotFound("Term failed to delete");
             return NoContent();
+        }
+
+        [HttpGet("GetAllGrades")]
+        public async Task<ActionResult<IEnumerable<GradeDTO>>> GetAllGrade ()
+        {
+            var grades = await _service.GetAllGradeAsync();
+            var dto = _mapper.Map<IEnumerable<GradeDTO>> (grades);
+            return Ok(dto);
         }
 
     }

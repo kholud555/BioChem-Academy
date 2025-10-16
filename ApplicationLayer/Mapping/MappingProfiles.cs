@@ -14,10 +14,23 @@ namespace Infrastructure.Data
     {
         public MappingProfiles() {
 
+            //Grade
             CreateMap<Grade, GradeDTO>();
 
+            //Term
             CreateMap<Term, TermDTO>();
+            CreateMap<CreateTermDTO , Term>();
+            CreateMap<Term , TermDTO>();
 
+            //Unit
+            CreateMap<CreateUnitDTO, Unit>();
+            CreateMap<UnitDTO, Unit>();
+            CreateMap<Unit ,UnitDTO>();
+
+            //Lesson
+            CreateMap<Lesson, LessonDTO>();
+            CreateMap<CreateLessonDTO, Lesson>();
+            CreateMap<LessonDTO, Lesson>();
 
         }
     }

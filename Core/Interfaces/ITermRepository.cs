@@ -9,7 +9,7 @@ namespace Core.Interfaces
 {
     public interface ITermRepository
     {
-        Task<IEnumerable<Term>> GetTermsByCourseAsync(int courseId);
+        Task<IEnumerable<Term>> GetTermsByGradeAsync(int courseId);
         Task<Term> GetTermByIdAsync(int id);
         Task<Term> AddTermAsync(Term term);
         Task<bool> UpdateTermAsync(Term term);

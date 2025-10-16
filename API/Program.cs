@@ -38,6 +38,14 @@ namespace API
             builder.Services.AddScoped<ITermRepository, TermRepository>();
             builder.Services.AddScoped<TermService>();
 
+            // Register Unit service and repository 
+            builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+            builder.Services.AddScoped<UnitService>();
+
+            // Register Lesson service and repository 
+            builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+            builder.Services.AddScoped<LessonService>();
+
             //=========================================
             // Register R2 Cloud Flare Service
             builder.Services.AddSingleton<R2CloudFlareService>();

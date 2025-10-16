@@ -32,8 +32,6 @@ namespace Application.Services
             CheckIdValidation(id);
             return await _repo.GetGradeByIdAsync(id);
         }
-
-
         public async Task<Grade> CreateGradeAsync(string gradeName)
         {
 
@@ -43,21 +41,32 @@ namespace Application.Services
             
         }
 
-        public async Task<Grade> UpdateGradeAsync(Grade grade)
+        public async Task<bool> UpdateGradeAsync(Grade grade)
         {
+            if(grade is null) 
+                throw new ArgumentNullException(nameof(grade), "Grade object cannot be null.");
+
             if (grade.Id <= 0)
                 throw new ArgumentOutOfRangeException("Invalid Grade ID");
 
-            if (String.IsNullOrWhiteSpace(grade.GradeName)) throw new ArgumentNullException(nameof(grade.GradeName), "Grade should not be null");
-            return await _repo.UpdateGradeNameAsync(grade);
+            if (String.IsNullOrWhiteSpace(grade.GradeName))
+                throw new ArgumentNullException(nameof(grade.GradeName),"Grade name should not be null");
+
+            var isUpdated = await _repo.UpdateGradeNameAsync(grade);
+            if(!isUpdated) 
+                throw new KeyNotFoundException($"Grade with ID {grade.Id} not found.");
+
+            return true;
         }
 
-        public async Task DeleteGradeAsync(int id)
+        public async Task<bool> DeleteGradeAsync(int id)
         {
-            if (id <= 0)
-                throw new ArgumentOutOfRangeException("Invalid Grade ID");
-            await _repo.DeleteGradeAsync(id);
+            CheckIdValidation(id);
 
+           return await _repo.DeleteGradeAsync(id);
         }
+
+        public async Task<IEnumerable<Grade>> GetAllGradeAsync ()
+        => await _repo.GetAllGradesAsync();
     }
 }

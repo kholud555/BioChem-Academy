@@ -18,12 +18,16 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public async Task<IEnumerable<Term>> GetTermsByCourseAsync(int courseId)
+        public async Task<IEnumerable<Term>> GetTermsByGradeAsync(int gradeId)
         {
-            return await _context.Terms
-                .Where(t => t.GradeId == courseId)
+            var terms = await _context.Terms
+                .Where(t => t.GradeId == gradeId)
                 .Include(t => t.Grade)
                 .ToListAsync();
+
+            if(terms.Count == 0) throw new KeyNotFoundException(nameof(terms));
+
+            return terms;
         }
 
         public async Task<Term> GetTermByIdAsync(int id)
@@ -35,12 +39,14 @@ namespace Infrastructure.Data
 
         public async Task<Term> AddTermAsync(Term term)
         {
-            var isExisting = _context.Terms.
-                Any(t => t.GradeId == term.GradeId
-                && (t.TermOrder == TermEnum.TermOne || t.TermOrder == TermEnum.TermTwo)
-                && t.TermOrder == term.TermOrder);
+            var isGradeExist = await _context.Grades.AnyAsync(g => g.Id == term.GradeId);
 
-            if (isExisting) throw new InvalidOperationException("conflict term already exists");
+            if(!isGradeExist)  throw new InvalidOperationException("Conflict: No Grade matches your input.");
+
+            var isExisting = await _context.Terms.
+                AnyAsync(t => t.GradeId == term.GradeId && t.TermOrder == term.TermOrder);
+
+            if (isExisting) throw new InvalidOperationException("conflict: term already exists.");
 
             var newTerm = new Term
             {
@@ -52,12 +58,19 @@ namespace Infrastructure.Data
                                  
             _context.Terms.Add(newTerm);
             await _context.SaveChangesAsync();
-            return term;
+            return newTerm;
         }
 
         public async Task<bool> UpdateTermAsync(Term term)
         {
-            _context.Terms.Update(term);
+            var existingTerm = await _context.Terms.FindAsync(term.Id);
+            if(existingTerm == null) return false;
+
+            existingTerm.TermOrder = term.TermOrder;
+            existingTerm.IsFree = term.IsFree;
+            existingTerm.IsPublished = term.IsPublished;
+            existingTerm.GradeId = term.GradeId;
+
             return await _context.SaveChangesAsync() > 0;
         }
 

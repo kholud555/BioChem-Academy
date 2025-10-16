@@ -9,10 +9,11 @@ namespace Application.DTOS
 {
    public class LoginDTO
    {
-        [Required]
+        [Required(ErrorMessage = "ID is required")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "ID is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

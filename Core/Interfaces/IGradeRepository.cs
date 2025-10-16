@@ -13,8 +13,10 @@ namespace Core.Interfaces
 
         Task<Grade> CreateGradeAsync(string gradeName);
 
-        Task<Grade> UpdateGradeNameAsync(Grade grade);
+        Task<bool> UpdateGradeNameAsync(Grade grade);
 
-        Task DeleteGradeAsync(int id);
+        Task<bool> DeleteGradeAsync(int id);
+
+        Task<IEnumerable<Grade>> GetAllGradesAsync(); 
     }
 }

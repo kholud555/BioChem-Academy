@@ -17,5 +17,5 @@ namespace Core.Entities
         public Term Term{ get; set; }
         public ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
         public ICollection<AccessControl> AccessControls { get; set; } = new List<AccessControl>();
-    }
+   }
 }

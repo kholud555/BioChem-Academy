@@ -1,85 +1,70 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Authentication;
 
-namespace API.Exceptions
+public class GlobalExceptionHandler : IExceptionHandler
 {
-    public class GlobalExceptionHandler : IExceptionHandler
+    private readonly ILogger<GlobalExceptionHandler> _logger;
+
+    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
     {
-        private readonly ILogger<GlobalExceptionHandler> _logger;
+        _logger = logger;
+    }
 
-        public Exception Error => throw new NotImplementedException();
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    {
+        _logger.LogError(exception, "An error occurred: {Message}", exception.Message);
 
-        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+        var (statusCode, title, detail) = MapExceptionToResponse(exception);
+
+        var problemDetails = new ProblemDetails
         {
-            _logger = logger;
-        }
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+            Status = statusCode,
+            Title = title,
+            Detail = detail,
+            Instance = httpContext.Request.Path
+        };
+
+        httpContext.Response.StatusCode = statusCode;
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+
+        return true;
+    }
+
+    public static (int statusCode, string title, string detail) MapExceptionToResponse(Exception exception)
+    {
+        // 🧩 أول حاجة: exceptions الناتجة من [Authorize]
+        if (exception is AuthenticationException || exception is UnauthorizedAccessException)
         {
-            // write exception message in Logs 
-            _logger.LogError(exception, "An error occurred: {Message}", exception.Message);
-
-            // convert exception to proper message
-            var (statusCode, title, detail) = MapExceptionToResponse(exception);
-
-            // create problem details  is a standard class include exception JSON (RFC 7807)
-            var problemDetails = new ProblemDetails
-            {
-
-                Status = statusCode,
-                Title = title,
-                Detail = detail,
-                Instance = httpContext.Request.Path
-
-            };
-
-            // determine response if status code is 400 or 500 and send JSON to API Consumer
-            httpContext.Response.StatusCode = statusCode;
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-            return true;
+            return (StatusCodes.Status401Unauthorized, "Unauthorized", "Authentication or Authorization failed.");
         }
 
-        public static (int statusCode, string title, string detail) MapExceptionToResponse(Exception exception)
+
+        return exception switch
         {
-            return exception switch
-            {
-
-
-                // 400 Bad Request 
-                ArgumentException or
-                ArgumentNullException or
-                ArgumentOutOfRangeException =>
+            ArgumentException or ArgumentNullException or ArgumentOutOfRangeException =>
                 (StatusCodes.Status400BadRequest, "Bad Request", exception.Message),
 
-                // 401 Unauthorized
-                UnauthorizedAccessException =>
+            UnauthorizedAccessException =>
                 (StatusCodes.Status401Unauthorized, "Unauthorized", exception.Message),
 
-                // 403 Forbidden 
-                InvalidOperationException when exception.Message.Contains("forbidden") =>
+            InvalidOperationException when exception.Message.Contains("forbidden", StringComparison.OrdinalIgnoreCase) =>
                 (StatusCodes.Status403Forbidden, "Forbidden", exception.Message),
 
-                // 404 Not Found 
-                KeyNotFoundException or
-                FileNotFoundException =>
+            KeyNotFoundException or FileNotFoundException =>
                 (StatusCodes.Status404NotFound, "Not Found", exception.Message),
 
-                // 409 Conflict 
-                InvalidOperationException when exception.Message.Contains("conflict", StringComparison.OrdinalIgnoreCase) =>
+            InvalidOperationException when exception.Message.Contains("conflict", StringComparison.OrdinalIgnoreCase) =>
                 (StatusCodes.Status409Conflict, "Conflict", exception.Message),
 
-                // 422 Unprocessable Entity
-                InvalidDataException =>
-                    (StatusCodes.Status422UnprocessableEntity, "Unprocessable Entity", exception.Message),
+            InvalidDataException =>
+                (StatusCodes.Status422UnprocessableEntity, "Unprocessable Entity", exception.Message),
 
-                // 408 Request Timeout
-                TimeoutException =>
-                    (StatusCodes.Status408RequestTimeout, "Request Timeout", "The request took too long to process"),
+            TimeoutException =>
+                (StatusCodes.Status408RequestTimeout, "Request Timeout", "The request took too long to process"),
 
-                // 500 Internal Server Error (default)
-                _ =>
-                    (StatusCodes.Status500InternalServerError, "Internal Server Error", "An unexpected error occurred. Please try again later.")
-            };
-        }
+            _ =>
+                (StatusCodes.Status500InternalServerError, "Internal Server Error", "An unexpected error occurred. Please try again later.")
+        };
     }
 }

@@ -6,7 +6,9 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -16,11 +18,13 @@ namespace API.Controllers
     {
         private readonly GradeService _service;
         private readonly IMapper _mapper;
-
-        public GradeController (GradeService service , IMapper mapper)
+        private readonly UserManager<User> _userManager;
+ 
+        public GradeController (GradeService service , IMapper mapper , UserManager<User> userManager)
         {
             _service = service;
             _mapper = mapper;
+            _userManager = userManager;
         }
       
         [HttpGet("{id:int}")]
@@ -61,6 +65,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        
         [HttpGet("GetAllGrades")]
         public async Task<ActionResult<IEnumerable<GradeDTO>>> GetAllGrade ()
         {
@@ -68,6 +73,20 @@ namespace API.Controllers
             var dto = _mapper.Map<IEnumerable<GradeDTO>> (grades);
             return Ok(dto);
         }
+
+        [AllowAnonymous]
+        [HttpGet("whoami")]
+        public async Task<IActionResult> WhoAmI()
+        {
+            var userEmail = User?.Identity?.Name;
+            if (userEmail == null) return Unauthorized("No user found");
+
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null) return NotFound("User not found");
+
+            return Ok(new { user.Email, user.Role });
+        }
+
 
     }
 }

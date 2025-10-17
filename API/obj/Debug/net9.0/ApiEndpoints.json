@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "API.Controllers.AuthController",
+    "Method": "CreateStudent",
+    "RelativePath": "api/Auth/create-student",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
@@ -107,6 +117,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.GradeController",
+    "Method": "WhoAmI",
+    "RelativePath": "api/Grade/whoami",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

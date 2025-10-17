@@ -3,32 +3,56 @@
   "WorkspaceRootPath": "D:\\CourseProject\\CoursesWebsite\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\lessonrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\lessonrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\lessonscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\lessonscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\lessonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\lessonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\termservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\termservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\graderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\graderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\filters\\validatemodelattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\filters\\validatemodelattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\courseproject\\courseswebsite\\core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\exceptions\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\exceptions\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\migrations\\20251017163128_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20251017163128_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\storecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\storecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\courseproject\\courseswebsite\\core\\entities\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\courseproject\\courseswebsite\\core\\entities\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,94 +90,170 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MappingProfiles.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "RelativeToolTip": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB0AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:29:37.327Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwC4AAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:29:16.42Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "LessonsController.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\LessonsController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\LessonsController.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\LessonsController.cs",
-              "RelativeToolTip": "API\\Controllers\\LessonsController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAA+wBsAAAAAAAAAAAAAAA==",
+              "Title": "GradeRepository.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\GradeRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\GradeRepository.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\GradeRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\GradeRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAowBgAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:28:24.136Z",
+              "WhenOpened": "2025-10-17T17:58:28.679Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LessonService.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\LessonService.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\LessonService.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\LessonService.cs",
-              "RelativeToolTip": "ApplicationLayer\\Services\\LessonService.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAmwEYAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:25:45.648Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TermService.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\TermService.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\TermService.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\TermService.cs",
-              "RelativeToolTip": "ApplicationLayer\\Services\\TermService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:25:37.94Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UnitRepository.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\UnitRepository.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\UnitRepository.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\UnitRepository.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\UnitRepository.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwB4AAABnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:22:26.232Z",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-17T16:52:22.052Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LessonRepository.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\LessonRepository.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\LessonRepository.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\LessonRepository.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\LessonRepository.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAmwEYAAAAAAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAAAKQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:19:05.969Z",
+              "WhenOpened": "2025-10-17T07:39:39.133Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GradeController.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\GradeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\GradeController.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\GradeController.cs",
+              "RelativeToolTip": "API\\Controllers\\GradeController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwE8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T07:49:08.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ValidateModelAttribute.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Filters\\ValidateModelAttribute.cs",
+              "RelativeDocumentMoniker": "API\\Filters\\ValidateModelAttribute.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Filters\\ValidateModelAttribute.cs",
+              "RelativeToolTip": "API\\Filters\\ValidateModelAttribute.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAD4vycAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T15:31:37.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\User.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\User.cs",
+              "RelativeToolTip": "Core\\Entities\\User.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAYwBMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T15:32:00.064Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "JwtTokenService.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\JwtTokenService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\JwtTokenService.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\JwtTokenService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\JwtTokenService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAmwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T08:29:23.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAiwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T08:30:04.721Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GlobalExceptionHandler.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Exceptions\\GlobalExceptionHandler.cs",
+              "RelativeDocumentMoniker": "API\\Exceptions\\GlobalExceptionHandler.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Exceptions\\GlobalExceptionHandler.cs",
+              "RelativeToolTip": "API\\Exceptions\\GlobalExceptionHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T15:31:27.226Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "20251017163128_Initial.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Migrations\\20251017163128_Initial.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20251017163128_Initial.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Migrations\\20251017163128_Initial.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20251017163128_Initial.cs",
+              "ViewState": "AgIAAFACAAAAAAAAAAAmwFwCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T16:31:36.143Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "StoreContext.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\StoreContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\StoreContext.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\StoreContext.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\StoreContext.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAD4vw4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T15:32:13.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Unit.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\Unit.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Unit.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\Unit.cs",
+              "RelativeToolTip": "Core\\Entities\\Unit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T15:31:58.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RoleEnum.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\RoleEnum.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\RoleEnum.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\RoleEnum.cs",
+              "RelativeToolTip": "Core\\Entities\\RoleEnum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T08:27:25.504Z"
             }
           ]
         }

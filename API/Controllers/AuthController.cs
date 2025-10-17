@@ -42,7 +42,7 @@ namespace API.Controllers
                 return Unauthorized("Invalid  Email or password");
 
             // Generate token
-            var token = _jwtTokenService.GenerateJwtToken(user.Id, user.Email ,user.Role.ToString());
+            var token = await _jwtTokenService.GenerateJwtToken(user);
 
             return Ok(new
             {
@@ -53,5 +53,32 @@ namespace API.Controllers
 
             });
         }
+
+        [HttpPost("create-student")]
+        public async Task<IActionResult> CreateStudent([FromServices] UserManager<User> userManager)
+        {
+            var email = "student@example.com";
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = "student",
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(user, "Student@123");
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                await userManager.AddToRoleAsync(user, "Student");
+            }
+
+            return Ok("Student user created and assigned to role 'Student'");
+        }
+
     }
 }

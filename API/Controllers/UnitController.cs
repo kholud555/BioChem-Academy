@@ -2,9 +2,8 @@
 using Application.Services;
 using AutoMapper;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
 {
@@ -21,7 +20,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<UnitDTO>> GetUnitById(int id)
         {
@@ -30,7 +29,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddUnit")]
         public async Task<ActionResult> AddUnit([FromBody] CreateUnitDTO dto)
         {
@@ -39,6 +38,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetUnitById), new { id = finalNewUnitDto.Id }, finalNewUnitDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateUnit")]
         public async Task<ActionResult> UpdateUnit ([FromBody] UnitDTO dto)
         {
@@ -46,6 +46,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteUnit (int id)
         {
@@ -53,5 +54,6 @@ namespace API.Controllers
             if (!success) return NotFound("Unit failed to delete");
             return NoContent();
         }
+
     }
 }

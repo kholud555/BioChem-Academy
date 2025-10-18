@@ -22,7 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetTermsByGrade")]
         public async Task<ActionResult<IEnumerable<TermDTO>>> GetTermsByGrade(int gradeId)
         {
@@ -31,6 +31,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<TermDTO>> GetTermById(int id)
         {
@@ -39,7 +40,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-        
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddTerm")]
         public async Task<ActionResult> AddTerm([FromBody] CreateTermDTO dto)
         {
@@ -48,6 +49,7 @@ namespace API.Controllers
             return  CreatedAtAction(nameof(GetTermById),new { id = finalNewTermDto.Id },finalNewTermDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateTerm")]
         public async Task<ActionResult> UpdateTerm([FromBody] TermDTO dto)
         {
@@ -55,6 +57,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteTerm(int id)
         {

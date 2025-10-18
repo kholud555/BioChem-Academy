@@ -6,7 +6,9 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -16,13 +18,14 @@ namespace API.Controllers
     {
         private readonly GradeService _service;
         private readonly IMapper _mapper;
-
+ 
         public GradeController (GradeService service , IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
       
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GradeDTO>> GetGradeById (int id )
         {
@@ -31,6 +34,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{gradeName}")]
         public async Task<ActionResult> AddGrade(string gradeName)
         {
@@ -41,6 +45,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetGradeById), new { id = newGradeDto.ID }, newGradeDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("Update Grade")]
         public async Task<ActionResult> UpdateGrade (GradeDTO dto )
         {
@@ -53,6 +58,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteGrade (int id)
         {
@@ -61,6 +67,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllGrades")]
         public async Task<ActionResult<IEnumerable<GradeDTO>>> GetAllGrade ()
         {

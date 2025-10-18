@@ -2,6 +2,7 @@
 using Application.Services;
 using Azure.Core;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
@@ -28,7 +29,7 @@ namespace API.Controllers
         }
         #endregion
 
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
@@ -42,7 +43,7 @@ namespace API.Controllers
                 return Unauthorized("Invalid  Email or password");
 
             // Generate token
-            var token = _jwtTokenService.GenerateJwtToken(user.Id, user.Email ,user.Role.ToString());
+            var token = await _jwtTokenService.GenerateJwtToken(user);
 
             return Ok(new
             {

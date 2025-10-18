@@ -1,6 +1,5 @@
-
+﻿
 using API.Filters;
-using API.Exceptions;
 using Application.Services;
 using Core.Entities;
 using Core.Interfaces;
@@ -11,17 +10,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Security.Claims;
 
 namespace API
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        
+       public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             //Add Filers To Controllers
-            builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
+           builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
           
             //Register AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
@@ -92,73 +93,29 @@ namespace API
             // Register EF DbContext  & Admin seedings
             builder.Services.AddDbContext<StoreContext>( opt =>
             {
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-                opt.UseSeeding((context, _) =>
-                {
-                    var isAdminExist = context.Set<User>().Any(U => U.Email == "BioChem_Academy111@gmail.com");
-
-                    if (!isAdminExist)
-                    {
-                        var adminUser = new User
-                        {
-                            UserName = "Admin",
-                            NormalizedUserName = "ADMIN",
-                            Email = "BioChem_Academy111@gmail.com",
-                            NormalizedEmail = "BIOCHEM_ACADEMY111@GMAIL.COM",
-                            EmailConfirmed = true,
-                            Role = RoleEnum.Admin,
-                            CreatedAt = DateTime.Now,
-                            LockoutEnabled = false,
-                            AccessFailedCount = 0,
-                            PhoneNumberConfirmed = true,
-
-                        };
-
-                        adminUser.PasswordHash = new PasswordHasher<User>().HashPassword(adminUser, "CL_NA_$_#5");
-
-                        context.Set<User>().Add(adminUser);
-                        context.SaveChanges();
-                    }
-                });
-
-                opt.UseAsyncSeeding(async (context, _, CancellationToken) =>
-                {
-                    var isAdminExist = await context.Set<User>().AnyAsync(U => U.Email == "BioChem_Academy111@gmail.com");
-
-                    if (!isAdminExist)
-                    {
-                        var adminUser = new User
-                        {
-                            UserName = "Admin",
-                            NormalizedUserName = "ADMIN",
-                            Email = "BioChem_Academy111@gmail.com",
-                            NormalizedEmail = "BIOCHEM_ACADEMY111@GMAIL.COM",
-                            EmailConfirmed = true,
-                            Role = RoleEnum.Admin,
-                            CreatedAt = DateTime.Now,
-                            LockoutEnabled = false,
-                            AccessFailedCount = 0,
-                            PhoneNumberConfirmed = true,
-
-                        };
-
-                        adminUser.PasswordHash = new PasswordHasher<User>().HashPassword(adminUser, "CL_NA_$_#5");
-
-                        context.Set<User>().Add(adminUser);
-                        await context.SaveChangesAsync();
-                    }
-                }
-                );
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
             });
 
             // JWT Configurations
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
 
+
+            // Register Identity & Add Role Service to Identity 
+            builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+            {
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+            })
+                .AddEntityFrameworkStores<StoreContext>()
+                .AddDefaultTokenProviders();
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -168,6 +125,8 @@ namespace API
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+                    RoleClaimType = ClaimTypes.Role,
+                    NameClaimType = ClaimTypes.Name,
 
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
@@ -175,16 +134,6 @@ namespace API
                 };
 
             });
-
-            // Register Identity
-            builder.Services.AddIdentity<User , IdentityRole<int>>(options =>
-            {
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-                
-            })
-                .AddEntityFrameworkStores<StoreContext>()
-                .AddDefaultTokenProviders();
 
             // Register CORS Configuration
             builder.Services.AddCors( option =>
@@ -216,49 +165,75 @@ namespace API
 
             var app = builder.Build();
 
+            // Seed default roles before processing requests
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await SeedRolesAndAdminAsync(services);
+
+            }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            //add Global Exception
+            
             app.UseExceptionHandler();
 
+           //app.UseHttpsRedirection();
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
 
             app.UseCors("GeneralCORSConfig");
 
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            // Seeds default roles into the system if they don't exist.
-            async Task SeedRolesAsync (WebApplication App)
-            {
-                var Scope = app.Services.CreateScope();
-
-                var roleManager = Scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
-
-                string[] roles = new[] { "Admin", "Student" };
-
-                foreach (var role in roles)
-                {
-                    if (!await roleManager.RoleExistsAsync(role))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole<int>(role));
-                    }
-                }
-
-            }
-
-            await SeedRolesAsync(app);
+            app.UseAuthentication();  
+            
+            app.UseAuthorization(); 
+            
+            app.MapControllers();      
 
             app.Run();
+       }
+
+        //Seeding Roles And Admin
+        private static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            string[] roleNames = { "Admin", "Student" };
+            foreach (var roleName in roleNames)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole<int>(roleName));
+                }
+            }
+
+            var adminEmail = "BioChem_Academy111@gmail.com";
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new User
+                {
+                    UserName = "admin",
+                    Email = adminEmail,
+                    EmailConfirmed = true,
+                    Role = RoleEnum.Admin,
+                    CreatedAt = DateTime.Now,
+                };
+
+                var result = await userManager.CreateAsync(adminUser, "CL_na_$_#5");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
         }
+
+
     }
+
 }
+

@@ -33,12 +33,6 @@ public class GlobalExceptionHandler : IExceptionHandler
 
     public static (int statusCode, string title, string detail) MapExceptionToResponse(Exception exception)
     {
-        // 🧩 أول حاجة: exceptions الناتجة من [Authorize]
-        if (exception is AuthenticationException || exception is UnauthorizedAccessException)
-        {
-            return (StatusCodes.Status401Unauthorized, "Unauthorized", "Authentication or Authorization failed.");
-        }
-
 
         return exception switch
         {

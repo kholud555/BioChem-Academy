@@ -2,6 +2,7 @@
 using Application.Services;
 using Azure.Core;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
@@ -28,7 +29,7 @@ namespace API.Controllers
         }
         #endregion
 
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
@@ -53,32 +54,5 @@ namespace API.Controllers
 
             });
         }
-
-        [HttpPost("create-student")]
-        public async Task<IActionResult> CreateStudent([FromServices] UserManager<User> userManager)
-        {
-            var email = "student@example.com";
-            var user = await userManager.FindByEmailAsync(email);
-
-            if (user == null)
-            {
-                user = new User
-                {
-                    UserName = "student",
-                    Email = email,
-                    EmailConfirmed = true
-                };
-
-                var result = await userManager.CreateAsync(user, "Student@123");
-
-                if (!result.Succeeded)
-                    return BadRequest(result.Errors);
-
-                await userManager.AddToRoleAsync(user, "Student");
-            }
-
-            return Ok("Student user created and assigned to role 'Student'");
-        }
-
     }
 }

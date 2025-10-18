@@ -3,6 +3,7 @@ using Application.Services;
 using AutoMapper;
 using Core.Entities;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,8 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("units/{unitId:int}/lessons")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{unitId:int}")]
         public async Task<ActionResult<IEnumerable<LessonDTO>>> GetLessonsByUnit(int unitId)
         {
             var lessons = await _lessonService.GetLessonsByUnitAsync(unitId);
@@ -34,6 +36,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("lessons/{id:int}")]
         public async Task<ActionResult<LessonDTO>> GetLessonById(int id)
         {
@@ -42,6 +45,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("lessons")]
         public async Task<ActionResult> AddLesson([FromBody] CreateLessonDTO dto)
         {
@@ -50,7 +54,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetLessonById), new { id = finalNewLessonDto.Id }, finalNewLessonDto);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("lessons/{id:int}")]
         public async Task<ActionResult> UpdateLesson(int id, [FromBody] LessonDTO dto)
         {
@@ -61,6 +65,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("lessons/{id:int}")]
         public async Task<ActionResult> DeleteLesson(int id)
         {

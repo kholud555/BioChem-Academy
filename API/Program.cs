@@ -55,9 +55,8 @@ namespace API
             builder.Services.AddScoped<JwtTokenService>();
 
             // Register Global Exception Handler 
-            //builder.Services.AddExceptionHandler();
-            //builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-            //builder.Services.AddProblemDetails();
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
             //Add Swagger configuration 
             builder.Services.AddEndpointsApiExplorer();
@@ -101,10 +100,7 @@ namespace API
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
 
-            //888************************************************************************
 
-
-            // ✅ أولاً: Identity Core (بدون Cookies)
             // Register Identity & Add Role Service to Identity 
             builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
             {
@@ -138,9 +134,6 @@ namespace API
                 };
 
             });
-
-
-
 
             // Register CORS Configuration
             builder.Services.AddCors( option =>
@@ -176,18 +169,8 @@ namespace API
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var logger = services.GetRequiredService<ILogger<Program>>();
+                await SeedRolesAndAdminAsync(services);
 
-                try
-                {
-                    logger.LogInformation("Starting seeding roles and admin...");
-                    await SeedRolesAndAdminAsync(services);
-                    logger.LogInformation("✅ Seeding roles and admin completed successfully.");
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "❌ Error while seeding roles and admin");
-                }
             }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -195,29 +178,27 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            
+            app.UseExceptionHandler();
 
-            // ✅ لازم exception handler يكون بعد الـ swagger وأول حاجة في الـ middleware
-            //app.UseExceptionHandler();
-
-            // ✅ HTTPS (اختياري)
            //app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors("GeneralCORSConfig");
-            app.UseAuthentication();   // ✅ أولاً
-            app.UseAuthorization();    // ✅ ثانياً
-            app.MapControllers();      // ✅ آخر حاجة
 
+            app.UseCors("GeneralCORSConfig");
+
+            app.UseAuthentication();  
+            
+            app.UseAuthorization(); 
+            
+            app.MapControllers();      
 
             app.Run();
-        }
+       }
 
         //Seeding Roles And Admin
         private static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         {
-            var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("Starting seeding roles and admin...");
-
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
@@ -227,7 +208,6 @@ namespace API
                 if (!await roleManager.RoleExistsAsync(roleName))
                 {
                     await roleManager.CreateAsync(new IdentityRole<int>(roleName));
-                    logger.LogInformation($"✅ Role '{roleName}' created.");
                 }
             }
 
@@ -248,16 +228,8 @@ namespace API
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, "Admin");
-                    logger.LogInformation("✅ Admin user created successfully.");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                        logger.LogError($"❌ {error.Description}");
                 }
             }
-
-            logger.LogInformation("✅ Seeding roles and admin completed successfully.");
         }
 
 

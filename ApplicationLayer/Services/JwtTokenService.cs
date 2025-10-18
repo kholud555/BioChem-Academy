@@ -32,7 +32,7 @@ namespace Application.Services
             var claims = new List<Claim>
             {
 
-                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -44,9 +44,6 @@ namespace Application.Services
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
-            Console.WriteLine("User Roles: " + string.Join(", ", userRoles));
-
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

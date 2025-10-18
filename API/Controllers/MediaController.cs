@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,8 @@ namespace API.Controllers
             _r2 = r2;
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("presign-upload")]
         public IActionResult GetUploadUrl([FromBody] string fileName)
         {
@@ -23,6 +26,7 @@ namespace API.Controllers
             return Ok(new { presignedUrl = url, storageKey = key });
         }
 
+        [Authorize(Roles = "Student")]
         [HttpGet("presign-Watch")]
         public IActionResult GetWatchUrl([FromQuery] string key)
         {

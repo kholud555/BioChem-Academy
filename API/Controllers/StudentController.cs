@@ -28,9 +28,8 @@ namespace API.Controllers
 
         #endregion
 
-
-        [HttpPost("RegisterStudent")]
         [AllowAnonymous]
+        [HttpPost("RegisterStudent")]
         public async Task<ActionResult<StudentRegisterDTO>> Registration ([FromBody]  StudentRegisterDTO dto)
         {
             try

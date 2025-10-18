@@ -18,15 +18,14 @@ namespace API.Controllers
     {
         private readonly GradeService _service;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
  
-        public GradeController (GradeService service , IMapper mapper , UserManager<User> userManager)
+        public GradeController (GradeService service , IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
-            _userManager = userManager;
         }
       
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GradeDTO>> GetGradeById (int id )
         {
@@ -35,6 +34,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{gradeName}")]
         public async Task<ActionResult> AddGrade(string gradeName)
         {
@@ -45,6 +45,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetGradeById), new { id = newGradeDto.ID }, newGradeDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("Update Grade")]
         public async Task<ActionResult> UpdateGrade (GradeDTO dto )
         {
@@ -57,6 +58,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteGrade (int id)
         {
@@ -73,20 +75,6 @@ namespace API.Controllers
             var dto = _mapper.Map<IEnumerable<GradeDTO>> (grades);
             return Ok(dto);
         }
-
-        [AllowAnonymous]
-        [HttpGet("whoami")]
-        public async Task<IActionResult> WhoAmI()
-        {
-            var userEmail = User?.Identity?.Name;
-            if (userEmail == null) return Unauthorized("No user found");
-
-            var user = await _userManager.FindByEmailAsync(userEmail);
-            if (user == null) return NotFound("User not found");
-
-            return Ok(new { user.Email, user.Role });
-        }
-
 
     }
 }

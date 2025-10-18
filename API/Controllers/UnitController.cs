@@ -2,6 +2,7 @@
 using Application.Services;
 using AutoMapper;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -52,6 +53,19 @@ namespace API.Controllers
             var success = await _unitService.DeleteUnitAsync(id);
             if (!success) return NotFound("Unit failed to delete");
             return NoContent();
+        }
+
+        [HttpGet("test-without-auth")]
+        public IActionResult TestWithoutAuth()
+        {
+            return Ok("This works without auth");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("test-with-auth")]
+        public IActionResult TestWithAuth()
+        {
+            return Ok("This works WITH auth");
         }
     }
 }

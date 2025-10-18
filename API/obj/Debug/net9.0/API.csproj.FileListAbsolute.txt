@@ -465,10 +465,10 @@ D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.build.json
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.build.json.cache
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.development.json
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\API.csproj.Up2Date
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\API.dll
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\refint\API.dll
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\API.pdb
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\API.genruntimeconfig.cache
 D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\ref\API.dll
-D:\CourseProject\CoursesWebsite\API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

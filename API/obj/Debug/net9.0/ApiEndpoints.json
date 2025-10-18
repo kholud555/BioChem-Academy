@@ -393,6 +393,36 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.TestController",
+    "Method": "Get",
+    "RelativePath": "api/Test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.TestController",
+    "Method": "AdminOnly",
+    "RelativePath": "api/Test/AllowAnonymous",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.TestController",
+    "Method": "CheckMyRoles",
+    "RelativePath": "api/Test/check-my-roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.UnitController",
     "Method": "GetUnitById",
     "RelativePath": "api/Unit/{id}",
@@ -448,6 +478,26 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UnitController",
+    "Method": "TestWithAuth",
+    "RelativePath": "api/Unit/test-with-auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UnitController",
+    "Method": "TestWithoutAuth",
+    "RelativePath": "api/Unit/test-without-auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

@@ -22,7 +22,7 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             //Add Filers To Controllers
-            builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
+           builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
           
             //Register AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
@@ -101,10 +101,25 @@ namespace API
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
 
+            //888************************************************************************
+
+
+            // ✅ أولاً: Identity Core (بدون Cookies)
+            // Register Identity & Add Role Service to Identity 
+            builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+            {
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+            })
+                .AddEntityFrameworkStores<StoreContext>()
+                .AddDefaultTokenProviders();
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -124,15 +139,8 @@ namespace API
 
             });
 
-            // Register Identity & Add Role Service to Identity 
-            builder.Services.AddIdentity<User , IdentityRole<int>>(options =>
-            {
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-                
-            })
-                .AddEntityFrameworkStores<StoreContext>()
-                .AddDefaultTokenProviders();
+
+
 
             // Register CORS Configuration
             builder.Services.AddCors( option =>

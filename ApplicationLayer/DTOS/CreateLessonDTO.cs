@@ -9,9 +9,6 @@ namespace Application.DTOS
 {
    public class CreateLessonDTO
     {
-        
-
-
        [Required(ErrorMessage = "Title is required")]
         [StringLength(150, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 150 characters")]
         public required string Title { get; set; }

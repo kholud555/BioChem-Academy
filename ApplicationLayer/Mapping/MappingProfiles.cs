@@ -20,7 +20,7 @@ namespace Infrastructure.Data
             //Term
             CreateMap<Term, TermDTO>();
             CreateMap<CreateTermDTO , Term>();
-            CreateMap<Term , TermDTO>();
+            CreateMap<TermDTO, Term>();
 
             //Unit
             CreateMap<CreateUnitDTO, Unit>();

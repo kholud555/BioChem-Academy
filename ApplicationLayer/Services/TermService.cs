@@ -56,6 +56,7 @@ namespace Application.Services
                 throw new ArgumentOutOfRangeException(nameof(dto.GradeId), "Grade ID must be greater than zero.");
 
             var term = _mapper.Map<Term>(dto);
+
             var isUpdated = await _termRepo.UpdateTermAsync(term);
 
             if (!isUpdated)

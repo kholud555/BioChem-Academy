@@ -7,11 +7,12 @@ namespace Core.Entities
     public class AccessControl : BaseEntity
     {
         public bool IsGranted { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         public int StudentId { get; set; }
         public Student student { get; set; }
 
-        public int? GradeId { get; set; }
+        public int? GradeId { get; set; } 
         public Grade? Grade { get; set; }
 
         public int? TermId { get; set; }

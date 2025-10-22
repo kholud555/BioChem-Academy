@@ -47,6 +47,10 @@ namespace API
             builder.Services.AddScoped<ILessonRepository, LessonRepository>();
             builder.Services.AddScoped<LessonService>();
 
+            // Register Access Control service and repository
+            builder.Services.AddScoped<IAccessControlRepository, AccessControlRepository>();
+            builder.Services.AddScoped<AccessControlService>();
+
             //=========================================
             // Register R2 Cloud Flare Service
             builder.Services.AddSingleton<R2CloudFlareService>();

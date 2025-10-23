@@ -32,6 +32,12 @@ namespace Infrastructure.Data
             CreateMap<CreateLessonDTO, Lesson>();
             CreateMap<LessonDTO, Lesson>();
 
+            //Student
+            CreateMap<Student, StudentDTO>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(scr => scr.User.UserName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(scr => scr.User.Email))
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(scr => scr.User.PhoneNumber));
+
         }
     }
 }

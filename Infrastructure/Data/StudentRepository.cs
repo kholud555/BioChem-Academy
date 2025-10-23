@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,13 @@ namespace Infrastructure.Data
             var student = await _Context.Students.FindAsync(id);
             if (student == null) throw new KeyNotFoundException($"student with  id {id} not found");
             return student;
+        }
+
+        public async Task<IEnumerable<Student>> GetAllStudentAsync()
+        {
+            var students = await _Context.Students.Include(s => s.User).ToListAsync();
+            if (students.Count == 0) throw new KeyNotFoundException("No Students");
+            return students;
         }
     }
 }

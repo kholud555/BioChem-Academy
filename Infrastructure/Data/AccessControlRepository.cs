@@ -75,7 +75,8 @@ namespace Infrastructure.Data
                         //check if term has already access
                         var isTermGranted = allStudentAccesses.Any(a => a.TermId == grantedSectionId);
                         if (isTermGranted) 
-                            throw new ArgumentException("Term access already granted before.");
+                            return true;
+                            
 
                         //check if grade already accessed
                         var isGradeGranted = allStudentAccesses.Any(a => a.GradeId == Term.GradeId);

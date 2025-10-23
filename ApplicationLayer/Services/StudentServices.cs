@@ -112,5 +112,9 @@ namespace Application.Services
             int ID = int.Parse(id);
             return await _repo.GetStudentByIdAsync(ID);
         }
+
+        public  async Task<IEnumerable<Student>> GetAllStudentAsync()
+            => await _repo.GetAllStudentAsync();
+      
     }
 }

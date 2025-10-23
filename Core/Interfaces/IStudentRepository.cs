@@ -12,6 +12,8 @@ namespace Core.Interfaces
        Task <Student> Registration(Student student);
         Task<Student> GetStudentByIdAsync(int id);
 
+        Task<IEnumerable<Student>> GetAllStudentAsync();
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using API.DTOS;
+using Application.DTOS;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -57,6 +58,15 @@ namespace API.Controllers
                 // Unexpected error - return 500 Internal Server Error with message
                 return StatusCode(500, new { error = ex.Message });
             }
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpGet("GetAllStudents")]
+        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetAllStudentsAsync ()
+        {
+            var students = await _service.GetAllStudentAsync();
+            var dto = _mapper.Map<IEnumerable<StudentDTO>>(students);
+            return Ok(dto);
         }
     }
 }

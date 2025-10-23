@@ -12,5 +12,7 @@ namespace Core.Interfaces
     {
         Task <Student> Registration(StudentRegistrationModel model );
         Task<Student> GetProfileAsync(string id);
+
+        Task<IEnumerable<Student>> GetAllStudentAsync();
     }
 }

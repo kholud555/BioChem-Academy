@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.AccessController",
+    "Method": "RevokeAccess",
+    "RelativePath": "api/Access/Revoke",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Application.DTOS.AccessControlDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",

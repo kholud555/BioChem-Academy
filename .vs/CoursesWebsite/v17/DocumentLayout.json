@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "D:\\CourseProject\\CoursesWebsite\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\accesscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\accesscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\accesscontrolservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\accesscontrolservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\courseproject\\courseswebsite\\infrastructure\\data\\accesscontrolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\accesscontrolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\courseproject\\courseswebsite\\core\\entities\\grantedsectionsenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\grantedsectionsenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\exceptions\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\exceptions\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\studentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\studentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,28 +86,145 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MappingProfiles.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs*",
-              "RelativeToolTip": "ApplicationLayer\\Mapping\\MappingProfiles.cs*",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCYAAABmAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "GradeController.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\GradeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\GradeController.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\GradeController.cs",
+              "RelativeToolTip": "API\\Controllers\\GradeController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAQwEUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T15:02:04.011Z",
+              "WhenOpened": "2025-10-23T21:26:57.096Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StudentRepository.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\StudentRepository.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\StudentRepository.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\StudentRepository.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\StudentRepository.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCsAAABGAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "API\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T14:47:13.947Z",
+              "WhenOpened": "2025-10-23T21:26:39.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAQwOYAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T20:50:22.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MappingProfiles.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "RelativeToolTip": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwCcAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T20:47:41.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StudentDTO.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "RelativeToolTip": "ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T20:45:47.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GrantedSectionsEnum.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\GrantedSectionsEnum.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\GrantedSectionsEnum.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\GrantedSectionsEnum.cs",
+              "RelativeToolTip": "Core\\Entities\\GrantedSectionsEnum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T20:39:32.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GlobalExceptionHandler.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Exceptions\\GlobalExceptionHandler.cs",
+              "RelativeDocumentMoniker": "API\\Exceptions\\GlobalExceptionHandler.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Exceptions\\GlobalExceptionHandler.cs",
+              "RelativeToolTip": "API\\Exceptions\\GlobalExceptionHandler.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAYwCYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T20:30:18.599Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccessController.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\AccessController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AccessController.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\AccessController.cs",
+              "RelativeToolTip": "API\\Controllers\\AccessController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAgwBgAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T19:53:19.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccessControlService.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\AccessControlService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\AccessControlService.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\AccessControlService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\AccessControlService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T19:51:33.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "StudentServices.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\StudentServices.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\StudentServices.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\StudentServices.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\StudentServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T19:51:30.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccessControlRepository.cs",
+              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\AccessControlRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\AccessControlRepository.cs",
+              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Data\\AccessControlRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\AccessControlRepository.cs",
+              "ViewState": "AgIAALoAAAAAAAAAAAAkwPMAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T17:26:41.853Z",
               "EditorCaption": ""
             }
           ]

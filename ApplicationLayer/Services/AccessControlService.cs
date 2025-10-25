@@ -23,11 +23,22 @@ namespace Application.Services
 
         public async Task AccessGrantAsync (AccessControlDTO dto)
         {
-            if (dto == null) throw new ArgumentNullException(nameof(dto), "Term object cannot be null.");
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "object cannot be null.");
 
             if (dto.StudentId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");
 
             var isGranted = await _repo.GrantAccess(dto.StudentId, dto.grantedSectionId , dto.GrantedType);
+
+            if (!isGranted) throw new ArgumentException("Type not Supported");
+        }
+
+        public async Task RevokeAccessAsync(AccessControlDTO dto)
+        {
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "object cannot be null.");
+
+            if (dto.StudentId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");
+
+            var isGranted = await _repo.RevokeAccess(dto.StudentId, dto.grantedSectionId, dto.GrantedType);
 
             if (!isGranted) throw new ArgumentException("Type not Supported");
         }

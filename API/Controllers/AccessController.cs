@@ -24,5 +24,12 @@ namespace API.Controllers
             await _service.AccessGrantAsync(dto);
             return Ok();
         }
+
+        [HttpDelete("Revoke")]
+        public async Task<IActionResult> RevokeAccess([FromBody] AccessControlDTO dto)
+        {
+            await _service.RevokeAccessAsync(dto);
+            return Ok();
+        }
     }
 }

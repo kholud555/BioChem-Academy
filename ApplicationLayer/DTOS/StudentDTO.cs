@@ -17,6 +17,7 @@ namespace Application.DTOS
 
         public string PhoneNumber { get; set; }
 
+        public string ParentNumber { get; set; }
         
     }
 }

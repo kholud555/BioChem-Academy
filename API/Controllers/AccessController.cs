@@ -31,5 +31,13 @@ namespace API.Controllers
             await _service.RevokeAccessAsync(dto);
             return Ok();
         }
+
+        [HttpGet("student/{studentId}")]
+        public async Task<ActionResult<StudentPermissionsDTO>> GetStudentPermissions1q(int studentId , [FromQuery] bool IncludedNames = false)
+        {
+            var studentPermissions = await _service.GetStudentPermissionsAsync(studentId, IncludedNames);
+            return Ok(studentPermissions);
+        }
+
     }
 }

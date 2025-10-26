@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-   public enum TermEnum
+    [Flags]
+    public enum TermEnum
    {
         TermOne,
         TermTwo

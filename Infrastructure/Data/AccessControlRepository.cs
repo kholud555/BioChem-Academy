@@ -36,7 +36,6 @@ namespace Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
-
         public async Task<bool> GrantAccess(int studentId, int grantedSectionId, GrantedSectionsEnum grantedSections)
         {
 
@@ -259,6 +258,11 @@ namespace Infrastructure.Data
             return true;
 
         }
+
+        public async Task<List<AccessControl>> GetStudentPermissionsAsync (int studentId)
+         => await _context.AccessControls
+            .Where(a => a.StudentId == studentId && a.IsGranted)
+            .ToListAsync();
 
     }
 }

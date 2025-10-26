@@ -13,5 +13,9 @@ namespace Core.Interfaces
         Task<bool> GrantAccess(int studentId, int grantedSectionId , GrantedSectionsEnum grantedSections);
 
         Task<bool> RevokeAccess(int studentId, int grantedSectionId , GrantedSectionsEnum grantedSections);
+
+        Task<List<AccessControl>> GetStudentPermissionsAsync(int studentId);
+
+        
     }
 }

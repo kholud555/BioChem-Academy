@@ -14,6 +14,7 @@ namespace Core.Interfaces
 
         Task<IEnumerable<Student>> GetAllStudentAsync();
 
+        Task<bool> UpdateStudentAsync(Student student);
 
     }
 }

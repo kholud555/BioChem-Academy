@@ -300,6 +300,26 @@
   },
   {
     "ContainingType": "API.Controllers.StudentController",
+    "Method": "GetStudentProfile",
+    "RelativePath": "api/Student/GetStudentProfile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Application.DTOS.StudentDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.StudentController",
     "Method": "Registration",
     "RelativePath": "api/Student/RegisterStudent",
     "HttpMethod": "POST",
@@ -315,6 +335,32 @@
     "ReturnTypes": [
       {
         "Type": "API.DTOS.StudentRegisterDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.StudentController",
+    "Method": "UpdateStudentProfile",
+    "RelativePath": "api/Student/UpdateStudentProfile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "student",
+        "Type": "Application.DTOS.UpdateStudentProfileDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Application.DTOS.UpdateStudentProfileDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",

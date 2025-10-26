@@ -29,7 +29,7 @@ namespace API
 
             // Register Student service and repository
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            builder.Services.AddScoped<IStudentService , StudentServices>();
+            builder.Services.AddScoped<StudentServices>();
 
             // Register Grade service and repository 
             builder.Services.AddScoped<IGradeRepository , GradeRepository>();

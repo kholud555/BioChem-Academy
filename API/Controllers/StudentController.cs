@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Application.Services;
 
 namespace API.Controllers
 {
@@ -16,12 +18,12 @@ namespace API.Controllers
     public class StudentController : ControllerBase
     {
         #region Fields
-        private readonly IStudentService _service;
+        private readonly StudentServices _service;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public StudentController(IStudentService service, IMapper mapper)
+        public StudentController(StudentServices service, IMapper mapper)
         {
             _service = service;
            _mapper = mapper;
@@ -67,6 +69,29 @@ namespace API.Controllers
             var students = await _service.GetAllStudentAsync();
             var dto = _mapper.Map<IEnumerable<StudentDTO>>(students);
             return Ok(dto);
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpGet("GetStudentProfile")]
+        public async Task<ActionResult<StudentDTO>> GetStudentProfile ()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var StudentProfile = await _service.GetProfileAsync(userId);
+
+            return Ok(StudentProfile);
+        }
+
+
+        [Authorize(Roles = "Student")]
+        [HttpPut("UpdateStudentProfile")]
+        public async Task<ActionResult<UpdateStudentProfileDTO>> UpdateStudentProfile ([FromBody] UpdateStudentProfileDTO student)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var updateProfile = await _service.UpdateStudentAsync(userId, student);
+
+            return Ok(updateProfile);
         }
     }
 }

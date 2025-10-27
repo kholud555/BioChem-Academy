@@ -1,13 +1,15 @@
-﻿using AutoMapper;
+﻿using Application.DTOS;
+using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Models;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
-    public class StudentServices : IStudentService
+    public class StudentServices 
     {
 
         #region Fields
@@ -105,16 +107,65 @@ namespace Application.Services
             }
         }
 
-        public  async Task<Student> GetProfileAsync(string id)
+        public  async Task<StudentDTO> GetProfileAsync(string id)
         {
             
             if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("Id must be provided");
-            int ID = int.Parse(id);
-            return await _repo.GetStudentByIdAsync(ID);
+
+            if (!int.TryParse(id, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing student ID claim.");
+            }
+            var student =  await _repo.GetStudentByIdAsync(userId);
+
+            var dto = _mapper.Map<StudentDTO>(student);
+            return dto;
         }
 
         public  async Task<IEnumerable<Student>> GetAllStudentAsync()
             => await _repo.GetAllStudentAsync();
+
+        public async Task<UpdateStudentProfileDTO> UpdateStudentAsync (string userIdClaim, UpdateStudentProfileDTO dto)
+        {
+            if (!int.TryParse(userIdClaim, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing student ID claim.");
+            }
+
+            var existingStudent = await _context.Students.Include(s => s.User).FirstOrDefaultAsync(s => s.UserId == userId);
+            
+            if (existingStudent == null) throw new KeyNotFoundException("Student Not Found");
+
+            if (existingStudent.User == null) throw new KeyNotFoundException("User Not Found");
+
+
+            if (dto == null) throw new ArgumentNullException("Object can not be null");
+
+            if(! String.IsNullOrWhiteSpace(dto.UserName) )
+            {
+                existingStudent.User.UserName = dto.UserName;
+            }
+
+            if (!String.IsNullOrWhiteSpace(dto.PhoneNumber))
+            {
+                existingStudent.User.PhoneNumber = dto.PhoneNumber;
+            }
+
+            if (!String.IsNullOrWhiteSpace(dto.ParentNumber))
+            {
+                existingStudent.ParentPhone = dto.ParentNumber;
+            }
+
+            if (!String.IsNullOrWhiteSpace(dto.Grade))
+            {
+                existingStudent.Grade = dto.Grade;
+            }
+
+            var isStudentUpdated = await _repo.UpdateStudentAsync(existingStudent);
+            if (!isStudentUpdated) throw new InvalidOperationException("Conflict: Student did not update");
+
+            return dto;
+        }
       
     }
 }

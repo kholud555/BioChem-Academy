@@ -34,8 +34,8 @@ namespace Infrastructure.Data
 
         public async Task<Student> GetStudentByIdAsync(int id)
         {
-            var student = await _Context.Students.FindAsync(id);
-            if (student == null) throw new KeyNotFoundException($"student with  id {id} not found");
+            var student = await _Context.Students.Include(s => s.User).FirstOrDefaultAsync(s => s.UserId == id);
+            if (student == null) throw new KeyNotFoundException("student with not found");
             return student;
         }
 
@@ -45,5 +45,14 @@ namespace Infrastructure.Data
             if (students.Count == 0) throw new KeyNotFoundException("No Students");
             return students;
         }
+
+        public async Task<bool> UpdateStudentAsync (Student student)
+        {
+            _Context.Students.Update(student);
+
+            return await _Context.SaveChangesAsync() > 0;
+        }
+
     }
+
 }

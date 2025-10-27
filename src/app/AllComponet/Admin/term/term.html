@@ -1,0 +1,129 @@
+<!-- Add Term Form -->
+ <div class="container-custom">
+<div class="card p-3 mt-4 border">
+  <h5>Add New Term</h5>
+
+  <div class="mb-2">
+    <label>Term Name</label>
+   <select class="form-control" [(ngModel)]="editedTerm.termOrder">
+  <option [ngValue]="0">First Term</option>
+  <option [ngValue]="1">Second Term</option>
+</select>
+  </div>
+
+  <div class="mb-2">
+    <label>Select Grade</label>
+    <select class="form-control" [(ngModel)]="newTerm.gradeId">
+      <option value="0" disabled>Select Grade</option>
+      <option *ngFor="let grade of grades" [value]="grade.id">
+        {{ grade.gradeName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-check mb-2">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="newTerm.isFree" id="isFree" />
+    <label class="form-check-label" for="isFree">Is Free</label>
+  </div>
+
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="newTerm.isPublished" id="isPublished" />
+    <label class="form-check-label" for="isPublished">Is Published</label>
+  </div>
+
+  <button class="btn btn-Action" (click)="addNewTerm()">Add Term</button>
+</div>
+
+<!-- Update/Delete Section -->
+<div class="card p-3 mt-4 border">
+  <h5>Update And Delete Term</h5>
+
+  <div class="mb-2">
+    <label>Select Grade</label>
+    <select class="form-control" [(ngModel)]="selectedGradeIdForUpdate" (ngModelChange)="onGradeChange()">
+      <option value="0" disabled>Select a Grade</option>
+      <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
+    </select>
+  </div>
+
+  <!-- Show Terms Table -->
+  <div *ngIf="terms.length > 0" class="mt-4">
+    <h5>Terms for Selected Grade</h5>
+    <table class="table table-hover table-bordered ">
+      <thead class="">
+        <tr>
+          <th>Term Name</th>
+          <th>Is Free</th>
+          <th>Is Published</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let term of terms">
+          <!-- Edit Mode -->
+          <ng-container *ngIf="editingTermId === term.id; else viewMode">
+            <td>
+              <select class="form-control" [(ngModel)]="editedTerm.termOrder">
+                <option [ngValue]="0">First Term</option>
+                <option [ngValue]="1">Second Term</option>
+              </select>
+            </td>
+            <td>
+          
+    <input type="checkbox" [(ngModel)]="editedTerm.isFree" />
+  
+ 
+</td>
+
+<td>
+     
+   
+    <input type="checkbox" [(ngModel)]="editedTerm.isPublished" />
+    
+ 
+</td>
+            <td>
+              <div class="action-buttons">
+              <button class="btn btn-success btn-sm me-1" (click)="updateTerm()">
+                <i class="bi bi-check-lg"></i>
+              </button>
+              <span>
+              <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">
+
+                   <i class="bi bi-x-lg"></i>
+              </button>
+              </span>
+              </div>
+            </td>
+    
+          </ng-container>
+
+          <!-- View Mode -->
+          <ng-template #viewMode>
+          <td>{{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}</td>
+            <td><input type="checkbox" [checked]="term.isFree" disabled /></td>
+            <td><input type="checkbox" [checked]="term.isPublished" disabled /></td>
+            <td>
+              <button class="btn-action btn-edit" (click)="startEdit(term)">
+
+                  <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn-action btn-delete" (click)="deleteTerm(term.id)">
+
+                  <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </ng-template>
+       
+        </tr>
+      </tbody>
+    </table>
+     </div>
+  </div>
+
+  <!-- No Terms Message -->
+  <div *ngIf="selectedGradeIdForUpdate > 0 && terms.length === 0" class="alert alert-info mt-3">
+    No terms found for the selected grade.
+  </div>
+  </div>
+

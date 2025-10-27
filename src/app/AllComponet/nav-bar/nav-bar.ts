@@ -26,5 +26,11 @@ export class NavBar {
   this.router.navigate(['/home']);
   this.toast.info("LogOut Successfully");
  }
+ IsAdmin(){
+  return this.auth.IsAdmin();
+ }
+ isStudent(){
+  return this.auth.IsStudent();
+ }
 
 }

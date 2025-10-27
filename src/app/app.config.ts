@@ -2,10 +2,13 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
+
 import { provideToastr } from 'ngx-toastr';
+import { authInterceptor } from './interceptors/auth-interceptor';
+import { spinnerInterceptor } from './interceptors/spinner/spinner-interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -14,7 +17,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()), 
      provideAnimations(), // required animations providers
     provideToastr(), // Toastr providers
-   
+   provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([spinnerInterceptor])),
     
   ]
 };

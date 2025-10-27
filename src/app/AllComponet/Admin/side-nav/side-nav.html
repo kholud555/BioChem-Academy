@@ -1,0 +1,37 @@
+<div class="app-container">
+  <!-- Toggle Button -->
+   <div class="mt-2">
+<button class="toggle-btn" (click)="toggleSidebar()">
+    <i class="bi bi-list"></i>
+    <br/>
+  </button>
+   </div>
+  
+
+  <!-- Sidebar -->
+  <div class="sidebar" [class.collapsed]="isCollapsed" [class.active]="sidebarVisible">
+    <div class="sidebar-header">
+     
+      
+      <h3>BioChem Academy</h3>
+      <p>Admin Dashboard</p>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li><a href="#"><i class="bi bi-house-door"></i><span>Home</span></a></li>
+      <!-- <li><a ><i class="bi bi-graph-up"></i><span>Main Dashboard</span></a></li> -->
+      <li><a routerLink="grade"><i class="bi bi-journal-text"></i><span>Grade</span></a></li>
+      <li><a routerLink="term"><i class="bi bi-calendar-check"></i><span>Term</span></a></li>
+      <li><a routerLink="unit"><i class="bi bi-layers"></i><span>Units</span></a></li>
+      <li><a routerLink="lesson"><i class="bi bi-journal"></i><span>Lessons</span></a></li>
+   
+   <li><a routerLink="GetAllStudent">
+   <i class="bi bi-people"></i>
+    
+    <span>Students</span></a></li>
+   
+    </ul>
+  </div>
+
+  
+</div>

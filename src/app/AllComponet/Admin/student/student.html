@@ -1,0 +1,74 @@
+<!-- Main Content -->
+<main class="main-content">
+  
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <div class="quick-action-card" data-bs-toggle="modal" data-bs-target="#addClassroomModal">
+      <div class="quick-action-icon"><i class="bi bi-plus-circle-fill"></i></div>
+      <h6>Add Grade</h6>
+    </div>
+    <!-- <div class="quick-action-card orange" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+      <div class="quick-action-icon"><i class="bi bi-person-plus-fill"></i></div>
+      <h6>Add Student</h6>
+    </div> -->
+    <div class="quick-action-card" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
+      <div class="quick-action-icon"><i class="bi bi-journal-plus"></i></div>
+      <h6>Add term</h6>
+    </div>
+    <div class="quick-action-card orange" data-bs-toggle="modal" data-bs-target="#addUnitModal">
+      <div class="quick-action-icon"><i class="bi bi-layers-fill"></i></div>
+      <h6>Add Unit</h6>
+    </div>
+    <div class="quick-action-card" data-bs-toggle="modal" data-bs-target="#addLessonModal">
+      <div class="quick-action-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+      <h6>Add Lesson</h6>
+    </div>
+  </div>
+  <!-- Classrooms Management -->
+  <div class="content-card">
+    <div class="card-header-custom">
+      <h5><i class="bi bi-easel-fill"></i> Classrooms Management</h5>
+      <button class="btn btn-teal" data-bs-toggle="modal" data-bs-target="#addClassroomModal">
+        <i class="bi bi-plus-circle"></i> Add New Classroom
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Classroom Name</th>
+            <th>Grade</th>
+            <th>Students</th>
+            <th>Subjects</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#001</td>
+            <td>Grade 1 - Section A</td>
+            <td>Grade 1</td>
+            <td>45</td>
+            <td>8</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-action btn-view" title="View Details">
+                  <i class="bi bi-eye-fill"></i>
+                </button>
+                <button class="btn-action btn-edit" title="Edit">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn-action btn-delete" title="Delete">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

@@ -4,6 +4,7 @@ import { StudentService } from '../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink],
@@ -16,14 +17,16 @@ export class Login {
   password:new FormControl(''),
 
   })
- constructor(private login:StudentService , private router:Router , private toast :ToastrService){}
-
+ constructor(private login:StudentService , private router:Router , private toast :ToastrService ){}
+ 
  
   onSubmit(){
   
     console.log(this. LoginForm.value);
+     
 this.login.loginStudent(this. LoginForm.value).subscribe({
   next:(res)=>{
+   
     const token = res.token;
     const name= res.userName;
     const role=res.role;
@@ -33,9 +36,15 @@ this.login.loginStudent(this. LoginForm.value).subscribe({
   
     this.toast.success("login Successfully  " ,   " Welcome "+res.userName);
     this.LoginForm.reset();
+    if(role == "Admin"){
+      this.router.navigate(['/AdmenBody'])
+    }
+    else{
     this.router.navigate(['/home']);
+    }
   },
   error:(err)=>{
+    
 
    this.toast.error("invalid email or password" , "Login Failed");
   }

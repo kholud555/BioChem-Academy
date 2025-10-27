@@ -15,41 +15,71 @@ export class StudentService {
 
   constructor(private http:HttpClient) {}
 setLoginData(token: string, userName: string ,role:string , userId:any)  {
-      localStorage.setItem("token",token);
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('role', role);
-    localStorage.setItem('userId', userId);
+     sessionStorage.setItem("token",token);
+   sessionStorage.setItem('userName', userName);
+   sessionStorage.setItem('role', role);
+   sessionStorage.setItem('userId', userId);
    
   }
 
  getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   clearToken() {
-    localStorage.removeItem('token');
+   sessionStorage.removeItem('token');
     
   }
  iSlogin():boolean{
-      return localStorage.getItem("token")!=null;
+      return sessionStorage.getItem("token")!=null;
     }
 getUserName(): string {
     if (!this.UserName) {
-      this.UserName = localStorage.getItem('userName') || '';
+      this.UserName =sessionStorage.getItem('userName') || '';
     }
     return this.UserName;
   }
 
   
+   getRole(): string | null{
+  return sessionStorage.getItem("role");
+   }
    
+
+   IsAdmin():boolean{
+    if (this.getRole() == 'Admin'){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+
+   }
+
+
+    
+IsStudent():boolean{
+    if (this.getRole() == 'Student'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   RegistrationStudent(RegistertionData:Register) :Observable <any>{
     return this.http.post(this.BaseUrl+"/RegisterStudent",RegistertionData);
 
   }
 
+
 loginStudent(loginData:Login) :Observable <any>{
     return this.http.post("http://localhost:5292/api/Auth/login",loginData);
 
+  }
+  getAllStudent():Observable<any[]>{
+    const url=`${this.BaseUrl}/GetAllStudents`;
+    return this.http.get<any[]>(url);
   }
   
 } 

@@ -1,0 +1,48 @@
+import { Component } from '@angular/core';
+import { StudentService } from '../../../service/Student/student-service';
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-getll-students',
+  imports: [CommonModule],
+  templateUrl: './getll-students.html',
+  styleUrl: './getll-students.css'
+})
+export class GetllStudents {
+  students:any[]=[];
+  SelectedStusent:any| null=null;
+  SelectedStusentName:string| null=null;
+  SelectedStusentGrade:string| null=null;
+  constructor(
+    private studentService : StudentService,
+    private toast : ToastrService
+  ){}
+
+  ngOnInit(): void {
+    this.LoadAllStudent();
+  }
+  LoadAllStudent(){
+    this.studentService.getAllStudent().subscribe({
+      next:(res)=>{
+        this.students=res;
+          this.toast.success("All Students loaded successfully");
+         console.log("✅ All Students loaded successfully:", res);
+
+      },
+      error:(err)=>{
+        this.toast.error("Error loading students");
+      console.error("❌ Error loading students:", err);
+      }
+    })
+  }
+
+  selectedStudent(student : any):void{
+this.SelectedStusentName=student.userName;
+this.SelectedStusentGrade=student.grade;
+
+  }
+}
+
+
+

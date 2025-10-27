@@ -1,0 +1,134 @@
+.btn-primary-teal {
+  background-color: var(--primary-teal);
+  border-color: var(--primary-teal);
+  color: white;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-primary-teal:hover {
+  background-color: var(--hover-teal);
+  border-color: var(--hover-teal);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.btn-primary-orange {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: white;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-primary-orange:hover {
+  background-color: var(--hover-orange);
+  border-color: var(--hover-orange);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.upload-zone {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: white;
+  padding: 1.5rem;
+  min-height: 150px;
+}
+
+.upload-zone.active {
+  border-color: var(--primary-teal);
+  background: rgba(23, 162, 184, 0.05);
+}
+
+.upload-zone:hover {
+  border-color: var(--primary-teal);
+}
+
+.video-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.video-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.progress-bar-teal {
+  background: linear-gradient(90deg, var(--primary-teal), var(--hover-teal));
+  min-height: 0.5rem;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+  .btn-primary-teal,
+  .btn-primary-orange {
+    padding: 0.625rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .upload-zone {
+    border-width: 3px;
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 200px;
+  }
+
+  .video-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+
+  .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .progress-bar-teal {
+    min-height: 0.75rem;
+  }
+}
+
+/* Desktop and larger screens */
+@media (min-width: 1024px) {
+  .upload-zone {
+    padding: 3rem;
+    min-height: 250px;
+  }
+
+  .video-card {
+    padding: 2rem;
+  }
+}
+
+/* Touch device adjustments - disable hover effects */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary-teal:hover,
+  .btn-primary-orange:hover {
+    transform: none;
+  }
+
+  .video-card:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .upload-zone:hover {
+    border-color: #dee2e6;
+  }
+}

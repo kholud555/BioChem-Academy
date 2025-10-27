@@ -1,0 +1,36 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ✅ المحتوى الأساسي */
+.content {
+  flex-grow: 1;
+  margin-left: 250px; /* عرض الـ sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+/* ✅ لما الشاشة تصغر (تابلت وموبايل) */
+@media (max-width: 992px) {
+  app-side-nav {
+    width: 80px !important; /* sidebar صغير */
+  }
+
+  .content {
+    margin-left: 80px; /* يوازي عرض الـ sidebar */
+  }
+}
+
+/* ✅ موبايل صغير جدًا */
+@media (max-width: 576px) {
+  app-side-nav {
+    width: 60px !important;
+  }
+
+  .content {
+    margin-left: 60px;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="table-responsive mt-4">
+  <table class="table align-middle table-striped table-hover shadow-sm">
+    <thead class="table-header text-center text-white">
+      <tr>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Grade</th>
+        <th>Phone</th>
+        <th>Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let std of students" class="text-center">
+        <td class="fw-semibold">{{ std.userName }}</td>
+        <td>{{ std.email }}</td>
+        <td>{{ std.grade }}</td>
+        <td>{{ std.phoneNumber }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-primary btn-access px-3 py-1"
+            (click)="selectedStudent(std)"
+          >
+            <i class="bi bi-shield-lock me-1"></i> Add Access
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

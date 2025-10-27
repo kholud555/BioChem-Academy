@@ -286,8 +286,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "fileName",
-        "Type": "System.String",
+        "Name": "dto",
+        "Type": "Application.DTOS.PresignRequestDTO",
         "IsRequired": true
       }
     ],

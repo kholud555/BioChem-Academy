@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { StudentService } from '../../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-getll-students',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './getll-students.html',
   styleUrl: './getll-students.css'
 })

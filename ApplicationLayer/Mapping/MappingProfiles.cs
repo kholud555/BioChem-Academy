@@ -37,7 +37,8 @@ namespace Infrastructure.Data
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(scr => scr.User.UserName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(scr => scr.User.Email))
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(scr => scr.User.PhoneNumber))
-                .ForMember(dest => dest.ParentNumber, opt => opt.MapFrom(scr => scr.ParentPhone));
+                .ForMember(dest => dest.ParentNumber, opt => opt.MapFrom(scr => scr.ParentPhone))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(scr => scr.Id));
 
         }
     }

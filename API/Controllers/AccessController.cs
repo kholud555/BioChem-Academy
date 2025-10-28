@@ -14,7 +14,7 @@ namespace API.Controllers
 
         public AccessController(AccessControlService service)
         {
-           _service = service;
+            _service = service;
         }
 
 
@@ -24,8 +24,7 @@ namespace API.Controllers
             await _service.AccessGrantAsync(dto);
             return Ok();
         }
-<<<<<<< HEAD
-=======
+
 
         [HttpDelete("Revoke")]
         public async Task<IActionResult> RevokeAccess([FromBody] AccessControlDTO dto)
@@ -35,12 +34,11 @@ namespace API.Controllers
         }
 
         [HttpGet("student/{studentId}")]
-        public async Task<ActionResult<StudentPermissionsDTO>> GetStudentPermissions1q(int studentId , [FromQuery] bool IncludedNames = false)
+        public async Task<ActionResult<StudentPermissionsDTO>> GetStudentPermissions1q(int studentId, [FromQuery] bool IncludedNames = false)
         {
             var studentPermissions = await _service.GetStudentPermissionsAsync(studentId, IncludedNames);
             return Ok(studentPermissions);
         }
 
->>>>>>> f2bd000af4a3471b031bcf6cb15b27233e1d7852
     }
 }

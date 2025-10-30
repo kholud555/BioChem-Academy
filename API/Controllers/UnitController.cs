@@ -14,7 +14,7 @@ namespace API.Controllers
         private readonly UnitService _unitService;
         private readonly IMapper _mapper;
 
-        public UnitController (UnitService unitService, IMapper mapper)
+        public UnitController(UnitService unitService, IMapper mapper)
         {
             _unitService = unitService;
             _mapper = mapper;
@@ -40,7 +40,7 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("UpdateUnit")]
-        public async Task<ActionResult> UpdateUnit ([FromBody] UnitDTO dto)
+        public async Task<ActionResult> UpdateUnit([FromBody] UnitDTO dto)
         {
             var Unit = await _unitService.UpdateUnitAsync(dto);
             return NoContent();
@@ -48,11 +48,20 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteUnit (int id)
+        public async Task<ActionResult> DeleteUnit(int id)
         {
             var success = await _unitService.DeleteUnitAsync(id);
             if (!success) return NotFound("Unit failed to delete");
             return NoContent();
+        }
+
+        [HttpGet("GetUnitsByTermID")]
+        public async Task<ActionResult<IEnumerable<UnitDTO>>> GetUnitsByTermID(int termId)
+        {
+            var UnitsOfTerm = await _unitService.GetUnutsByTermId(termId);
+
+            var dtos = _mapper.Map<IEnumerable<UnitDTO>>(UnitsOfTerm);
+           return Ok(dtos);
         }
 
     }

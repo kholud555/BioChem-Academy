@@ -6,6 +6,7 @@ using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +64,21 @@ namespace Application.Services
                 throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater than zero");
             }
             return await _unitRepo.DeleteUnitAsync(id);
+        }
+
+        public async Task<IEnumerable<Unit>> GetUnutsByTermId(int termId) {
+         if (termId <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(termId), "ID must be greater than zero");
+            } 
+         
+         var unitsOfTerm =  await _unitRepo.GetUnitsByTermIdAsync(termId);
+
+        if (!unitsOfTerm.Any()) throw new ArgumentException("no units to this term");
+
+
+            return unitsOfTerm;
+
+
         }
     }
 }

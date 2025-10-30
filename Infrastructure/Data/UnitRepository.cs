@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Data
 {
@@ -71,6 +72,18 @@ namespace Infrastructure.Data
             return _context.SaveChanges() > 0;
      }
 
+        public async Task<IEnumerable<Unit>> GetUnitsByTermIdAsync(int termId)
+        {
+            var isTermIdExist= await _context.Terms.AnyAsync(t=>t.Id== termId);
+            if (!isTermIdExist) throw new KeyNotFoundException("termId not found");
+
+            var unitsOfTerm = await _context.Units.Where(u => u.TermId == termId).ToListAsync();
+           
+            
+            return unitsOfTerm;
+
+           
+        }
     }
 
   

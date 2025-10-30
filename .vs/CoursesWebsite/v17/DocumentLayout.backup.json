@@ -1,26 +1,106 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\CourseProject\\CoursesWebsite\\",
+  "WorkspaceRootPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\unitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\unitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\services\\r2cloudflareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\r2cloudflareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\mapping\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\courseproject\\courseswebsite\\applicationlayer\\dtos\\presignrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\presignrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\services\\unitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\unitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\courseproject\\courseswebsite\\core\\entities\\media.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\termscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\termscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\infrastructure\\data\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\core\\interfaces\\iunitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\interfaces\\iunitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\infrastructure\\data\\termrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{589E1465-4991-4AB8-BA98-90BB9963C316}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\termrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\core\\entities\\term.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\term.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\services\\termservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\termservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\dtos\\lessondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\lessondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\core\\entities\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\core\\entities\\lesson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\lesson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\services\\lessonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\lessonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\lessonscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\lessonscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\accesscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\accesscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\dtos\\accesscontroldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\accesscontroldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\services\\accesscontrolservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\accesscontrolservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\core\\entities\\media.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2923244C-0634-401F-BA56-AFA1DBB863C3}|Core\\Core.csproj|solutionrelative:core\\entities\\media.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\courseproject\\courseswebsite\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\dtos\\presignrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\dtos\\presignrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\api\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDD641BE-DD2F-484A-9B20-BD730018B3F8}|API\\API.csproj|solutionrelative:api\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|d:\\website\\backend\\biochem-academy-newbranch (1)\\biochem-academy-newbranch\\applicationlayer\\services\\r2cloudflareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8F6495-294C-4DA1-B90D-27FDEEE9314D}|ApplicationLayer\\Application.csproj|solutionrelative:applicationlayer\\services\\r2cloudflareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,10 +118,6 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
@@ -54,76 +130,315 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PresignRequestDTO.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
-              "RelativeToolTip": "ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "IUnitRepository.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Interfaces\\IUnitRepository.cs",
+              "RelativeDocumentMoniker": "Core\\Interfaces\\IUnitRepository.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Interfaces\\IUnitRepository.cs",
+              "RelativeToolTip": "Core\\Interfaces\\IUnitRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T16:13:48.426Z",
+              "WhenOpened": "2025-10-30T09:15:53.216Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAuwOYAAABHAAAAAAAAAA==",
+              "Title": "UnitRepository.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Data\\UnitRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\UnitRepository.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Data\\UnitRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\UnitRepository.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAFAAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T14:43:34.131Z",
+              "WhenOpened": "2025-10-30T08:18:54.037Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "R2CloudFlareService.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\R2CloudFlareService.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\R2CloudFlareService.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Services\\R2CloudFlareService.cs",
-              "RelativeToolTip": "ApplicationLayer\\Services\\R2CloudFlareService.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwC4AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "TermRepository.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Data\\TermRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\TermRepository.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Data\\TermRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\TermRepository.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T11:42:04.023Z",
+              "WhenOpened": "2025-10-30T08:18:24.237Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MediaController.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\MediaController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\MediaController.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\API\\Controllers\\MediaController.cs",
-              "RelativeToolTip": "API\\Controllers\\MediaController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAhAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "UnitService.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\UnitService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\UnitService.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\UnitService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\UnitService.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAAAEsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T11:41:26.278Z",
+              "WhenOpened": "2025-10-30T08:14:18.328Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Media.cs",
-              "DocumentMoniker": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\Media.cs",
-              "RelativeDocumentMoniker": "Core\\Entities\\Media.cs",
-              "ToolTip": "D:\\CourseProject\\CoursesWebsite\\Core\\Entities\\Media.cs",
-              "RelativeToolTip": "Core\\Entities\\Media.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAApAAAAAAAAAA==",
+              "Title": "TermsController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\TermsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\TermsController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\TermsController.cs",
+              "RelativeToolTip": "API\\Controllers\\TermsController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAAB4AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T11:39:59.262Z",
+              "WhenOpened": "2025-10-30T08:08:35.616Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\UnitController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\UnitController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\UnitController.cs",
+              "RelativeToolTip": "API\\Controllers\\UnitController.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAAD4AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T06:40:34.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MappingProfiles.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "RelativeToolTip": "ApplicationLayer\\Mapping\\MappingProfiles.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAACgAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T19:39:28.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T09:13:07.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TermService.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\TermService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\TermService.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\TermService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\TermService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T08:15:24.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Term.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Term.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Term.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Term.cs",
+              "RelativeToolTip": "Core\\Entities\\Term.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T08:18:01.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Unit.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Unit.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Unit.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Unit.cs",
+              "RelativeToolTip": "Core\\Entities\\Unit.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T06:40:20.088Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Lesson.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Lesson.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Lesson.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Lesson.cs",
+              "RelativeToolTip": "Core\\Entities\\Lesson.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvxgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:36:55.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LessonService.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\LessonService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\LessonService.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\LessonService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\LessonService.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAADwv0kAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:36:29.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LessonDTO.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\LessonDTO.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\LessonDTO.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\LessonDTO.cs",
+              "RelativeToolTip": "ApplicationLayer\\DTOS\\LessonDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:36:22.259Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "LessonsController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\LessonsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\LessonsController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\LessonsController.cs",
+              "RelativeToolTip": "API\\Controllers\\LessonsController.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAwwE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:36:17.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAMwAAAAAAAAAAAD4v9kAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T14:43:34.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AccessControlDTO.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\AccessControlDTO.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\AccessControlDTO.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\AccessControlDTO.cs",
+              "RelativeToolTip": "ApplicationLayer\\DTOS\\AccessControlDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T11:02:57.589Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "StudentDTO.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "RelativeToolTip": "ApplicationLayer\\DTOS\\StudentDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T19:38:52.738Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "API\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAzwEQAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T19:37:37.54Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "PresignRequestDTO.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
+              "RelativeToolTip": "ApplicationLayer\\DTOS\\PresignRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T16:13:48.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AccessControlService.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\AccessControlService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\AccessControlService.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\AccessControlService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\AccessControlService.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAIwH0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T11:03:12.526Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AccessController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\AccessController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AccessController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\AccessController.cs",
+              "RelativeToolTip": "API\\Controllers\\AccessController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAswBcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T11:03:22.884Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "R2CloudFlareService.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\R2CloudFlareService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\R2CloudFlareService.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Services\\R2CloudFlareService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\R2CloudFlareService.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:42:04.023Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "MediaController.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\MediaController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MediaController.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\Controllers\\MediaController.cs",
+              "RelativeToolTip": "API\\Controllers\\MediaController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:41:26.278Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Media.cs",
+              "DocumentMoniker": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Media.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Media.cs",
+              "ToolTip": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Entities\\Media.cs",
+              "RelativeToolTip": "Core\\Entities\\Media.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-27T11:39:59.262Z"
             }
           ]
         }

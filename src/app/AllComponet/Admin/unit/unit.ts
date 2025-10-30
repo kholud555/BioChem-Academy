@@ -78,10 +78,18 @@ export class Unit  implements OnInit  {
 
   // عند اختيار الترم
   onTermChange(): void {
-    console.log('الترم المختار ID:', this.selectedTermId);
-    // هنا ممكن تستدعي دالة لتحميل الوحدات مثلاً بناءً على الترم
+    if (this.selectedTermId > 0){
+      this.loadUnits();
+    }
+    else{
+      this.units=[];
+       console.log('الترم المختار ID:', this.selectedTermId);
+    
+    }
+   
   }
   // تحميل الوحدات الخاصة بالترم
+  
   loadUnits(): void {
     this.UnitService.getUnitsByTerm(this.selectedTermId).subscribe({
       next: (data) => (this.units = data),
@@ -106,7 +114,7 @@ export class Unit  implements OnInit  {
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Error', 'Failed to add unit', 'error');
+        Swal.fire('Error', err.error.message, 'error' );
       }
     });
   }

@@ -4,8 +4,10 @@
         <div class="logo-section">
             <div class="logo"></div>
             <div>
-                <span class="welcome-text">Welcome,</span>
-                <span class="username"></span>
+               <span class="welcome-text">Welcome, </span>
+
+               
+                <span class="username">{{studentData.userName}}</span>
             </div>
         </div>
         <div class="header-icons">
@@ -22,7 +24,7 @@
        <!--  <div class="sidebar-icon">📍</div>
         <div class="sidebar-icon">🍽️</div>
         <div class="sidebar-icon">💻</div> -->
-        <div class="sidebar-icon">➡️</div>
+        <!-- <div class="sidebar-icon">➡️</div> -->
     </div>
 
     <!-- Main Content -->
@@ -40,7 +42,7 @@
                             <span class="icon-user"></span>
                             USER NAME
                         </label>
-                        <input type="text" class="form-input" value="" >
+                        <input type="text" class="form-input" value="" [(ngModel)]="studentData.userName"  name="userName">
                     </div>
 
                   
@@ -50,7 +52,7 @@
                             <span class="icon-email"></span>
                             EMAIL ADDRESS
                         </label>
-                        <input type="email" class="form-input" value="" >
+                        <input type="email" class="form-input" value="" [(ngModel)]="studentData.email"  name="email" readonly>
                     </div>
 
                     <div class="form-group">
@@ -58,7 +60,7 @@
                             <span class="icon-phone"></span>
                             PHONE NUMBER
                         </label>
-                        <input type="tel" class="form-input" value="" readonly>
+                        <input type="tel" class="form-input" value="" [(ngModel)]="studentData.phoneNumber"  name="phoneNumber">
                     </div>
 
                       <div class="form-group">
@@ -66,18 +68,18 @@
                             <span class="icon-phone"></span>
                          PARENT PHONE NUMBER
                         </label>
-                        <input type="tel" class="form-input" value="" >
+                        <input type="tel" class="form-input" value="" [(ngModel)]="studentData.parentNumber"  name="parentNumber" >
                     </div>
                     <div class="form-group">
                         <label class="form-label">
                             <span class="icon-"></span>
                         GRADE
                         </label>
-                        <input type="tel" class="form-input" value="" >
+                        <input type="tel" class="form-input" value="" [(ngModel)]="studentData.grade"   name="grade">
                     </div>
 
                     <div class="button-group">
-                        <button type="button" class="update-btn">Update</button>
+                        <button type="button" class="update-btn" (click)="UpdateProfile()">Update</button>
                     </div>
                 </form>
             </div>

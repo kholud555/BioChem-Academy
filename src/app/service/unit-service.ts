@@ -14,7 +14,7 @@ export class UnitService {
   }
 
   getUnitsByTerm(termId: number): Observable<UnitDTO[]> {
-    return this.http.get<UnitDTO[]>(`${this.baseUrl}/GetUnitsByTerm?termId=${termId}`);
+    return this.http.get<UnitDTO[]>(`${this.baseUrl}/GetUnitsByTermID?termId=${termId}`);
   }
 
   addUnit(unit: CreateUnitDTO): Observable<UnitDTO> {
@@ -24,6 +24,7 @@ export class UnitService {
   updateUnit(unit: UnitDTO): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/UpdateUnit`, unit);
   }
+  
 
   deleteUnit(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);

@@ -14,6 +14,7 @@ import { Unit } from './AllComponet/Admin/unit/unit';
 import { Lesson } from './AllComponet/Admin/lesson/lesson';
 import { authGuard } from './Guard/auth-guard';
 import { GetllStudents } from './AllComponet/Admin/getll-students/getll-students';
+import { AccessControl } from './AllComponet/Admin/access-control/access-control';
 
 
 export const routes: Routes = [
@@ -37,6 +38,8 @@ export const routes: Routes = [
    {path:"unit",component:Unit},
     {path:"lesson",component:Lesson},
     {path:"GetAllStudent" , component:GetllStudents},
+     {path:"AccessControl" , component:AccessControl},
+
     ]
 }
     

@@ -1,1 +1,233 @@
-<p>lesson works!</p>
+<!-- Manage Lessons -->
+<div class="container-custom">
+  <!-- Add New Lesson -->
+  <div class="card p-3 mt-4 border">
+    <h5>Add New Lesson</h5>
+
+    <!-- Select Grade -->
+    <div class="mb-2">
+      <label>Select Grade</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedGradeId"
+        (ngModelChange)="onGradeChange()"
+      >
+        <option value="0" disabled>Select Grade</option>
+        <option *ngFor="let grade of grades" [value]="grade.id">
+          {{ grade.gradeName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Term -->
+    <div class="mb-2">
+      <label>Select Term</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedTermId"
+        (ngModelChange)="onTermChange()"
+      >
+        <option value="0" disabled>Select Term</option>
+        <option *ngFor="let term of terms" [value]="term.id">
+          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Unit -->
+    <div class="mb-2">
+      <label>Select Unit</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedUnitId"
+        (ngModelChange)="onUnitChange()"
+      >
+        <option value="0" disabled>Select Unit</option>
+        <option *ngFor="let unit of units" [value]="unit.id">
+          {{ unit.title }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Lesson Title -->
+    <div class="mb-2">
+      <label>Lesson Title</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newLesson.title"
+        placeholder="Enter Lesson Title"
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-2">
+      <label>Description</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="newLesson.description"
+        placeholder="Enter description (optional)"
+      ></textarea>
+    </div>
+
+    <!-- Order -->
+    <div class="mb-2">
+      <label>Order</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="newLesson.order"
+        min="1"
+      />
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="form-check mb-2">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="newLesson.isFree"
+        id="isFree"
+      />
+      <label class="form-check-label" for="isFree">Is Free</label>
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="newLesson.isPublished"
+        id="isPublished"
+      />
+      <label class="form-check-label" for="isPublished">Is Published</label>
+    </div>
+
+    <button class="btn btn-Action" (click)="addLesson()">Add Lesson</button>
+  </div>
+
+  <!-- Update/Delete Lessons -->
+  <div class="card p-3 mt-4 border">
+    <h5>Update And Delete Lessons</h5>
+
+    <!-- Select Grade -->
+    <div class="mb-2">
+      <label>Select Grade</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedGradeId"
+        (ngModelChange)="onGradeChange()"
+      >
+        <option value="0" disabled>Select Grade</option>
+        <option *ngFor="let grade of grades" [value]="grade.id">
+          {{ grade.gradeName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Term -->
+    <div class="mb-2">
+      <label>Select Term</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedTermId"
+        (ngModelChange)="onTermChange()"
+      >
+        <option value="0" disabled>Select Term</option>
+        <option *ngFor="let term of terms" [value]="term.id">
+          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Unit -->
+    <div class="mb-2">
+      <label>Select Unit</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedUnitId"
+        (ngModelChange)="onUnitChange()"
+      >
+        <option value="0" disabled>Select Unit</option>
+        <option *ngFor="let unit of units" [value]="unit.id">
+          {{ unit.title }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Lessons Table -->
+    <div *ngIf="lessons.length > 0" class="mt-4">
+      <h5>Lessons for Selected Unit</h5>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Order</th>
+            <th>Is Free</th>
+            <th>Is Published</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lesson of lessons">
+            <!-- Edit Mode -->
+            <ng-container *ngIf="selectedLessonId === lesson.id; else viewMode">
+              <td><input class="form-control" [(ngModel)]="lesson.title" /></td>
+              <td><input class="form-control" [(ngModel)]="lesson.description" /></td>
+              <td><input type="number" class="form-control" [(ngModel)]="lesson.order" /></td>
+              <td><input type="checkbox" [(ngModel)]="lesson.isFree" /></td>
+              <td><input type="checkbox" [(ngModel)]="lesson.isPublished" /></td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-success btn-sm me-1"
+                    (click)="saveEdit(lesson)"
+                  >
+                    <i class="bi bi-check-lg"></i>
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    (click)="cancelEdit()"
+                  >
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- View Mode -->
+            <ng-template #viewMode>
+              <td>{{ lesson.title }}</td>
+              <td>{{ lesson.description }}</td>
+              <td>{{ lesson.order }}</td>
+              <td><input type="checkbox" [checked]="lesson.isFree" disabled /></td>
+              <td><input type="checkbox" [checked]="lesson.isPublished" disabled /></td>
+              <td>
+                <button
+                  class="btn-action btn-edit"
+                  (click)="enableEdit(lesson.id)"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  class="btn-action btn-delete"
+                  (click)="deleteLesson(lesson.id)"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Lessons Message -->
+    <div
+      *ngIf="selectedUnitId > 0 && lessons.length === 0"
+      class="alert alert-info mt-3"
+    >
+      No lessons found for the selected unit.
+    </div>
+  </div>
+</div>

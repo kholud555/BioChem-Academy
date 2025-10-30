@@ -7,3 +7,11 @@ export interface Register {
    password :  string ,
    confirmPassword :  string 
 }
+
+export interface Profile{
+    userName  :   string  ,
+    email  :   string  ,
+    grade  :   string  ,
+    phoneNumber  :   string  ,
+    parentNumber  :   string  
+}

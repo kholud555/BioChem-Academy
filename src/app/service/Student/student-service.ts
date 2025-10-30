@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Register } from '../../InterFace/register';
+import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class StudentService {
   //http://localhost:5292/api/Student/RegisterStudent
   private BaseUrl="http://localhost:5292/api/Student";
   private UserName:string="";
+ private  token=this.getToken();
   
-
   constructor(private http:HttpClient) {}
 setLoginData(token: string, userName: string ,role:string , userId:any)  {
      sessionStorage.setItem("token",token);
@@ -81,5 +81,17 @@ loginStudent(loginData:Login) :Observable <any>{
     const url=`${this.BaseUrl}/GetAllStudents`;
     return this.http.get<any[]>(url);
   }
-  
+  getStudentProfile():Observable<any>{
+     const headers={ Authorization: `Bearer ${this.token}` };
+
+    return this.http.get(`${this.BaseUrl}/GetStudentProfile`, {headers});
+
+  }
+  UpdateStudentProfile(data:any):Observable<any>{
+ const headers = {
+    Authorization: `Bearer ${this.token}`,
+    'Content-Type': 'application/json'
+  };
+return this.http.put(`${this.BaseUrl}/UpdateStudentProfile` , data , {headers})
+  }
 } 

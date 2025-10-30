@@ -1,98 +1,206 @@
-<div class="container mt-4">
-  <h3>Add New Unit</h3>
+<!-- Add Unit Form -->
+<div class="container-custom">
+  <div class="card p-3 mt-4 border">
+    <h5>Add New Unit</h5>
 
-  <div class="mt-3">
-    <label>Select Grade:</label>
-    <select class="form-select" [(ngModel)]="selectedGradeId" (change)="onGradeChange()">
-      <option value="0" disabled>-- Select Grade --</option>
-      <option *ngFor="let grade of grades" [ngValue]="grade.id">{{ grade.gradeName }}</option>
-    </select>
-  </div>
-
-  <div class="mt-3" *ngIf="terms.length > 0">
-    <label>Select Term:</label>
-    <select class="form-select" [(ngModel)]="selectedTermId">
-      <option value="0" disabled>-- Select Term --</option>
-      <option *ngFor="let term of terms" [ngValue]="term.id">
-        {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-      </option>
-    </select>
-  </div>
-<div class="mt-section">
-  <div class="mt-4">
-    <input class="form-control" placeholder="Unit Title" [(ngModel)]="newUnit.title" />
-    <textarea class="form-control mt-2" placeholder="Description" [(ngModel)]="newUnit.description"></textarea>
-    <input class="form-control mt-2" type="number" placeholder="Order" [(ngModel)]="newUnit.order" />
-    <div class="form-check mt-2">
-      <input class="form-check-input" type="checkbox" [(ngModel)]="newUnit.isFree" /> Free
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" [(ngModel)]="newUnit.isPublished" /> Published
+    <!-- Select Grade -->
+    <div class="mb-2">
+      <label>Select Grade</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedGradeId"
+        (ngModelChange)="onGradeChange()"
+      >
+        <option value="0" disabled>Select Grade</option>
+        <option *ngFor="let grade of grades" [value]="grade.id">
+          {{ grade.gradeName }}
+        </option>
+      </select>
     </div>
 
-    <button class="btn btn-primary mt-3" (click)="addUnit()">Add Unit</button>
+    <!-- Select Term -->
+    <div class="mb-2">
+      <label>Select Term</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedTermId"
+        (ngModelChange)="onTermChange()"
+      >
+        <option value="0" disabled>Select Term</option>
+        <option *ngFor="let term of terms" [value]="term.id">
+          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Unit Name -->
+    <div class="mb-2">
+      <label>Unit Title</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newUnit.title"
+        placeholder="Enter Unit Title"
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-2">
+      <label>Description</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="newUnit.description"
+        placeholder="Enter description (optional)"
+      ></textarea>
+    </div>
+
+    <!-- Order -->
+    <div class="mb-2">
+      <label>Order</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="newUnit.order"
+        min="1"
+      />
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="form-check mb-2">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="newUnit.isFree"
+        id="isFree"
+      />
+      <label class="form-check-label" for="isFree">Is Free</label>
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="newUnit.isPublished"
+        id="isPublished"
+      />
+      <label class="form-check-label" for="isPublished">Is Published</label>
+    </div>
+
+    <button class="btn btn-Action" (click)="addUnit()">Add Unit</button>
   </div>
+
+  <!-- Update/Delete Section -->
+  <div class="card p-3 mt-4 border">
+    <h5>Update And Delete Unit</h5>
+
+    <!-- Select Grade -->
+    <div class="mb-2">
+      <label>Select Grade</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedGradeId"
+        (ngModelChange)="onGradeChange()"
+      >
+        <option value="0" disabled>Select Grade</option>
+        <option *ngFor="let grade of grades" [value]="grade.id">
+          {{ grade.gradeName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Term -->
+    <div class="mb-2">
+      <label>Select Term</label>
+      <select
+        class="form-control"
+        [(ngModel)]="selectedTermId"
+        (ngModelChange)="onTermChange()"
+      >
+        <option value="0" disabled>Select Term</option>
+        <option *ngFor="let term of terms" [value]="term.id">
+          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Units Table -->
+    <div *ngIf="units.length > 0" class="mt-4">
+      <h5>Units for Selected Term</h5>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Order</th>
+            <th>Is Free</th>
+            <th>Is Published</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let unit of units">
+            <!-- Edit Mode -->
+            <ng-container *ngIf="selectedTUnitId === unit.id; else viewMode">
+              <td><input class="form-control" [(ngModel)]="unit.title" /></td>
+              <td>
+                <input class="form-control" [(ngModel)]="unit.description" />
+              </td>
+              <td>
+                <input type="number" class="form-control" [(ngModel)]="unit.order" />
+              </td>
+              <td><input type="checkbox" [(ngModel)]="unit.isFree" /></td>
+              <td><input type="checkbox" [(ngModel)]="unit.isPublished" /></td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-success btn-sm me-1"
+                    (click)="saveEdit(unit)"
+                  >
+                    <i class="bi bi-check-lg"></i>
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    (click)="cancelEdit()"
+                  >
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- View Mode -->
+            <ng-template #viewMode>
+              <td>{{ unit.title }}</td>
+              <td>{{ unit.description }}</td>
+              <td>{{ unit.order }}</td>
+              <td><input type="checkbox" [checked]="unit.isFree" disabled /></td>
+              <td><input type="checkbox" [checked]="unit.isPublished" disabled /></td>
+              <td>
+                <button
+                  class="btn-action btn-edit"
+                  (click)="enableEdit(unit.id)"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  class="btn-action btn-delete"
+                  (click)="deleteUnit(unit.id)"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Units Message -->
+    <div
+      *ngIf="selectedTermId > 0 && units.length === 0"
+      class="alert alert-info mt-3"
+    >
+      No units found for the selected term.
+    </div>
   </div>
 </div>
-
-
-<div class="container mt-4">
-  <h3> update and delete the Unit</h3>
-
-  <div class="mt-3">
-    <label>Select Grade:</label>
-    <select class="form-select" [(ngModel)]="selectedGradeId" (change)="onGradeChange()">
-      <option value="0" disabled>-- Select Grade --</option>
-      <option *ngFor="let grade of grades" [ngValue]="grade.id">{{ grade.gradeName }}</option>
-    </select>
-  </div>
-
-  <div class="mt-3" *ngIf="terms.length > 0">
-    <label>Select Term:</label>
-    <select class="form-select" [(ngModel)]="selectedTermId">
-      <option value="0" disabled>-- Select Term --</option>
-      <option *ngFor="let term of terms" [ngValue]="term.id">
-        {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-      </option>
-    </select>
-  </div>
-  
-  <!-- تعديل الوحدة -->
-  <div
-    class="card mt-4 p-3 shadow-sm"
-    *ngIf="selectedTUnitId && selectedTUnitId > 0"
-  >
-    <h5>Edit Selected Unit</h5>
-
-    <div *ngFor="let unit of units" >
-      <div *ngIf="unit.id === selectedTUnitId">
-        <label class="form-label mt-2">Title:</label>
-        <input class="form-control" [(ngModel)]="unit.title" />
-
-        <label class="form-label mt-2">Description:</label>
-        <textarea class="form-control" [(ngModel)]="unit.description"></textarea>
-
-        <label class="form-label mt-2">Order:</label>
-        <input type="number" class="form-control" [(ngModel)]="unit.order" />
-
-        <div class="form-check mt-2">
-          <input type="checkbox" class="form-check-input" [(ngModel)]="unit.isFree" />
-          <label class="form-check-label">Is Free</label>
-        </div>
-
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" [(ngModel)]="unit.isPublished" />
-          <label class="form-check-label">Is Published</label>
-        </div>
-
-        <div class="mt-3">
-          <button class="btn btn-success me-2" (click)="saveEdit(unit)">Update Unit</button>
-          <button class="btn btn-danger" (click)="deleteUnit(unit.id)">Delete Unit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-

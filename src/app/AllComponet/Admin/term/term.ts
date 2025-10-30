@@ -91,11 +91,15 @@ export class Term implements OnInit {
     this.termService.addTerm(this.newTerm).subscribe({
       next: (term) => {
         Swal.fire('Success', 'Term added successfully.', 'success');
+       
+       
         this.newTerm = { gradeId: 0, isFree: false, isPublished: false ,  termOrder:0};
         this.onGradeChange();
       },
       error: (err) => {
         Swal.fire('Error', 'Failed to add term.', 'error');
+      
+      
         console.error('Add term error:', err);
       }
     });

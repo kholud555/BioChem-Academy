@@ -75,6 +75,7 @@ GoLogin(){
       this.RegisterForm.markAllAsTouched();
       return;
     }
+    
   this.isLoading=true;
     console.log(this.RegisterForm.value);
 this.register.RegistrationStudent(this.RegisterForm.value).subscribe({

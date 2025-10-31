@@ -22,10 +22,6 @@ namespace Application.DTOS
         [Range(1, 100, ErrorMessage = "Order must be between 1 and 100")]
         public int Order { get; set; }
 
-        public bool IsFree { get; set; } = false;
-
-        public bool IsPublished { get; set; } = false;
-
         [Required(ErrorMessage = "TermId is required")]
         [Range(1, int.MaxValue, ErrorMessage = "TermId must be a positive number")]
         public int TermId { get; set; }

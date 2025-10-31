@@ -11,8 +11,6 @@ namespace Core.Entities
     {
         [EnumDataType(typeof(TermEnum))]
         public TermEnum TermOrder { get; set; }
-        public bool  IsFree { get; set; }
-        public bool IsPublished { get; set; }
         public int GradeId { get; set; }
         public Grade Grade { get; set; }
         public ICollection<Unit> Units { get; set; } = new List<Unit>();

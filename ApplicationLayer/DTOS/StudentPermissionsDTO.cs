@@ -15,8 +15,6 @@ namespace Application.DTOS
         public List<int> GrantedTerms { get; set; } = new();
         public List<int> GrantedUnits { get; set; } = new();
         public List<int> GrantedLessons { get; set; } = new();
-        public List<int> FreeLessons { get; set; } = new();
-
 
         public List<string> GradeNames { get; set; } = new();
        

@@ -47,8 +47,10 @@ namespace Application.Services
         }
 
         //Generates a temporary upload link for Admin To Upload Data to CloudFlare from Frontend
-        public string GenerateUrlToUploadFiles (string filePathInBucket , int expireMinutes = 15)
+        public string GenerateUrlToUploadFiles (string filePathInBucket , int expireMinutes = 5)
         {
+            var lessonId = filePathInBucket.Split('/')[3];
+
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = _bucketName,

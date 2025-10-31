@@ -15,10 +15,6 @@ namespace Application.DTOS
         [EnumDataType(typeof(TermEnum), ErrorMessage = "Invalid value for TermOrder")]
         public TermEnum TermOrder { get; set; }
 
-        public bool IsFree { get; set; } = false;
-
-        public bool IsPublished { get; set; } = false;
-
         [Required(ErrorMessage = "GradeId is required")]
         [Range(1, int.MaxValue, ErrorMessage = "GradeId must be a positive number")]
         public int GradeId { get; set; }

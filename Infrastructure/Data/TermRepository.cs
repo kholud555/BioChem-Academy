@@ -51,8 +51,6 @@ namespace Infrastructure.Data
             var newTerm = new Term
             {
                 TermOrder = term.TermOrder,
-                IsFree = term.IsFree,
-                IsPublished = term.IsPublished,
                 GradeId = term.GradeId,
             };
                                  
@@ -67,8 +65,6 @@ namespace Infrastructure.Data
             if(existingTerm == null) return false;
 
             existingTerm.TermOrder = term.TermOrder;
-            existingTerm.IsFree = term.IsFree;
-            existingTerm.IsPublished = term.IsPublished;
             existingTerm.GradeId = term.GradeId;
 
             return await _context.SaveChangesAsync() > 0;

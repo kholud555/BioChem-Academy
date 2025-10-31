@@ -58,8 +58,6 @@ namespace Application.Services
             var unitIds = accessList.Where(a => a.UnitId != null).Select(a => a.UnitId.Value).ToList();
             var lessonIds = accessList.Where(a => a.LessonId != null).Select(a => a.LessonId.Value).ToList();
 
-            var freeLessons = await _context.Lessons.Where(l => l.IsFree).Select(l => l.Id).ToListAsync();
-
             //expand hierarchies
             var expandedTermUnits = await _context.Units
                 .Where(u => termIds.Contains(u.TermId))
@@ -92,8 +90,7 @@ namespace Application.Services
                 GrantedGrade = gradeIds,
                 GrantedTerms = termIds.Union(expandedGradeTerms).Distinct().ToList(),
                 GrantedUnits = unitIds.Union(expandedTermUnits).Union(expandedGradeUnits).Distinct().ToList(),
-                GrantedLessons = lessonIds.Union(expandedTermLessons).Union(expandedGradeLessons).Union(freeLessons).Distinct().ToList(),
-                FreeLessons = freeLessons
+                GrantedLessons = lessonIds.Union(expandedTermLessons).Union(expandedGradeLessons).Distinct().ToList(),
             };
 
             if(includeNames)

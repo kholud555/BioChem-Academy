@@ -38,8 +38,6 @@ namespace Infrastructure.Data
                 Title = unit.Title,
                 Description = unit.Description,
                 Order = unit.Order,
-                IsFree = unit.IsFree,
-                IsPublished = unit.IsPublished,
                 TermId = unit.TermId,
             };
 
@@ -55,8 +53,6 @@ namespace Infrastructure.Data
             existingUnit.Title = unit.Title;
             existingUnit.Description = unit.Description;
             existingUnit.Order = unit.Order;
-            existingUnit.IsFree = unit.IsFree;
-            existingUnit.IsPublished = unit.IsPublished;
             existingUnit.TermId = unit.TermId;
 
             return await _context.SaveChangesAsync() > 0;

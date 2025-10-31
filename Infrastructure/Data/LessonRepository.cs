@@ -54,8 +54,6 @@ namespace Infrastructure.Data
                 Title = lesson.Title,
                 Description = lesson.Description,
                 Order = lesson.Order,
-                IsFree = lesson.IsFree,
-                IsPublished = lesson.IsPublished,
                 UnitId = lesson.UnitId
             };
 
@@ -75,8 +73,6 @@ namespace Infrastructure.Data
             existingLesson.Title = lesson.Title;
             existingLesson.Description = lesson.Description;
             existingLesson.Order = lesson.Order;
-            existingLesson.IsFree = lesson.IsFree;
-            existingLesson.IsPublished = lesson.IsPublished;
             existingLesson.UnitId = lesson.UnitId;
 
             return await _context.SaveChangesAsync() > 0;

@@ -57,7 +57,7 @@ namespace API
 
             //=========================================
             // Register R2 Cloud Flare Service
-            builder.Services.AddSingleton<R2CloudFlareService>();
+            builder.Services.AddScoped<R2CloudFlareService>();
 
             // Register Jwt Token Service  
             builder.Services.AddScoped<JwtTokenService>();

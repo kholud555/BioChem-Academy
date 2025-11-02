@@ -67,7 +67,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllGrades")]
         public async Task<ActionResult<IEnumerable<GradeDTO>>> GetAllGrade ()
         {

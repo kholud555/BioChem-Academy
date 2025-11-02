@@ -279,6 +279,32 @@
   },
   {
     "ContainingType": "API.Controllers.MediaController",
+    "Method": "AddMediaAfterUpload",
+    "RelativePath": "api/Media/AddMediaAfterUpload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Application.DTOS.MediaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Core.Entities.Media",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MediaController",
     "Method": "GetUploadUrl",
     "RelativePath": "api/Media/presign-upload",
     "HttpMethod": "POST",

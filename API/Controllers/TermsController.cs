@@ -51,7 +51,7 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("UpdateTerm")]
-        public async Task<ActionResult> UpdateTerm([FromBody] TermDTO dto)
+        public async Task<IActionResult> UpdateTerm([FromBody] TermDTO dto)
         {
             var term = await _termService.UpdateTermAsync(dto);
             return NoContent();

@@ -40,6 +40,10 @@ namespace Infrastructure.Data
                 .ForMember(dest => dest.ParentNumber, opt => opt.MapFrom(scr => scr.ParentPhone))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(scr => scr.Id));
 
+            //Media 
+            //CreateMap<Media, MediaDTO>();
+            CreateMap<MediaDTO, Media>();
+
         }
     }
 }

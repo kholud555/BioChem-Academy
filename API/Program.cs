@@ -51,6 +51,10 @@ namespace API
             builder.Services.AddScoped<IAccessControlRepository, AccessControlRepository>();
             builder.Services.AddScoped<AccessControlService>();
 
+            // Register Media service and repository
+            builder.Services.AddScoped<IMediaRepository, MediaRepository>();
+            builder.Services.AddScoped<MediaService>();
+
             //=========================================
             // Register R2 Cloud Flare Service
             builder.Services.AddSingleton<R2CloudFlareService>();

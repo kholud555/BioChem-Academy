@@ -10,5 +10,7 @@ namespace Core.Interfaces
     public interface IMediaRepository
     {
         Task<Media> AddMediaAsync(Media media);
+
+      
     }
 }

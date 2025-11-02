@@ -1,5 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Services
@@ -8,8 +10,9 @@ namespace Application.Services
     {
         private readonly IAmazonS3 _s3Client;
         private readonly string _bucketName;
+        private readonly StoreContext _context;
 
-        public R2CloudFlareService( IConfiguration config)
+        public R2CloudFlareService( IConfiguration config , StoreContext context)
         {
             //Creates a configuration object for the S3 client 
             var s3Config = new AmazonS3Config
@@ -28,7 +31,7 @@ namespace Application.Services
                 );
 
             _bucketName = config["R2:BucketName"]!;
-            
+            _context = context;
         }
 
 
@@ -62,6 +65,34 @@ namespace Application.Services
             return _s3Client.GetPreSignedURL(request);
         }
 
+        public async Task<bool> DeleteMediaAsync(int mediaId)
+        {
+            if(mediaId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");
 
+            var existedMedia = await _context.Medias.FindAsync(mediaId);
+            if (existedMedia == null) throw new KeyNotFoundException("Media not found");
+
+            var deleteRequest = new DeleteObjectRequest
+            {
+                BucketName= _bucketName,
+                Key = existedMedia.StorageKey
+            };
+
+
+            var response = await _s3Client.DeleteObjectAsync(_bucketName, existedMedia.StorageKey);
+
+            if (response.HttpStatusCode != System.Net.HttpStatusCode.OK 
+             && 
+                 response.HttpStatusCode != System.Net.HttpStatusCode.NoContent)
+             throw new ArgumentException($"Failed to delete file from Cloudflare R2. Status: {response.HttpStatusCode}");
+
+            _context.Medias.Remove(existedMedia);
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (!result)
+                throw new InvalidOperationException("Media was deleted from Cloudflare but not removed from database");
+
+            return true;
+        }
     }
 }

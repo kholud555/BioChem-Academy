@@ -43,11 +43,20 @@ namespace API.Controllers
             return Ok(new { presignedUrl = url });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddMediaAfterUpload")]
         public async Task<IActionResult> AddMediaAfterUpload ([FromBody] MediaDTO dto)
         {
             var newMedia = await _service.AddMediaAsync(dto);
             return Created();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("DeleteMedia")]
+        public async Task<IActionResult> DeleteMedia ( [FromQuery]  int mediaId)
+        {
+            var Deleted = await _r2.DeleteMediaAsync(mediaId);
+            return NoContent();
         }
 
     }

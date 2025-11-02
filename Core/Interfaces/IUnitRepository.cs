@@ -14,5 +14,6 @@ namespace Core.Interfaces
         Task<Unit> AddUnitAsync(Unit unit);
         Task<bool> UpdateUnitAsync(Unit unit);
         Task<bool> DeleteUnitAsync(int id);
+        Task<IEnumerable<Unit>> GetAllUnitsByTermIDAsync(int termId);
     }
 }

@@ -73,6 +73,8 @@ namespace Application.Services
             }
             return await _termRepo.DeleteTermAsync(id);
         }
+
+
     }
 }
 

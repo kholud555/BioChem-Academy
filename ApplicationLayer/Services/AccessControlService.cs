@@ -30,6 +30,7 @@ namespace Application.Services
             var isGranted = await _repo.GrantAccess(dto.StudentId, dto.grantedSectionId , dto.GrantedType);
 
             if (!isGranted) throw new ArgumentException("Type not Supported");
+            await _context.SaveChangesAsync(); 
         }
 
         public async Task RevokeAccessAsync(AccessControlDTO dto)

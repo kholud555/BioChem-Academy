@@ -12,7 +12,7 @@ namespace Infrastructure.Data
     public class UnitRepository : IUnitRepository
     {
         private readonly StoreContext _context;
-        public UnitRepository(StoreContext context) 
+        public UnitRepository(StoreContext context)
         {
             _context = context;
         }
@@ -21,7 +21,7 @@ namespace Infrastructure.Data
         {
             var unit = await _context.Units.FindAsync(id);
 
-            if(unit is null) throw new KeyNotFoundException(nameof(unit));
+            if (unit is null) throw new KeyNotFoundException(nameof(unit));
 
             return unit;
         }
@@ -31,7 +31,7 @@ namespace Infrastructure.Data
             if (!isTermExist) throw new InvalidOperationException("Conflict: No Term matches your input.");
 
             var isExistedUnit = await _context.Units.AnyAsync(u => u.Title == unit.Title);
-            if(isExistedUnit) throw new InvalidOperationException("conflict: Unit already exists.");
+            if (isExistedUnit) throw new InvalidOperationException("conflict: Unit already exists.");
 
             var newUnit = new Unit
             {
@@ -48,7 +48,7 @@ namespace Infrastructure.Data
         public async Task<bool> UpdateUnitAsync(Unit unit)
         {
             var existingUnit = await _context.Units.FindAsync(unit.Id);
-            if(existingUnit is null) return false;
+            if (existingUnit is null) return false;
 
             existingUnit.Title = unit.Title;
             existingUnit.Description = unit.Description;
@@ -57,17 +57,29 @@ namespace Infrastructure.Data
 
             return await _context.SaveChangesAsync() > 0;
         }
-     public async Task<bool> DeleteUnitAsync(int id)
-     {
-           var existingUnit = await _context.Units.FindAsync(id); 
-            if(existingUnit is null) return false;
+        public async Task<bool> DeleteUnitAsync(int id)
+        {
+            var existingUnit = await _context.Units.FindAsync(id);
+            if (existingUnit is null) return false;
 
             _context.Units.Remove(existingUnit);
 
             return _context.SaveChanges() > 0;
-     }
+        }
 
+      
+        public async Task<IEnumerable<Unit>> GetAllUnitsByTermIDAsync(int termId)
+        {
+            var units = await _context.Units
+                .Where(u => u.TermId == termId)
+                .ToListAsync();
+
+            if (units.Count == 0)
+                throw new KeyNotFoundException("No Units found for this Term ID.");
+
+            return units;
+        }
     }
 
-  
+
 }

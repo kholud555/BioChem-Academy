@@ -55,5 +55,14 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetUnitsByTerms")]
+        public async Task<ActionResult<IEnumerable<TermDTO>>> GetUnitsByTerms(int termId)
+        {
+            var units = await _unitService.GetUnitsByTermIdAsync(termId);
+            var dto = _mapper.Map<IEnumerable<UnitDTO>>(units);
+            return Ok(dto);
+        }
+
     }
 }

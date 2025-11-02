@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CourseProject\\CoursesWebsite\\API\\API.csproj": {}
+    "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\CourseProject\\CoursesWebsite\\API\\API.csproj": {
+    "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CourseProject\\CoursesWebsite\\API\\API.csproj",
+        "projectUniqueName": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\CourseProject\\CoursesWebsite\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\khokha\\.nuget\\packages\\",
-        "outputPath": "D:\\CourseProject\\CoursesWebsite\\API\\obj\\",
+        "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\2025\\.nuget\\packages\\",
+        "outputPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\khokha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2025\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,14 +32,14 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Application.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Application.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Application.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Application.csproj"
               },
-              "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj"
               },
-              "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -112,24 +112,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Application.csproj": {
+    "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Application.csproj",
+        "projectUniqueName": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\Application.csproj",
-        "packagesPath": "C:\\Users\\khokha\\.nuget\\packages\\",
-        "outputPath": "D:\\CourseProject\\CoursesWebsite\\ApplicationLayer\\obj\\",
+        "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\Application.csproj",
+        "packagesPath": "C:\\Users\\2025\\.nuget\\packages\\",
+        "outputPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\ApplicationLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\khokha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2025\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -144,11 +144,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj"
               },
-              "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -190,24 +190,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {
+    "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\khokha\\.nuget\\packages\\",
-        "outputPath": "D:\\CourseProject\\CoursesWebsite\\Core\\obj\\",
+        "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\2025\\.nuget\\packages\\",
+        "outputPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\khokha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2025\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -261,24 +261,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\khokha\\.nuget\\packages\\",
-        "outputPath": "D:\\CourseProject\\CoursesWebsite\\Infrastructure\\obj\\",
+        "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\2025\\.nuget\\packages\\",
+        "outputPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\khokha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2025\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -293,8 +293,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj": {
-                "projectPath": "D:\\CourseProject\\CoursesWebsite\\Core\\Core.csproj"
+              "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj": {
+                "projectPath": "D:\\website\\backend\\BioChem-Academy-newBranch (1)\\BioChem-Academy-newBranch\\Core\\Core.csproj"
               }
             }
           }
@@ -350,7 +350,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

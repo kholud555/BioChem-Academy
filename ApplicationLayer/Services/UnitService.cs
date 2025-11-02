@@ -64,5 +64,14 @@ namespace Application.Services
             }
             return await _unitRepo.DeleteUnitAsync(id);
         }
+
+        public async Task<IEnumerable<Unit>> GetUnitsByTermIdAsync(int termId)
+        {
+            if (termId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(termId), "Term ID must be greater than zero.");
+
+            return await _unitRepo.GetAllUnitsByTermIDAsync(termId);
+        }
+
     }
 }

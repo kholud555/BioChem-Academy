@@ -39,7 +39,7 @@ namespace Application.Services
         public async Task<Term> CreateTermAsync(CreateTermDTO dto)
         {
             if(dto == null) throw new ArgumentNullException(nameof(dto) , "Term should not be null");
-            if (dto.GradeId <= 0) throw new ArgumentException("term should have Grade");
+            if (dto.GradeId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");
             var term = _mapper.Map<Term> (dto);
             return await _termRepo.AddTermAsync(term);
         }

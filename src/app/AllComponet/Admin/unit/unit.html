@@ -65,26 +65,8 @@
       />
     </div>
 
-    <!-- Checkboxes -->
-    <div class="form-check mb-2">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        [(ngModel)]="newUnit.isFree"
-        id="isFree"
-      />
-      <label class="form-check-label" for="isFree">Is Free</label>
-    </div>
+    
 
-    <div class="form-check mb-3">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        [(ngModel)]="newUnit.isPublished"
-        id="isPublished"
-      />
-      <label class="form-check-label" for="isPublished">Is Published</label>
-    </div>
 
     <button class="btn btn-Action" (click)="addUnit()">Add Unit</button>
   </div>
@@ -132,8 +114,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Order</th>
-            <th>Is Free</th>
-            <th>Is Published</th>
+           
             <th>Actions</th>
           </tr>
         </thead>
@@ -148,8 +129,7 @@
               <td>
                 <input type="number" class="form-control" [(ngModel)]="unit.order" />
               </td>
-              <td><input type="checkbox" [(ngModel)]="unit.isFree" /></td>
-              <td><input type="checkbox" [(ngModel)]="unit.isPublished" /></td>
+              
               <td>
                 <div class="action-buttons">
                   <button
@@ -173,8 +153,7 @@
               <td>{{ unit.title }}</td>
               <td>{{ unit.description }}</td>
               <td>{{ unit.order }}</td>
-              <td><input type="checkbox" [checked]="unit.isFree" disabled /></td>
-              <td><input type="checkbox" [checked]="unit.isPublished" disabled /></td>
+             
               <td>
                 <button
                   class="btn-action btn-edit"

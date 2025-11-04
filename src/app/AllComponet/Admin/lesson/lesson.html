@@ -81,26 +81,7 @@
       />
     </div>
 
-    <!-- Checkboxes -->
-    <div class="form-check mb-2">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        [(ngModel)]="newLesson.isFree"
-        id="isFree"
-      />
-      <label class="form-check-label" for="isFree">Is Free</label>
-    </div>
-
-    <div class="form-check mb-3">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        [(ngModel)]="newLesson.isPublished"
-        id="isPublished"
-      />
-      <label class="form-check-label" for="isPublished">Is Published</label>
-    </div>
+    
 
     <button class="btn btn-Action" (click)="addLesson()">Add Lesson</button>
   </div>
@@ -163,8 +144,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Order</th>
-            <th>Is Free</th>
-            <th>Is Published</th>
+            
             <th>Actions</th>
           </tr>
         </thead>
@@ -175,8 +155,7 @@
               <td><input class="form-control" [(ngModel)]="lesson.title" /></td>
               <td><input class="form-control" [(ngModel)]="lesson.description" /></td>
               <td><input type="number" class="form-control" [(ngModel)]="lesson.order" /></td>
-              <td><input type="checkbox" [(ngModel)]="lesson.isFree" /></td>
-              <td><input type="checkbox" [(ngModel)]="lesson.isPublished" /></td>
+              
               <td>
                 <div class="action-buttons">
                   <button
@@ -200,8 +179,7 @@
               <td>{{ lesson.title }}</td>
               <td>{{ lesson.description }}</td>
               <td>{{ lesson.order }}</td>
-              <td><input type="checkbox" [checked]="lesson.isFree" disabled /></td>
-              <td><input type="checkbox" [checked]="lesson.isPublished" disabled /></td>
+              
               <td>
                 <button
                   class="btn-action btn-edit"

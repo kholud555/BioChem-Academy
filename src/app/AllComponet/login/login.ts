@@ -22,7 +22,7 @@ export class Login {
  
   onSubmit(){
   
-    console.log(this. LoginForm.value);
+    // console.log(this. LoginForm.value);
      
 this.login.loginStudent(this. LoginForm.value).subscribe({
   next:(res)=>{

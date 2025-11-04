@@ -1,170 +1,560 @@
-:root {
-  --primary-teal: #2d4073;
-  --hover-teal: #223668;
-  --primary-orange: #ff6b35;
-  --hover-orange: #ff874f;
-}
 
-/* ✅ Content Card */
-.content-card {
-  background: #fff;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
-  transition: all 0.3s ease;
-  border: 1px solid #e8e8e8;
-}
 
-.content-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Table Container */
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  border-radius: 15px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-/* ✅ Table Styles */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 0;
-  border: 1px solid #ccc;
-  transition: all 0.3s ease;
-}
-
-.table thead {
-  background: linear-gradient(135deg, var(--primary-teal), var(--hover-teal));
-  color: white;
-}
-
-.table th,
-.table td {
-  padding: 12px 10px;
-  border: 1px solid #ddd; /* ✅ جعل الجدول متسطر */
-  text-align: center;
-  font-size: 15px;
-}
-
-.table th {
-  font-weight: 600;
-}
-
-.table tbody tr {
-  transition: all 0.2s ease;
-}
-.table tbody tr:hover {
-  background-color: #f9f9f9;
-  transform: scale(1.005);
-}
-
-/* ✅ Action Buttons */
-button {
-  background-color: var(--primary-orange);
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--hover-orange);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 992px) {
-  .table th,
-  .table td {
-    padding: 10px 8px;
-    font-size: 14px;
+  :root {
+    --primary-teal: #17a2b8;
+    --primary-orange: #ff6b35;
+    --hover-teal: #138496;
+    --hover-orange: #ff8c5f;
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --hover-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
   }
 
-  button {
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .table th,
-  .table td {
-    padding: 8px 6px;
-    font-size: 13px;
+  * {
+    box-sizing: border-box;
   }
 
-  .table-container {
-    padding: 5px;
+  .students-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
   }
 
-  .content-card {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 576px) {
-  .table th,
-  .table td {
-    padding: 6px 5px;
-    font-size: 12px;
+  .table-header-section {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 25px 30px;
+    background: var(--bg-gradient);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
   }
 
-  button {
-    font-size: 12px;
-    padding: 5px 8px;
+  .table-title {
+    margin: 0;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
   }
 
-  .table {
-    border-spacing: 0;
+  .table-title i {
+    font-size: 2rem;
   }
 
-  /* ✅ الجدول يصغر ويتكيف مع الشاشة الصغيرة */
-  .table-container {
-    overflow-x: hidden;
+  .header-decoration {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  /* Desktop Table Styles */
+  .desktop-table {
     display: block;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+
+  .table-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-table {
     width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
   }
 
-  .table {
-    display: block;
-    width: 100%;
+  .data-table thead {
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--hover-teal) 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
-  .table thead {
-    display: none; /* نخفي العناوين في الشاشات الصغيرة */
+  .data-table thead tr {
+    border-bottom: 4px solid var(--primary-orange);
   }
 
-  .table tr {
-    display: block;
-    margin-bottom: 12px;
-    background: #fff;
+  .data-table th {
+    padding: 0;
+    text-align: left;
+  }
+
+  .header-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 16px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .header-cell i {
+    font-size: 1.1rem;
+  }
+
+  .data-row {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e9ecef;
+    background: white;
+  }
+
+  .data-row:hover {
+    background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 100%);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.15);
+  }
+
+  .data-row:last-child {
+    border-bottom: none;
+  }
+
+  .data-table td {
+    padding: 18px 16px;
+    vertical-align: middle;
+  }
+
+  .student-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .student-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--hover-teal) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+    flex-shrink: 0;
+  }
+
+  .student-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .student-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.95rem;
+  }
+
+  .student-id {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .email-wrapper,
+  .phone-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #475569;
+  }
+
+  .email-wrapper i,
+  .phone-wrapper i {
+    color: var(--primary-teal);
+    font-size: 1rem;
+  }
+
+  .grade-pill {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, var(--primary-orange) 0%, var(--hover-orange) 100%);
+    color: white;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    text-align: center;
+    min-width: 70px;
+  }
+
+  .access-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
     border-radius: 10px;
-    border: 1px solid #eee;
-    padding: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    border: none;
   }
 
-  .table td {
+  .access-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    color: white;
+  }
+
+  .access-button i {
+    font-size: 1.1rem;
+  }
+
+  /* Mobile Cards */
+  .mobile-cards {
+    display: none;
+  }
+
+  .student-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .student-card:hover {
+    box-shadow: var(--hover-shadow);
+    transform: translateY(-4px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-bottom: 3px solid var(--primary-teal);
+  }
+
+  .student-avatar-large {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--hover-teal) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+    flex-shrink: 0;
+  }
+
+  .card-student-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .card-student-name {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .card-student-id {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .card-grade-badge {
+    padding: 6px 16px;
+    background: linear-gradient(135deg, var(--primary-orange) 0%, var(--hover-orange) 100%);
+    color: white;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .info-row {
     display: flex;
     justify-content: space-between;
-    text-align: left;
-    border: none;
-    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
   }
 
-  .table td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #333;
+  .info-row:last-child {
+    border-bottom: none;
   }
-}
+
+  .info-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .info-label i {
+    color: var(--primary-teal);
+    font-size: 1rem;
+  }
+
+  .info-value {
+    color: #1e293b;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .card-footer {
+    padding: 20px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .card-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  .card-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    color: white;
+  }
+
+  .card-action-btn i {
+    font-size: 1.2rem;
+  }
+
+  /* Scrollbar Styling */
+  .table-scroll-wrapper::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .table-scroll-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+  }
+
+  .table-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: var(--primary-teal);
+    border-radius: 10px;
+  }
+
+  .table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-teal);
+  }
+
+  /* Responsive Breakpoints */
+  @media screen and (max-width: 1200px) {
+    .students-container {
+      padding: 16px;
+    }
+
+    .table-title {
+      font-size: 1.6rem;
+    }
+
+    .data-table {
+      min-width: 850px;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .students-container {
+      padding: 12px;
+    }
+
+    .table-title {
+      font-size: 1.4rem;
+    }
+
+    .table-title i {
+      font-size: 1.6rem;
+    }
+
+    .data-table {
+      min-width: 800px;
+    }
+
+    .header-cell {
+      padding: 16px 12px;
+      font-size: 0.85rem;
+    }
+
+    .data-table td {
+      padding: 14px 12px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .desktop-table {
+      display: none;
+    }
+
+    .mobile-cards {
+      display: block;
+    }
+
+    .table-header-section {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .table-title {
+      font-size: 1.3rem;
+    }
+
+    .table-title i {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .students-container {
+      padding: 10px;
+    }
+
+    .table-header-section {
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .table-title {
+      font-size: 1.2rem;
+      gap: 10px;
+    }
+
+    .table-title i {
+      font-size: 1.3rem;
+    }
+
+    .student-card {
+      margin-bottom: 16px;
+      border-radius: 12px;
+    }
+
+    .card-header {
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .student-avatar-large {
+      width: 50px;
+      height: 50px;
+      font-size: 1.3rem;
+    }
+
+    .card-student-name {
+      font-size: 1rem;
+    }
+
+    .card-student-id {
+      font-size: 0.75rem;
+    }
+
+    .card-grade-badge {
+      padding: 5px 14px;
+      font-size: 0.8rem;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .info-row {
+      padding: 10px 0;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+    }
+
+    .card-footer {
+      padding: 16px;
+    }
+
+    .card-action-btn {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .students-container {
+      padding: 8px;
+    }
+
+    .table-header-section {
+      padding: 14px;
+    }
+
+    .table-title {
+      font-size: 1.1rem;
+      gap: 8px;
+    }
+
+    .card-header {
+      padding: 14px;
+      flex-wrap: wrap;
+    }
+
+    .student-avatar-large {
+      width: 45px;
+      height: 45px;
+      font-size: 1.2rem;
+    }
+
+    .card-student-name {
+      font-size: 0.95rem;
+    }
+
+    .card-grade-badge {
+      padding: 4px 12px;
+      font-size: 0.75rem;
+    }
+  }

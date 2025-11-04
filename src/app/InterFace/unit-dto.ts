@@ -4,8 +4,8 @@ export interface CreateUnitDTO  {
   title: string;
   description?: string;
   order: number;
-  isFree: boolean;
-  isPublished: boolean;
+  // isFree: boolean;
+  // isPublished: boolean;
   termId: number;
 }
     

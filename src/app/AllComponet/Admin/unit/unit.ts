@@ -31,8 +31,7 @@ export class Unit  implements OnInit  {
     title: '',
     description: '',
     order: 1,
-    isFree: false,
-    isPublished: false,
+   
     termId: 0
   };
   constructor(
@@ -109,7 +108,7 @@ export class Unit  implements OnInit  {
     this.UnitService.addUnit(this.newUnit).subscribe({
       next: (res) => {
         Swal.fire('Success', 'Unit added successfully', 'success');
-        this.newUnit = { title: '', description: '', order: 1, isFree: false, isPublished: false, termId: 0 };
+        this.newUnit = { title: '', description: '', order: 1, termId: 0 };
       this.loadUnits(); 
       },
       error: (err) => {

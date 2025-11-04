@@ -24,8 +24,7 @@ export class Term implements OnInit {
   newTerm: CreateTermDTO = {
    
     gradeId: 0,
-    isFree: false,
-    isPublished: false,
+    
      termOrder:1,
   };
 
@@ -36,8 +35,7 @@ export class Term implements OnInit {
      termOrder:0,
     
     gradeId: 0,
-    isFree: false,
-    isPublished: false
+   
   };
 
   constructor(
@@ -93,7 +91,7 @@ export class Term implements OnInit {
         Swal.fire('Success', 'Term added successfully.', 'success');
        
        
-        this.newTerm = { gradeId: 0, isFree: false, isPublished: false ,  termOrder:0};
+        this.newTerm = { gradeId: 0,   termOrder:0};
         this.onGradeChange();
       },
       error: (err) => {
@@ -117,8 +115,7 @@ export class Term implements OnInit {
       id: 0,
     
       gradeId: 0,
-      isFree: false,
-      isPublished: false
+     
     };
   }
 

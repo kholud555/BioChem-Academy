@@ -31,8 +31,7 @@ export class Lesson implements OnInit {
     title: '',
     description: '',
     order: 1,
-    isFree: false,
-    isPublished: false,
+    
     unitId: 0
   };
 
@@ -106,8 +105,7 @@ export class Lesson implements OnInit {
           title: '',
           description: '',
           order: 1,
-          isFree: false,
-          isPublished: false,
+          
           unitId: this.selectedUnitId
         };
        Swal.fire('Success', 'Unit added successfully.', 'success');

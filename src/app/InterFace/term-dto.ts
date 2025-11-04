@@ -2,8 +2,8 @@ export interface CreateTermDTO {
  
   gradeId: number;
  termOrder: number;
-  isFree: boolean;
-  isPublished: boolean;
+  // isFree: boolean;
+  // isPublished: boolean;
 
 }
 

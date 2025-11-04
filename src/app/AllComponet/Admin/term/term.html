@@ -21,15 +21,7 @@
     </select>
   </div>
 
-  <div class="form-check mb-2">
-    <input class="form-check-input" type="checkbox" [(ngModel)]="newTerm.isFree" id="isFree" />
-    <label class="form-check-label" for="isFree">Is Free</label>
-  </div>
-
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" [(ngModel)]="newTerm.isPublished" id="isPublished" />
-    <label class="form-check-label" for="isPublished">Is Published</label>
-  </div>
+  
 
   <button class="btn btn-Action" (click)="addNewTerm()">Add Term</button>
 </div>
@@ -53,8 +45,7 @@
       <thead class="">
         <tr>
           <th>Term Name</th>
-          <th>Is Free</th>
-          <th>Is Published</th>
+          
           <th>Actions</th>
         </tr>
       </thead>
@@ -68,20 +59,7 @@
                 <option [ngValue]="1">Second Term</option>
               </select>
             </td>
-            <td>
-          
-    <input type="checkbox" [(ngModel)]="editedTerm.isFree" />
-  
- 
-</td>
-
-<td>
-     
-   
-    <input type="checkbox" [(ngModel)]="editedTerm.isPublished" />
-    
- 
-</td>
+           
             <td>
               <div class="action-buttons">
               <button class="btn btn-success btn-sm me-1" (click)="updateTerm()">
@@ -101,8 +79,7 @@
           <!-- View Mode -->
           <ng-template #viewMode>
           <td>{{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}</td>
-            <td><input type="checkbox" [checked]="term.isFree" disabled /></td>
-            <td><input type="checkbox" [checked]="term.isPublished" disabled /></td>
+            
             <td>
               <button class="btn-action btn-edit" (click)="startEdit(term)">
 

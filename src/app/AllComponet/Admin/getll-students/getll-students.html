@@ -1,31 +1,137 @@
-<div class="table-responsive mt-4">
-  <table class="table align-middle table-striped table-hover shadow-sm">
-    <thead class="table-header text-center text-white">
-      <tr>
-        <th>Name</th>
-        <th>E-mail</th>
-        <th>Grade</th>
-        <th>Phone</th>
-        <th>Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let std of students" class="text-center">
-        <td class="fw-semibold">{{ std.userName }}</td>
-        <td>{{ std.email }}</td>
-        <td>{{ std.grade }}</td>
-        <td>{{ std.phoneNumber }}</td>
-        <td>
-          <a
-            class="btn btn-sm btn-primary btn-access px-3 py-1"
-              [routerLink]="['/AdmenBody/AccessControl']"
-  [queryParams]="{ name: std.userName, grade: std.grade }"
-           
-          >
-            <i class="bi bi-shield-lock me-1"></i> Add Access
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="students-container">
+  <div class="table-header-section">
+    <h2 class="table-title">
+      <i class="bi bi-people-fill"></i>
+      Students Management
+    </h2>
+    <div class="header-decoration"></div>
+  </div>
+
+  <!-- Desktop & Tablet View -->
+  <div class="desktop-table">
+    <div class="table-scroll-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-person-badge"></i>
+                <span>Student Name</span>
+              </div>
+            </th>
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-envelope-at"></i>
+                <span>Email Address</span>
+              </div>
+            </th>
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-trophy"></i>
+                <span>Grade</span>
+              </div>
+            </th>
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-phone"></i>
+                <span>Phone Number</span>
+              </div>
+            </th>
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-sliders"></i>
+                <span>Actions</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let std of students" class="data-row">
+            <td>
+              <div class="student-cell">
+                <div class="student-avatar">
+                  <span>{{ std.userName?.charAt(0)?.toUpperCase() || 'S' }}</span>
+                </div>
+                <div class="student-details">
+                  <span class="student-name">{{ std.userName }}</span>
+                 
+               
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="email-wrapper">
+                <i class="bi bi-envelope"></i>
+                <span>{{ std.email }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="grade-pill">{{ std.grade }}</span>
+            </td>
+            <td>
+              <div class="phone-wrapper">
+                <i class="bi bi-telephone"></i>
+                <span>{{ std.phoneNumber }}</span>
+              </div>
+            </td>
+            <td>
+              <a
+                class="access-button"
+                [routerLink]="['/AdmenBody/AccessControl']"
+                [queryParams]="{ name: std.userName, grade: std.grade, id: std.id }"
+              >
+                <i class="bi bi-shield-check"></i>
+                <span>Manage Access</span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Mobile Card View -->
+  <div class="mobile-cards">
+    <div *ngFor="let std of students" class="student-card">
+      <div class="card-header">
+        <div class="student-avatar-large">
+          <span>{{ std.userName?.charAt(0)?.toUpperCase() || 'S' }}</span>
+        </div>
+        <div class="card-student-info">
+          <h3 class="card-student-name">{{ std.userName }}</h3>
+          <span class="card-student-id">ID: {{ std.id }}</span>
+        </div>
+        <span class="card-grade-badge">{{ std.grade }}</span>
+      </div>
+      
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-label">
+            <i class="bi bi-envelope-fill"></i>
+            <span>Email</span>
+          </div>
+          <div class="info-value">{{ std.email }}</div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">
+            <i class="bi bi-telephone-fill"></i>
+            <span>Phone</span>
+          </div>
+          <div class="info-value">{{ std.phoneNumber }}</div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <a
+          class="card-action-btn"
+          [routerLink]="['/AdmenBody/AccessControl']"
+          [queryParams]="{ name: std.userName, grade: std.grade, id: std.id }"
+        >
+          <i class="bi bi-shield-check"></i>
+          <span>Manage Access</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

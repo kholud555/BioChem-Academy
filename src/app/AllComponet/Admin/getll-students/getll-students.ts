@@ -15,6 +15,7 @@ export class GetllStudents {
   SelectedStusent:any| null=null;
   SelectedStusentName:string| null=null;
   SelectedStusentGrade:string| null=null;
+  SelectedStusentId:any|Number=0;
   constructor(
     private studentService : StudentService,
     private toast : ToastrService
@@ -32,15 +33,17 @@ export class GetllStudents {
 
       },
       error:(err)=>{
-        this.toast.error("Error loading students");
-      console.error("❌ Error loading students:", err);
+        this.toast.error("Error loading students" );
+    
       }
     })
   }
 
   selectedStudent(student : any):void{
 this.SelectedStusentName=student.userName;
+this.SelectedStusentName=student.studentId;
 this.SelectedStusentGrade=student.grade;
+this.SelectedStusentId=student.id;
 
   }
 }

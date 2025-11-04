@@ -14,7 +14,7 @@ export class UnitService {
   }
 
   getUnitsByTerm(termId: number): Observable<UnitDTO[]> {
-    return this.http.get<UnitDTO[]>(`${this.baseUrl}/GetUnitsByTermID?termId=${termId}`);
+    return this.http.get<UnitDTO[]>(`${this.baseUrl}/GetUnitsByTerms?termId=${termId}`);
   }
 
   addUnit(unit: CreateUnitDTO): Observable<UnitDTO> {

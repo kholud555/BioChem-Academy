@@ -2,8 +2,7 @@ export interface CreateLessonDTO {
   title: string;
   description?: string;
   order: number;
-  isFree: boolean;
-  isPublished: boolean;
+  
   unitId: number;
 }
 

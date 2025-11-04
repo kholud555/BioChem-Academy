@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AccessControlDTO } from '../InterFace/access-control-dto';
+import { AccessControlDTO, StudentPermissionsDTO } from '../InterFace/access-control-dto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,12 +17,14 @@ export class AccessControlService {
   }
 
   // ✅ سحب صلاحية
-  revokeAccess(dto: AccessControlDTO): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/Revoke`, { body: dto });
-  }
+  
+  revokeAccess(dto: AccessControlDTO) {
+  return this.http.request('DELETE', `${this.apiUrl}/Revoke`, { body: dto });
+}
+
 
   // ✅ الحصول على صلاحيات الطالب
-  getStudentPermissions(studentId: number, includeNames = false): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/student/${studentId}?IncludedNames=${includeNames}`);
+  getStudentPermissions(studentId: number, includeNames = false): Observable<StudentPermissionsDTO> {
+    return this.http.get<StudentPermissionsDTO>(`${this.apiUrl}/student/${studentId}?IncludedNames=${includeNames}`);
   }
 }

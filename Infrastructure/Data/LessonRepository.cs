@@ -57,7 +57,7 @@ namespace Infrastructure.Data
                 UnitId = lesson.UnitId
             };
 
-            _context.Lessons.Add(newLesson);
+            await _context.Lessons.AddAsync(newLesson);
             await _context.SaveChangesAsync();
             return newLesson;
         }

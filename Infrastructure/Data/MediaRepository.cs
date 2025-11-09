@@ -32,7 +32,7 @@ namespace Infrastructure.Data
                 Duration = media.Duration, 
             };
 
-            _context.Medias.Add(newMedia);
+            await _context.Medias.AddAsync(newMedia);
            await _context.SaveChangesAsync();
 
             return newMedia;

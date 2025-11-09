@@ -1,8 +1,10 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Application.DTOS;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Application.Services
 {
@@ -93,6 +95,41 @@ namespace Application.Services
                 throw new InvalidOperationException("Media was deleted from Cloudflare but not removed from database");
 
             return true;
+        }
+
+        public async Task<IEnumerable<MediaAdminDTO>> GetMediaByLessonIdAsync (int  lessonId)
+        {
+            var isExistLesson = await _context.Lessons.AnyAsync(l => l.Id == lessonId);
+            if(!isExistLesson) throw new KeyNotFoundException("Lesson with this Id not exist");
+
+            var MediaOfLesson = await _context.Medias.Where(m => m.LessonId == lessonId)
+                .Select(m => new 
+                {
+                    m.Id,
+                    m.FileFormat,
+                    m.MediaType,
+                    m.Duration,
+                    m.StorageKey  
+                }).ToListAsync();
+
+            var result = new List<MediaAdminDTO>();
+            foreach(var m in MediaOfLesson)
+            {
+                var Url = GenerateSignedUrlForViewing(m.StorageKey);
+
+                result.Add(new MediaAdminDTO
+                {
+                    Id = m.Id,
+                    MediaType = m.MediaType.ToString(),
+                    FileFormat = m.FileFormat.ToString(),
+                    Duration = m.Duration,
+                    FileName = Path.GetFileName(m.StorageKey),
+                    PreviewUrl = Url
+
+                });
+            }
+
+            return result;
         }
     }
 }

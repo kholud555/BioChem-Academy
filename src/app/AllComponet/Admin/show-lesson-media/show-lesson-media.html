@@ -1,0 +1,14 @@
+<div class="lesson-media-container">
+  <h2>Media for: {{ Lesson?.title }}</h2>
+
+  <div *ngIf="lessonMedia.length === 0" class="text-muted">
+    No media found for this lesson.
+  </div>
+
+  <ul class="list-group">
+    <li *ngFor="let item of lessonMedia" class="list-group-item d-flex justify-content-between align-items-center">
+      <span>{{ item.fileName}}</span>
+      <button class="btn btn-danger btn-sm" (click)="onDeleteMedia(item.id)">🗑 Delete</button>
+    </li>
+  </ul>
+</div>

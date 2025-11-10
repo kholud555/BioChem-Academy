@@ -1,16 +1,24 @@
-<h1>All Grades</h1>
-<div class="container mt-4 course me-2">
-  <app-fixed-icon/>
-    <div class="row    mx-4">
-        <div class="card  col-lg-3 col-md-6 my-2 mx-4">
-  <img class="card-img-top" src="./Assets/chemistry1.jpg" alt="Card image" style="height: 300px;">
-  <div class="card-body">
-    <h4 class="card-title">الصف الاول الثانوى</h4>
-    <p class="card-text">شرح المنهج بشكل سهل وبسيط</p>
-    <a href="#" class="btn btn-primary">التفاصيل</a>
+
+  
+ 
+<div class="course-container">
+  <h2 class="title">🎓 Available Grades</h2>
+
+  <!-- في حالة التحميل -->
+  <div *ngIf="grades.length === 0" class="loading">
+    <p>⏳ Loading grades...</p>
+  </div>
+
+  <!-- عرض الدرجات -->
+  <div class="grades-grid" *ngIf="grades.length > 0">
+    <div class="grade-card" *ngFor="let grade of grades">
+      <div class="grade-icon">🏫</div>
+      <div class="grade-info">
+        <h3> Grade {{ grade.gradeName }}</h3>
+       
+      </div>
+      <button class="view-btn" (click)="onSelectGrade(grade)">View Details</button>
+    </div>
   </div>
 </div>
 
-  
-    </div>
-</div>

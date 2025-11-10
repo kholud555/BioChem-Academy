@@ -20,6 +20,8 @@ import { AccessControl } from './AllComponet/Admin/access-control/access-control
 
 import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
 import { CourseContent } from './AllComponet/Admin/course-content/course-content';
+import { GetAllTermsForGrade } from './AllComponet/Admin/get-all-terms-for-grade/get-all-terms-for-grade';
+import { ShowLessonMedia } from './AllComponet/Admin/show-lesson-media/show-lesson-media';
 
 
 export const routes: Routes = [
@@ -35,7 +37,7 @@ export const routes: Routes = [
 {path:"AdmenBody",component:Body,
     canActivate:[authGuard],
     children:[
-        { path: '', redirectTo: 'UploadVideo', pathMatch: 'full' },
+        { path: '', redirectTo: 'GetAllStudent', pathMatch: 'full' },
 {path:"UploadVideo" , component:UploadVideo},
  {path:"student",component:Student},
  {path:"grade",component:Grade},
@@ -45,7 +47,8 @@ export const routes: Routes = [
     {path:"GetAllStudent" , component:GetllStudents},
      {path:"AccessControl" , component:AccessControl},
       {path:"Courses" , component:CourseContent},
-     
+     {path:"get-all-terms-for-grade" , component:GetAllTermsForGrade},
+     {path:"ShowLessonMedia" ,component:ShowLessonMedia}
 
 ]
 }

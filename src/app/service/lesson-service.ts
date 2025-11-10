@@ -35,4 +35,12 @@ export class LessonService {
   deleteLesson(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/lessons/${id}`);
   }
+  private selectedLesson: LessonDTO | null = null;
+  setLesson(lesson :LessonDTO): void {
+     this.selectedLesson = lesson;
+    }
+  
+    getLesson(): LessonDTO | null {
+      return this.selectedLesson;
+    }
 }

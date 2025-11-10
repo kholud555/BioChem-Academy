@@ -25,4 +25,13 @@ UpdareGrade (grade:GradeDTO):Observable<GradeDTO>{
 }
 DeleteGrade (id:number):Observable<void>{
   return this.http.delete<void>(`${this.BaseUrl}/${id}`);}
+private selectedGrade: GradeDTO | null = null;
+
+setGrade(grade : GradeDTO): void {
+   this.selectedGrade = grade;
+  }
+
+  getGrade(): GradeDTO | null {
+    return this.selectedGrade;
+  }
 }

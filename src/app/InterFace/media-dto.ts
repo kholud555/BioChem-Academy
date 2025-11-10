@@ -13,3 +13,14 @@ export interface PresignRequestDTO {
   lessonId: number;
   fileName: string;
 }
+
+export interface LessonForMediaDTO {
+
+     id :number,
+     fileName :  string ,
+     mediaType :  string ,
+     fileFormat :  string ,
+     duration : number,
+     previewUrl :  string 
+  
+}

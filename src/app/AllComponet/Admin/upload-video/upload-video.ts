@@ -11,6 +11,7 @@ import { GradeDTO } from '../../../InterFace/grade-dto';
 import { TermDTO } from '../../../InterFace/term-dto';
 import { UnitDTO } from '../../../InterFace/unit-dto';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-upload-video',
@@ -40,7 +41,8 @@ export class UploadVideo implements OnInit {
     private termService: TermService,
     private unitService: UnitService,
     private lessonService: LessonService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -115,11 +117,11 @@ export class UploadVideo implements OnInit {
 
       await this.uploadService.addMediaAfterUpload(mediaDto);
 
-      alert('✅ تم رفع الفيديو وتسجيله بنجاح');
+     
       this.handleRemove();
     } catch (error) {
       console.error('Upload failed:', error);
-      alert('❌ فشل في رفع أو تسجيل الفيديو');
+      
     } finally {
       this.isUploading = false;
     }

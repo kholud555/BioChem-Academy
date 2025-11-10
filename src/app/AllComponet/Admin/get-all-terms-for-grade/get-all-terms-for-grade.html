@@ -1,0 +1,47 @@
+<div class="terms-container">
+  <h1> Terms For Grade {{this.SelectedGrade?.gradeName}}</h1>
+  <div class="terms-list">
+    <div *ngFor="let term of terms" class="term-item">
+      <div class="term-header" (click)="toggleTerm(term.id)">
+        <span class="chevron-icon" [class.expanded]="isTermExpanded(term.id)">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+      <span class="term-title">
+  {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+</span>
+
+     
+      </div>
+      
+      <div class="units-container" *ngIf="isTermExpanded(term.id)" [@slideDown]>
+        <div *ngIf="getUnitsForTerm(term.id).length === 0" class="loading-message">
+         no units found for this term.
+        </div>
+        
+        <div *ngFor="let unit of getUnitsForTerm(term.id)" class="unit-item">
+          <div class="unit-header" (click)="toggleUnit(unit.id)">
+            <span class="chevron-icon small" [class.expanded]="isUnitExpanded(unit.id)">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="unit-title">{{ unit.title }}</span>
+          </div>
+          
+          <div class="lessons-container" *ngIf="isUnitExpanded(unit.id)" [@slideDown]>
+            <div *ngIf="getLessonsForUnit(unit.id).length === 0" class="loading-message small">
+              Loading lessons...
+            </div>
+            
+            <div *ngFor="let lesson of getLessonsForUnit(unit.id)" class="lesson-item">
+              <span class="lesson-icon">📚</span>
+              <span class="lesson-title"  (click)=" GetSelectedOneLesson(lesson)" >{{ lesson.title }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

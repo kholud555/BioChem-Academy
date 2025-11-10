@@ -77,9 +77,9 @@
             <td>
               <a
                 class="access-button"
-                [routerLink]="['/AdmenBody/AccessControl']"
-                [queryParams]="{ name: std.userName, grade: std.grade, id: std.id }"
-              >
+               
+               (click)="onSelectStudent(std)"
+                >
                 <i class="bi bi-shield-check"></i>
                 <span>Manage Access</span>
               </a>
@@ -125,9 +125,8 @@
       <div class="card-footer">
         <a
           class="card-action-btn"
-          [routerLink]="['/AdmenBody/AccessControl']"
-          [queryParams]="{ name: std.userName, grade: std.grade, id: std.id }"
-        >
+          (click)="onSelectStudent(std)"
+          >
           <i class="bi bi-shield-check"></i>
           <span>Manage Access</span>
         </a>

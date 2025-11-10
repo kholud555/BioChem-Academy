@@ -6,7 +6,8 @@ import { Courses } from './AllComponet/courses/courses/courses';
 
 import { UserProfile } from './AllComponet/user-profile/user-profile';
 import { Student } from './AllComponet/Admin/student/student';
-import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
+
+
 import { Body } from './AllComponet/Admin/body/body';
 import { Grade } from './AllComponet/Admin/grade/grade';
 import { Term } from './AllComponet/Admin/term/term';
@@ -15,6 +16,10 @@ import { Lesson } from './AllComponet/Admin/lesson/lesson';
 import { authGuard } from './Guard/auth-guard';
 import { GetllStudents } from './AllComponet/Admin/getll-students/getll-students';
 import { AccessControl } from './AllComponet/Admin/access-control/access-control';
+
+
+import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
+import { CourseContent } from './AllComponet/Admin/course-content/course-content';
 
 
 export const routes: Routes = [
@@ -39,8 +44,10 @@ export const routes: Routes = [
     {path:"lesson",component:Lesson},
     {path:"GetAllStudent" , component:GetllStudents},
      {path:"AccessControl" , component:AccessControl},
+      {path:"Courses" , component:CourseContent},
+     
 
-    ]
+]
 }
     
 ];

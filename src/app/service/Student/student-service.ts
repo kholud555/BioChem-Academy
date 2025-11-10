@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
+import { StudentDto } from '../../InterFace/student-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,15 @@ getUserName(): string {
    }
 
 
-    
+    private selectedStudent: StudentDto | null = null;
+
+  setStudent(student: StudentDto) {
+    this.selectedStudent = student;
+  }
+
+  getStudent(): StudentDto | null {
+    return this.selectedStudent;
+  }
 IsStudent():boolean{
     if (this.getRole() == 'Student'){
       return true;
@@ -77,9 +86,9 @@ loginStudent(loginData:Login) :Observable <any>{
     return this.http.post("http://localhost:5292/api/Auth/login",loginData);
 
   }
-  getAllStudent():Observable<any[]>{
+  getAllStudent():Observable<StudentDto[]>{
     const url=`${this.BaseUrl}/GetAllStudents`;
-    return this.http.get<any[]>(url);
+    return this.http.get<StudentDto[]>(url);
   }
   getStudentProfile():Observable<any>{
      const headers={ Authorization: `Bearer ${this.token}` };

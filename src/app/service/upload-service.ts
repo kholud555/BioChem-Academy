@@ -1,36 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UploadService {
-  private apiUrl = `http://localhost:5292/api/Media`;
+  private apiUrl = 'http://localhost:5292/api/media'; 
 
   constructor(private http: HttpClient) {}
 
-  // طلب presigned URL من السيرفر
+  // طلب presigned URL من API
   async getPresignedUrl(
     file: File,
-    grade = 'Grade1',
-    term = 'Term1',
-    unit = 'Unit1',
-    lessonId = 1
+    grade = 'Grade7',
+    term = 'Term2',
+    unit = 'Unit2',
+    lessonId = 4
   ) {
     const body = {
       grade,
       term,
       unit,
       lessonId,
-      fileName: file.name
+      fileName: file.name,
     };
 
-    // ✅ هنا التصحيح — شيل التكرار
-    const res: any = await lastValueFrom(
-      this.http.post(`${this.apiUrl}/presign-upload`, body)
-    );
-
+    const res: any = await lastValueFrom(this.http.post(`${this.apiUrl}/presign-upload`, body));
     return res;
   }
 
@@ -43,7 +39,7 @@ export class UploadService {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('PUT', presignedUrl);
-      xhr.setRequestHeader('x-amz-content-sha256', 'UNSIGNED-PAYLOAD');
+
       xhr.setRequestHeader('Content-Type', file.type);
 
       xhr.upload.onprogress = (event) => {
@@ -65,4 +61,19 @@ export class UploadService {
       xhr.send(file);
     });
   }
+async addMediaAfterUpload(dto: {
+  mediaType: number;
+  storageKey: string;
+  duration?: number | null;
+  fileFormat: number;
+  lessonId: number;
+}): Promise<void> {
+  await lastValueFrom(this.http.post(`${this.apiUrl}/AddMediaAfterUpload`, dto));
+}
+
+  async deleteMedia(mediaId: number): Promise<void> {
+  const url = `${this.apiUrl}/DeleteMedia?mediaId=${mediaId}`;
+  await lastValueFrom(this.http.delete(url));
+}
+
 }

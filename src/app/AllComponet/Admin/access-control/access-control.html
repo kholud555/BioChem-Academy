@@ -1,191 +1,69 @@
-<div class="container mt-4">
-  <div class="text-center mb-4">
-    <h2 class="fw-semibold mb-3 card">🎓 Access Control Panel</h2>
-    <div class="student-info mt-3">
-      <div class="badge bg-light text-dark border px-3 py-2 me-2">
-        <strong>Name:</strong> {{ SelectedStudentName }}
-      </div>
-      <div class="badge bg-light text-dark border px-3 py-2">
-        <strong>Grade:</strong> {{ SelectedStudentGrade }}
-      </div>
-    </div>
+<div class="section-container grade">
+  <div class="arrow">▲</div>
+  <div class="section-header">
+    <span>Grade 10 (First Year of High School)</span>
+    <span class="icon" title="Graduation cap">🎓</span>
+    <input type="checkbox" />
   </div>
 
-  <div class="card p-3 border mb-4">
-    <h5 class="fw-semibold mb-3">Select Accessible Sections</h5>
+  <div class="btn-group">
+    <button class="btn approve">Grant Access ✅</button>
+    <button class="btn cancel">Revoke Access 🚫</button>
+  </div>
 
-    <!-- ✅ Grades Checklist -->
-    <div class="mb-3">
-      <label class="form-label fw-bold d-block">Grades</label>
-      <div class="border rounded p-2" style="max-height:150px; overflow-y:auto;">
-        <div class="form-check text-start mb-2" *ngFor="let grade of grades">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="'grade-' + grade.id"
-            (change)="onGradeToggle($event, grade.id)"
-            (click)="setActiveSection('Grade', grade.id)"
-            [checked]="selectedGradeIds.includes(grade.id)"
-          />
-          <label class="form-check-label ms-2" [for]="'grade-' + grade.id">
-            {{ grade.gradeName }}
-          </label>
+  <div class="section-container term">
+    <div class="arrow">▲</div>
+    <div class="section-header">
+      <span>First Term</span>
+      <span class="icon" title="Calendar">📅</span>
+      <input type="checkbox" />
+    </div>
 
-          <!-- أزرار الـ Grant/Revoke -->
-          <div *ngIf="activeSectionType === 'Grade' && activeSectionId === grade.id" class="mt-2 ms-4">
-            <button class="btn btn-success btn-sm me-2" 
-            
-            
-            (click)="grantSingle('Grade', grade.id)">
-              ✅ Grant
-            </button>
-            <button class="btn btn-danger btn-sm" (click)="revokeSingle('Grade', grade.id)">
-              🚫 Revoke
-            </button>
-          </div>
+    <div class="btn-group">
+      <button class="btn approve">Grant ✅</button>
+      <button class="btn cancel">Revoke 🚫</button>
+    </div>
+
+    <div class="section-container unit">
+      <div class="arrow">▲</div>
+      <div class="section-header">
+        <span>Unit 1: Algebra</span>
+        <span class="icon" title="Book">📖</span>
+        <input type="checkbox" />
+      </div>
+
+      <div class="btn-group">
+        <button class="btn approve">Grant ✅</button>
+        <button class="btn cancel">Revoke 🚫</button>
+      </div>
+
+      <div class="section-container lesson">
+        <div class="arrow">▲</div>
+        <div class="section-header">
+          <span>Lesson 1: Equations</span>
+          <span class="icon" title="Notebook">📚</span>
+          <input type="checkbox" />
+        </div>
+
+        <div class="btn-group">
+          <button class="btn approve">Grant ✅</button>
+          <button class="btn cancel">Revoke 🚫</button>
+        </div>
+      </div>
+
+      <div class="section-container lesson" style="margin-top: 10px;">
+        <div class="arrow">▲</div>
+        <div class="section-header">
+          <span>Lesson 2: Inequalities</span>
+          <span class="icon" title="Notebook">📚</span>
+          <input type="checkbox" />
+        </div>
+
+        <div class="btn-group">
+          <button class="btn approve">Grant ✅</button>
+          <button class="btn cancel">Revoke 🚫</button>
         </div>
       </div>
     </div>
-
-    <!-- ✅ Terms Checklist -->
-    <div class="mb-3" *ngIf="terms.length > 0">
-      <label class="form-label fw-bold d-block">Terms</label>
-      <div class="border rounded p-2" style="max-height:150px; overflow-y:auto;">
-        <div class="form-check text-start mb-2" *ngFor="let term of terms">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="'term-' + term.id"
-            (change)="onTermToggle($event, term.id)"
-            (click)="setActiveSection('Term', term.id)"
-            [checked]="selectedTermIds.includes(term.id)"
-          />
-          <label class="form-check-label ms-2" [for]="'term-' + term.id">
-            {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-          </label>
-
-          <div *ngIf="activeSectionType === 'Term' && activeSectionId === term.id" class="mt-2 ms-4">
-            <button class="btn btn-success btn-sm me-2" 
-             
-            (click)="grantSingle('Term', term.id)">
-              ✅ Grant
-            </button>
-            <button class="btn btn-danger btn-sm" (click)="revokeSingle('Term', term.id)">
-              🚫 Revoke
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ Units Checklist -->
-    <div class="mb-3" *ngIf="units.length > 0">
-      <label class="form-label fw-bold d-block">Units</label>
-      <div class="border rounded p-2" style="max-height:150px; overflow-y:auto;">
-        <div class="form-check text-start mb-2" *ngFor="let unit of units">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="'unit-' + unit.id"
-            (change)="onUnitToggle($event, unit.id)"
-            (click)="setActiveSection('Unit', unit.id)"
-            [checked]="selectedUnitIds.includes(unit.id)"
-          />
-          <label class="form-check-label ms-2" [for]="'unit-' + unit.id">
-            {{ unit.title }}
-          </label>
-
-          <div *ngIf="activeSectionType === 'Unit' && activeSectionId === unit.id" class="mt-2 ms-4">
-            <button class="btn btn-success btn-sm me-2" (click)="grantSingle('Unit', unit.id)">
-              ✅ Grant
-            </button>
-            <button class="btn btn-danger btn-sm" (click)="revokeSingle('Unit', unit.id)">
-              🚫 Revoke
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ Lessons Checklist -->
-    <div class="mb-3" *ngIf="lessons.length > 0">
-      <label class="form-label fw-bold d-block">Lessons</label>
-     
-      <div>
-    <button class="btn btn-outline-success btn-sm me-2" (click)="grantAllLessons()">Grant All</button>
-    <button class="btn btn-outline-danger btn-sm" (click)="revokeAllLessons()">Revoke All</button>
   </div>
-      <div class="border rounded p-2" style="max-height:180px; overflow-y:auto;">
-        <div class="form-check text-start mb-2" *ngFor="let lesson of lessons">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="'lesson-' + lesson.id"
-            (change)="onLessonToggle($event, lesson.id)"
-            (click)="setActiveSection('Lesson', lesson.id)"
-            [checked]="selectedLessonIds.includes(lesson.id)"
-          />
-          <label class="form-check-label ms-2" [for]="'lesson-' + lesson.id">
-            {{ lesson.title }}
-          </label>
-
-          <div *ngIf="activeSectionType === 'Lesson' && activeSectionId === lesson.id" class="mt-2 ms-4">
-            <button class="btn btn-success btn-sm me-2" (click)="grantSingle('Lesson', lesson.id)">
-              ✅ Grant
-            </button>
-            <button class="btn btn-danger btn-sm" (click)="revokeSingle('Lesson', lesson.id)">
-              🚫 Revoke
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- 🟢 الصلاحيات الحالية -->
-<div class="card p-3 border bg-light">
-  <h5 class="fw-semibold mb-3">🎯 Current Permissions</h5>
-
-  <div *ngIf="permissions">
-    <div class="mb-2">
-      <strong>Grades:</strong>
-      <span *ngIf="permissions.gradeNames?.length; else noGrades">
-        {{ permissions.gradeNames.join(', ') }}
-      </span>
-      <ng-template #noGrades>None</ng-template>
-    </div>
-
-    <div class="mb-2">
-      <strong>Terms:</strong>
-      <span *ngIf="permissions.termNames?.length; else noTerms">
-         {{ getTermNames(permissions.termNames) }}
-
-      </span>
-      <ng-template #noTerms>None</ng-template>
-    </div>
-
-    <div class="mb-2">
-      <strong>Units:</strong>
-      <span *ngIf="permissions.unitNames?.length; else noUnits">
-        {{ permissions.unitNames.join(', ') }}
-      </span>
-      <ng-template #noUnits>None</ng-template>
-    </div>
-
-    <div class="mb-2">
-      <strong>Lessons:</strong>
-      <span *ngIf="permissions.lessonNames?.length; else noLessons">
-        {{ permissions.lessonNames.join(', ') }}
-      </span>
-      <ng-template #noLessons>None</ng-template>
-    </div>
-  </div>
-
-  <div *ngIf="!permissions" class="text-muted">
-    Loading permissions...
-  </div>
-</div>
-
 </div>

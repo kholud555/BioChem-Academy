@@ -26,7 +26,8 @@ namespace Infrastructure.Data
             if(student == null) throw new ArgumentNullException(nameof(student));
             if(student.User == null) throw new ArgumentNullException(nameof(student.User));
             if(string.IsNullOrEmpty(student.User.Email)) throw new ArgumentNullException("User Email Must be provided before save");
-            _Context.Students.Add(student);
+            
+            await _Context.Students.AddAsync(student);
             await _Context.SaveChangesAsync();
             return student;
         }

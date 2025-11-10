@@ -53,11 +53,20 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteMedia")]
-        public async Task<IActionResult> DeleteMedia ( [FromQuery]  int mediaId)
+        public async Task<IActionResult> DeleteMedia ([FromQuery]  int mediaId)
         {
             var Deleted = await _r2.DeleteMediaAsync(mediaId);
             return NoContent();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetLessonMedia")]
+        public async Task<ActionResult<IEnumerable<MediaAdminDTO>>> GetMediaByLessonId ( [FromQuery] int lessonId)
+        {
+            var mediaList = await _r2.GetMediaByLessonIdAsync(lessonId);
+            return Ok(mediaList);
+        }
+
 
     }
 }

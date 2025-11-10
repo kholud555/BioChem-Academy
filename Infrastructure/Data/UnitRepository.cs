@@ -41,7 +41,7 @@ namespace Infrastructure.Data
                 TermId = unit.TermId,
             };
 
-            _context.Units.Add(newUnit);
+            await _context.Units.AddAsync(newUnit);
             _context.SaveChanges();
             return newUnit;
         }

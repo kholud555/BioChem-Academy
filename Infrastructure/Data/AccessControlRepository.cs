@@ -32,7 +32,7 @@ namespace Infrastructure.Data
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.AccessControls.Add(access);
+            await _context.AccessControls.AddAsync(access);
             await _context.SaveChangesAsync();
         }
 

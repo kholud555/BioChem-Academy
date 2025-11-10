@@ -42,7 +42,8 @@ namespace Infrastructure.Data
             if (existing != null)
                 throw new InvalidOperationException ("Conflict: Grade  name already exists.");
             var newGrade = new Grade { GradeName = gradeName};
-            _context.Grades.Add(newGrade);
+
+            await _context.Grades.AddAsync(newGrade);
             await _context.SaveChangesAsync();
             return newGrade;
         }

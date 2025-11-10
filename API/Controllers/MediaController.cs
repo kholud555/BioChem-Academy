@@ -1,8 +1,11 @@
 ﻿using Application.DTOS;
 using Application.Services;
+using AutoMapper;
+using Core.Entities;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,10 +15,14 @@ namespace API.Controllers
     public class MediaController : ControllerBase
     {
         private readonly R2CloudFlareService _r2;
+        private readonly MediaService _service;
+        private readonly IMapper _mapper;
 
-        public MediaController(R2CloudFlareService r2)
+        public MediaController(R2CloudFlareService r2 , MediaService service , IMapper mapper)
         {
             _r2 = r2;
+            _service = service;
+            _mapper = mapper;
         }
 
 
@@ -36,6 +43,21 @@ namespace API.Controllers
             return Ok(new { presignedUrl = url });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddMediaAfterUpload")]
+        public async Task<IActionResult> AddMediaAfterUpload ([FromBody] MediaDTO dto)
+        {
+            var newMedia = await _service.AddMediaAsync(dto);
+            return Created();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("DeleteMedia")]
+        public async Task<IActionResult> DeleteMedia ( [FromQuery]  int mediaId)
+        {
+            var Deleted = await _r2.DeleteMediaAsync(mediaId);
+            return NoContent();
+        }
 
     }
 }

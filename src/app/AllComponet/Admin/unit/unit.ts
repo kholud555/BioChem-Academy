@@ -82,7 +82,7 @@ export class Unit  implements OnInit  {
     }
     else{
       this.units=[];
-       console.log('الترم المختار ID:', this.selectedTermId);
+     
     
     }
    

@@ -59,7 +59,7 @@ export class Term implements OnInit {
     if (this.selectedGradeIdForUpdate > 0) {
       this.termService.getTermsByGrade(this.selectedGradeIdForUpdate).subscribe({
         next: (data) => {
-          console.log('Loaded terms:', data);
+        
           this.terms = data;
         },
         error: (err) => console.error('Error loading terms', err)

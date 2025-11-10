@@ -1,14 +1,47 @@
-<div class="lesson-media-container">
-  <h2>Media for: {{ Lesson?.title }}</h2>
+<div class="lesson-media-container" 
+     (contextmenu)="disableRightClick($event)" 
+     *ngIf="lessonMedia.length > 0">
+  <h2>🎥 Lesson Media</h2>
+  <h2>{{lessonName}}</h2>
+  
 
-  <div *ngIf="lessonMedia.length === 0" class="text-muted">
-    No media found for this lesson.
+
+  <div class="media-list">
+    <div *ngFor="let media of lessonMedia" class="media-card" (contextmenu)="disableRightClick($event)">
+     
+      <!-- ✅ منع التحميل -->
+      <video
+        *ngIf="media.mediaType.toLowerCase() === 'video'"
+        width="400"
+        controls
+        [src]="media.previewUrl"
+        controlsList="nodownload noremoteplayback"
+        disablePictureInPicture
+        (contextmenu)="disableRightClick($event)">
+      </video>
+
+      <audio
+        *ngIf="media.mediaType.toLowerCase() === 'audio'"
+        controls
+        [src]="media.previewUrl"
+        controlsList="nodownload noremoteplayback"
+        (contextmenu)="disableRightClick($event)">
+      </audio>
+
+      <img
+        *ngIf="media.mediaType.toLowerCase() === 'image'"
+        [src]="media.previewUrl"
+        alt="{{ media.fileName }}"
+        width="300"
+        draggable="false"
+        (contextmenu)="disableRightClick($event)"
+      />
+ <h4>{{ media.fileName }}</h4>
+      <p>Type: {{ media.mediaType }} | Format: {{ media.fileFormat }}</p>
+
+      <div class="media-actions">
+        <button class="delete-btn" (click)="onDeleteMedia(media.id)">🗑️ Delete</button>
+      </div>
+    </div>
   </div>
-
-  <ul class="list-group">
-    <li *ngFor="let item of lessonMedia" class="list-group-item d-flex justify-content-between align-items-center">
-      <span>{{ item.fileName}}</span>
-      <button class="btn btn-danger btn-sm" (click)="onDeleteMedia(item.id)">🗑 Delete</button>
-    </li>
-  </ul>
 </div>

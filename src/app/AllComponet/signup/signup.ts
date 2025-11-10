@@ -1,21 +1,41 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormsModule } from '@angular/forms';
 import { StudentService } from '../../service/Student/student-service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { GradeService } from '../../service/grade-service';
+import { GradeDTO } from '../../InterFace/grade-dto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , CommonModule,FormsModule],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
 })
 export class Signup {
+  selectedGradeId: number = 0;
+  
   isLoading: boolean = false;
   showPassword = false;
   showConfirmPassword = false;
+  grades: GradeDTO[] = [];
 
+ngOnInit(): void {
+      this.loadGrades();
+    }
+    loadGrades(): void {
+      this.gradeService.GetAllGrade().subscribe(
+        (data: GradeDTO[]) => {
+          this.grades = data;
+          
+        },
+        (error) => {
+          console.error('Error fetching grades:', error);
+        }
+      );
+    }
   RegisterForm: FormGroup = new FormGroup(
     {
       userName: new FormControl('', [
@@ -72,7 +92,8 @@ export class Signup {
   constructor(
     private register: StudentService,
     private router: Router,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private gradeService: GradeService
   ) {}
 
   GoLogin() {

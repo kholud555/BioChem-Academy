@@ -15,6 +15,9 @@ import { CommonModule } from '@angular/common';
 export class ShowLessonMedia {
 
 lessonId: number = 0;
+lessonName: string = '';
+lessonDescription: string = '';
+
 Lesson:LessonDTO | null = null;
 lessonMedia: LessonForMediaDTO[]  = [];
 constructor(private media:UploadService , 
@@ -23,12 +26,15 @@ constructor(private media:UploadService ,
 ngOnInit(): void {
   this.Lesson=this.lessonService.getLesson();
   this.lessonId=this.Lesson?.id || 0;
+this.lessonName=this.Lesson?.title || '';
+this.lessonDescription=this.Lesson?.description || '';
+
   this.loadLessonMedia();
 }
  async loadLessonMedia() {
     try {
       this.lessonMedia = await this.media.getLessonMedia(this.lessonId);
-      console.log('Lesson media loaded:', this.lessonMedia);
+     
     } catch (err) {
       console.error('Error fetching lesson media:', err);
     }
@@ -46,4 +52,9 @@ ngOnInit(): void {
       this.toast.error('Failed to delete media', 'Error');
     }
   }
+  disableRightClick(event: MouseEvent) {
+  event.preventDefault();
+  return false;
+}
+
 }

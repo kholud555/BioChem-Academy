@@ -33,7 +33,7 @@
             <a class="nav-link  fw-bold nav-hover" routerLink="/courses" routerLinkActive="active-link">Learning Paths</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  fw-bold nav-hover" routerLink="/courses" routerLinkActive="active-link">About US</a>
+            <a class="nav-link  fw-bold nav-hover" routerLinkActive="active-link" (click)="scrollToSection('header')">About US</a>
           </li>
 
           @if(IsAdmin()){

@@ -25,7 +25,7 @@ editedGradeName: string = '';
     this.gradeService.GetAllGrade().subscribe(
       (data: GradeDTO[]) => {
         this.grades = data;
-        console.log('Grades loaded:', this.grades);
+        
       },
       (error) => {
         console.error('Error fetching grades:', error);

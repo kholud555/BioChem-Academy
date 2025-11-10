@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule, FormsModule],
   templateUrl: './upload-video.html',
   styleUrls: ['./upload-video.css'],
+  
 })
 export class UploadVideo implements OnInit {
   grades: GradeDTO[] = [];

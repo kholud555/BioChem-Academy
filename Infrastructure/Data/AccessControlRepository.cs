@@ -32,7 +32,7 @@ namespace Infrastructure.Data
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.AccessControls.Add(access);
+            await _context.AccessControls.AddAsync(access);
             await _context.SaveChangesAsync();
         }
 
@@ -50,8 +50,8 @@ namespace Infrastructure.Data
             {
                 case GrantedSectionsEnum.Grades:
                     {
-                        var isGradeExist = await _context.Grades.AnyAsync(g => g.Id == grantedSectionId);
-                        if (!isGradeExist) 
+                        var isGradeExist = await _context.Grades.FindAsync(grantedSectionId);
+                        if (isGradeExist == null) 
                             throw new KeyNotFoundException($"Grade with id {grantedSectionId} not found.");
 
                         var isGradeGranted = allStudentAccesses.Any(a => a.GradeId == grantedSectionId);
@@ -82,7 +82,7 @@ namespace Infrastructure.Data
                         if (isGradeGranted) 
                             return true;
                        
-                        await AddAccessRecordAsync(studentId,gradeId:Term.GradeId,termId: grantedSectionId);
+                        await AddAccessRecordAsync(studentId,termId: grantedSectionId);
                     }
                     break;
 
@@ -90,14 +90,14 @@ namespace Infrastructure.Data
                     {
                         var unit = await _context.Units.FirstOrDefaultAsync(u => u.Id == grantedSectionId);
                         if (unit == null)
-                            throw new KeyNotFoundException($"Unit {grantedSectionId} not found");
+                            throw new KeyNotFoundException($"Unit with Id {grantedSectionId} not found");
 
                         var termOfUnit = await _context.Terms.FirstOrDefaultAsync(t => t.Id == unit.TermId);
 
                         if(allStudentAccesses.Any(a => a.UnitId == unit.Id || a.TermId == unit.TermId || a.GradeId == termOfUnit.GradeId))
                             return true;
 
-                        await AddAccessRecordAsync(studentId,termOfUnit.GradeId ,unit.TermId , unit.Id);
+                        await AddAccessRecordAsync(studentId, unitId:unit.Id);
                     }
                     break;
 
@@ -117,7 +117,7 @@ namespace Infrastructure.Data
                             a.GradeId == termForLesson.GradeId))
                             return true;
 
-                        await AddAccessRecordAsync(studentId, termForLesson.GradeId, termForLesson.Id, unitForLesson.Id, lesson.Id);
+                        await AddAccessRecordAsync(studentId, lessonId:lesson.Id);
 
                     }
                     break;
@@ -254,7 +254,7 @@ namespace Infrastructure.Data
                 default:
                     return false;
             }
-
+            await _context.SaveChangesAsync();
             return true;
 
         }

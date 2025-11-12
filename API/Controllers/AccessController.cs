@@ -1,6 +1,7 @@
 ﻿using Amazon.S3.Model;
 using Application.DTOS;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace API.Controllers
            _service = service;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("GrantAccess")]
         public async Task<IActionResult> GrantAccess([FromBody] AccessControlDTO dto)
         {
@@ -25,6 +26,7 @@ namespace API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("Revoke")]
         public async Task<IActionResult> RevokeAccess([FromBody] AccessControlDTO dto)
         {
@@ -32,6 +34,7 @@ namespace API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("student/{studentId}")]
         public async Task<ActionResult<StudentPermissionsDTO>> GetStudentPermissions1q(int studentId , [FromQuery] bool IncludedNames = false)
         {

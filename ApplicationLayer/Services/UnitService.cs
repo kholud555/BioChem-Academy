@@ -22,6 +22,22 @@ namespace Application.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<Unit>> GetUnutsByTermId(int termId)
+        {
+            if (termId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(termId), "ID must be greater than zero");
+            }
+
+            var unitsOfTerm = await _unitRepo.GetUnitsByTermIdAsync(termId);
+
+            if (!unitsOfTerm.Any()) throw new ArgumentException("no units to this term");
+
+
+            return unitsOfTerm;
+
+
+        }
         public async Task<Unit> GetUnitByIdAsync (int id)
         {
             if(id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Id Should Be Greater than 0");

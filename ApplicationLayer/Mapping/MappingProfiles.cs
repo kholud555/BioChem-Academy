@@ -41,9 +41,9 @@ namespace Infrastructure.Data
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(scr => scr.Id));
 
             //Media 
-            //CreateMap<Media, MediaDTO>();
             CreateMap<MediaDTO, Media>();
 
+            CreateMap<CreateQuestionDTO, Question>().ReverseMap();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Infrastructure.Data
                 GradeId = term.GradeId,
             };
                                  
-            _context.Terms.Add(newTerm);
+            await _context.Terms.AddAsync(newTerm);
             await _context.SaveChangesAsync();
             return newTerm;
         }

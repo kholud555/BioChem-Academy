@@ -17,6 +17,19 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+        public async Task<IEnumerable<Unit>> GetUnitsByTermIdAsync(int termId)
+        {
+            var isTermIdExist = await _context.Terms.AnyAsync(t => t.Id == termId);
+            if (!isTermIdExist) throw new KeyNotFoundException("termId not found");
+
+            var unitsOfTerm = await _context.Units.Where(u => u.TermId == termId).ToListAsync();
+
+
+            return unitsOfTerm;
+
+
+        }
+
         public async Task<Unit> GetUnitByIdAsync(int id)
         {
             var unit = await _context.Units.FindAsync(id);
@@ -41,7 +54,7 @@ namespace Infrastructure.Data
                 TermId = unit.TermId,
             };
 
-            _context.Units.Add(newUnit);
+            await _context.Units.AddAsync(newUnit);
             _context.SaveChanges();
             return newUnit;
         }

@@ -485,3 +485,36 @@ $RECYCLE.BIN/
 # app settings
 appsettings.json
 appsettings.*.json
+
+
+.vs/
+bin/
+obj/
+
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Tt]emp/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Visual Studio Code
+.vscode/
+
+# Other
+*.dbmdl
+*.pdb
+*.dll
+*.exe
+*.cache

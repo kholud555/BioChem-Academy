@@ -64,8 +64,16 @@ namespace Infrastructure.Data
             var existingTerm = await _context.Terms.FindAsync(term.Id);
             if(existingTerm == null) return false;
 
+            var isExisting = await _context.Terms.
+           AnyAsync(t => t.GradeId == term.GradeId && t.TermOrder == term.TermOrder);
+
+            if (isExisting) throw new InvalidOperationException("conflict: term with this name already exists.");
+
             existingTerm.TermOrder = term.TermOrder;
-            existingTerm.GradeId = term.GradeId;
+                existingTerm.GradeId = term.GradeId;
+
+            
+
 
             return await _context.SaveChangesAsync() > 0;
         }

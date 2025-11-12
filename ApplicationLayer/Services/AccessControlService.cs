@@ -93,11 +93,7 @@ namespace Application.Services
                     .Where(l => unitIds.Contains(l.UnitId))
                     .Select(l => l.Id)
                     .ToListAsync();
-            
-
-
-
-               
+     
 
             var result = new StudentPermissionsDTO
             {

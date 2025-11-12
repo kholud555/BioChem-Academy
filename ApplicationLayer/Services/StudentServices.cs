@@ -15,7 +15,7 @@ namespace Application.Services
         #region Fields
         private readonly UserManager<User> _userManager;
         private readonly StoreContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper; 
         private readonly IStudentRepository _repo;
         #endregion
 

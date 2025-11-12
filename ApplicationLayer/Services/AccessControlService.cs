@@ -59,30 +59,45 @@ namespace Application.Services
             var lessonIds = accessList.Where(a => a.LessonId != null).Select(a => a.LessonId.Value).ToList();
 
             //expand hierarchies
-            var expandedTermUnits = await _context.Units
-                .Where(u => termIds.Contains(u.TermId))
-                .Select(u => u.Id)
-                .ToListAsync();
 
-            var expandedTermLessons = await _context.Lessons
-                .Where(l => expandedTermUnits.Contains(l.UnitId))
-                .Select(l => l.Id)
-                .ToListAsync();
+            
+            
+                var expandedGradeTerms = await _context.Terms
+               .Where(t => gradeIds.Contains(t.GradeId))
+               .Select(t => t.Id)
+               .ToListAsync();
 
-            var expandedGradeTerms = await _context.Terms
-                .Where(t => gradeIds.Contains(t.GradeId))
-                .Select(t => t.Id)
-                .ToListAsync();
+                var expandedGradeUnits = await _context.Units
+                    .Where(u => expandedGradeTerms.Contains(u.TermId))
+                    .Select(u => u.Id)
+                    .ToListAsync();
 
-            var expandedGradeUnits = await _context.Units
-                .Where(u => expandedGradeTerms.Contains(u.TermId))
-                .Select(u => u.Id)
-                .ToListAsync();
+                var expandedGradeLessons = await _context.Lessons
+                    .Where(l => expandedGradeUnits.Contains(l.UnitId))
+                    .Select(l => l.Id)
+                    .ToListAsync();
+            
 
-            var expandedGradeLessons = await _context.Lessons
-                .Where(l => expandedGradeUnits.Contains(l.UnitId))
-                .Select(l => l.Id)
-                .ToListAsync();
+                var expandedTermUnits = await _context.Units
+                    .Where(u => termIds.Contains(u.TermId))
+                    .Select(u => u.Id)
+                    .ToListAsync();
+
+                var expandedTermLessons = await _context.Lessons
+                    .Where(l => expandedTermUnits.Contains(l.UnitId))
+                    .Select(l => l.Id)
+                    .ToListAsync();
+           
+           
+                var expandedUnitLessons = await _context.Lessons
+                    .Where(l => unitIds.Contains(l.UnitId))
+                    .Select(l => l.Id)
+                    .ToListAsync();
+            
+
+
+
+               
 
             var result = new StudentPermissionsDTO
             {
@@ -90,7 +105,7 @@ namespace Application.Services
                 GrantedGrade = gradeIds,
                 GrantedTerms = termIds.Union(expandedGradeTerms).Distinct().ToList(),
                 GrantedUnits = unitIds.Union(expandedTermUnits).Union(expandedGradeUnits).Distinct().ToList(),
-                GrantedLessons = lessonIds.Union(expandedTermLessons).Union(expandedGradeLessons).Distinct().ToList(),
+                GrantedLessons = lessonIds.Union(expandedTermLessons).Union(expandedGradeLessons).Union(expandedUnitLessons).Distinct().ToList(),
             };
 
             if(includeNames)

@@ -20,6 +20,15 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("GetUnitsByTerms")]
+        public async Task<ActionResult<IEnumerable<UnitDTO>>> GetUnitsByTermID(int termId)
+        {
+            var UnitsOfTerm = await _unitService.GetUnutsByTermId(termId);
+
+            var dtos = _mapper.Map<IEnumerable<UnitDTO>>(UnitsOfTerm);
+            return Ok(dtos);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<UnitDTO>> GetUnitById(int id)

@@ -150,10 +150,22 @@ export class Term implements OnInit {
             Swal.fire('Deleted!', 'Term has been deleted.', 'success');
             this.onGradeChange();
           },
-          error: (err) => {
-            Swal.fire('Error!', 'Failed to delete term.', 'error');
-            console.error('Delete error:', err);
-          }
+           error: (err) => {
+          const errorMessage =
+           
+             err?.error?.detail || 
+           
+            'An unexpected error occurred ';
+        
+          Swal.fire({
+            icon: 'error',
+            title:err.error?.title || 'Error!',
+            text: errorMessage,
+          });
+        
+          console.error('Error deleting grade:', err);
+        }
+        
         });
       }
     });

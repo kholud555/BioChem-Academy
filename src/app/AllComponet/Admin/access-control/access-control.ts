@@ -86,7 +86,12 @@ export class AccessControl implements OnInit {
 
         console.log('Mapped Permissions (used in UI):', this.permissions);
       },
-      error: err => console.error('Error loading permissions:', err)
+      error: err =>{
+         console.error('Error loading permissions:', err.message);
+        this.toastr.error(err.message, 'Error');
+      }
+        
+
     });
   }
 
@@ -111,7 +116,11 @@ export class AccessControl implements OnInit {
           });
         });
       },
-      error: err => console.error('Error loading grades:', err)
+      error: err =>{
+           console.error('Error loading grades:', err.message);
+           this.toastr.error(err.message, 'Error');
+      }
+      
     });
   }
 
@@ -151,7 +160,7 @@ export class AccessControl implements OnInit {
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed to grant access');
+        this.toastr.error('Failed ' , err.message);
       }
     });
   }
@@ -179,7 +188,7 @@ export class AccessControl implements OnInit {
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed to revoke access');
+        this.toastr.error('Failed to revoke access'   , err.message);
       }
     });
   }

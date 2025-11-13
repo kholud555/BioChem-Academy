@@ -18,10 +18,12 @@ import { GetllStudents } from './AllComponet/Admin/getll-students/getll-students
 import { AccessControl } from './AllComponet/Admin/access-control/access-control';
 
 
-import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
+
+
 import { CourseContent } from './AllComponet/Admin/course-content/course-content';
 import { GetAllTermsForGrade } from './AllComponet/Admin/get-all-terms-for-grade/get-all-terms-for-grade';
 import { ShowLessonMedia } from './AllComponet/Admin/show-lesson-media/show-lesson-media';
+import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
 
 
 export const routes: Routes = [
@@ -30,7 +32,7 @@ export const routes: Routes = [
     {path:"login" , component:Login},
     {path:"signup" , component:Signup},
     {path:"courses" , component:Courses},
-    {path:"upload-video",component:UploadVideo},
+    {path:"upload-video",component:UploadVideo },
     
      {path:"profile" , component:UserProfile},
  

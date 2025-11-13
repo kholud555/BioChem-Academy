@@ -128,10 +128,21 @@ export class Lesson implements OnInit {
       Swal.fire('Success', '🗑️ Lesson deleted successfully.', 'success');
        
       },
-      error: (err) =>
-       
-     Swal.fire('Error', err.error?.message || err.message, 'error')
-      
+       error: (err) => {
+      const errorMessage =
+        err?.error?.message ||
+         err?.error?.detail || 
+        err?.message ||
+        'An unexpected error occurred while deleting the grade.';
+    
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: errorMessage,
+      });
+    
+      console.error('Error deleting grade:', err);
+    }
     });
   }
 
@@ -148,7 +159,7 @@ export class Lesson implements OnInit {
        
       },
       error: (err) =>
-        Swal.fire('Error', 'Failed ', 'error')
+        Swal.fire('Error', 'Failed ', err.message )
       
     
     });

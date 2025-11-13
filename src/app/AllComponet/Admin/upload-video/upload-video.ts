@@ -19,7 +19,6 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule, FormsModule],
   templateUrl: './upload-video.html',
   styleUrls: ['./upload-video.css'],
-  
 })
 export class UploadVideo implements OnInit {
   grades: GradeDTO[] = [];
@@ -89,14 +88,19 @@ export class UploadVideo implements OnInit {
     this.selectedLessonId = Number(select.value);
   }
 
+  // ---------- upload logic ----------
   async handleUpload(): Promise<void> {
-    if (!this.selectedFile || !this.selectedLessonId) return;
+    if (!this.selectedFile || !this.selectedLessonId) {
+      this.toast.error('Please choose a file and select a lesson first', 'Missing data');
+      return;
+    }
 
     this.isUploading = true;
     this.uploadProgress = 0;
 
     try {
-      const { presignedUrl, storageKey } = await this.uploadService.getPresignedUrl(
+      // نحصل على presigned URL من الـ backend
+      const res: any = await this.uploadService.getPresignedUrl(
         this.selectedFile,
         this.getGradeName(),
         this.getTermName(),
@@ -104,25 +108,28 @@ export class UploadVideo implements OnInit {
         this.selectedLessonId
       );
 
+      // تأكد من البنية المتوقعة
+      const presignedUrl = res?.presignedUrl ?? res?.presignUrl ?? res?.url;
+      const storageKey = res?.storageKey ?? res?.key;
+
+      if (!presignedUrl || !storageKey) {
+        throw new Error('Invalid presigned response from server');
+      }
+
+      // نرفع الملف إلى R2 مع تحديث progress
       await this.uploadService.uploadToR2(this.selectedFile, presignedUrl, (percent) => {
         this.uploadProgress = percent;
       });
 
-      const mediaDto = {
-        mediaType: 0,
-        storageKey,
-        duration: null,
-        fileFormat: 0,
-        lessonId: this.selectedLessonId
-      };
+      // بعد الرفع نضيف السجل للـ DB عبر الـ service (مراعاة التوقيع الحالي في UploadService)
+      // نمرر الملف (لازِم عشان detectMediaType) + storageKey + lessonId + duration (نمرر null لو مش عندنا)
+      await this.uploadService.addMediaAfterUpload(this.selectedFile, storageKey, this.selectedLessonId, null);
 
-      await this.uploadService.addMediaAfterUpload(mediaDto);
-
-     
+      this.toast.success('Upload success', 'Done');
       this.handleRemove();
     } catch (error) {
       console.error('Upload failed:', error);
-      
+      this.toast.error('Upload failed', 'Error');
     } finally {
       this.isUploading = false;
     }
@@ -140,7 +147,10 @@ export class UploadVideo implements OnInit {
     this.dragActive = false;
 
     const file = event.dataTransfer?.files?.[0];
-    if (file?.type.startsWith('video/')) this.selectedFile = file;
+    if (!file) return;
+
+    // دلوقتي نقبل الفيديو/صورة/PDF/Audio — تحقق من النوع أو اسم الامتداد إن أحببت
+    this.selectedFile = file;
   }
 
   onFileChange(event: Event): void {
@@ -155,20 +165,23 @@ export class UploadVideo implements OnInit {
   }
 
   formatFileSize(bytes: number): string {
-    const k = 1024, sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const k = 1024,
+      sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   }
 
   getGradeName(): string {
-    return this.grades.find(g => g.id === this.selectedGradeId)?.gradeName || 'Grade';
+    return this.grades.find((g) => g.id === this.selectedGradeId)?.gradeName || 'Grade';
   }
 
-  getTermName(): any {
-    return this.terms.find(t => t.id === this.selectedTermId)?.termOrder|| 'Term';
+  // رجعت string بدل any
+  getTermName(): string {
+    const t = this.terms.find((t) => t.id === this.selectedTermId)?.termOrder;
+    return t !== undefined && t !== null ? String(t) : 'Term';
   }
 
   getUnitName(): string {
-    return this.units.find(u => u.id === this.selectedUnitId)?.title || 'Unit';
+    return this.units.find((u) => u.id === this.selectedUnitId)?.title || 'Unit';
   }
 }

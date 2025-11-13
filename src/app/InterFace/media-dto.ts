@@ -1,11 +1,13 @@
+// ✅ media-dto.ts
 export interface MediaDTO {
   id?: number;
-  mediaType: string;
+  mediaType: MediaTypeEnum;   // Enum مطابق للباك
   storageKey: string;
-  fileFormat: string;
+  fileFormat: FileFormatEnum; // Enum مطابق للباك
   lessonId: number;
-  duration: number;
+  duration?: number | null;
 }
+
 export interface PresignRequestDTO {
   grade: string;
   term: string;
@@ -15,12 +17,23 @@ export interface PresignRequestDTO {
 }
 
 export interface LessonForMediaDTO {
+  id: number;
+  fileName: string;
+  mediaType: string;  // backend بيرجع string زي "Video"
+  fileFormat: string; // نفس الكلام
+  duration?: number | null;
+  previewUrl: string;
+}
 
-     id :number,
-     fileName :  string ,
-     mediaType :  string ,
-     fileFormat :  string ,
-     duration : number,
-     previewUrl :  string 
-  
+export enum MediaTypeEnum {
+  Video = 0,
+  Pdf = 1,
+  Image = 2,
+}
+
+export enum FileFormatEnum {
+  Mp4 = 0,
+  Pdf = 1,
+  Jpg = 2,
+  Png = 3,
 }

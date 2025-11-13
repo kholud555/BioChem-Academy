@@ -74,7 +74,8 @@ export class GetAllTermsForGrade implements OnInit {
         this.terms = data;
       },
       (error) => {
-        console.error('❌ Error fetching terms:', error);
+        console.error('❌ Error fetching terms:', error.message);
+        this.toast.error(error.message, 'Error');
       
       }
     );
@@ -114,7 +115,7 @@ export class GetAllTermsForGrade implements OnInit {
       },
       error: (err) => {
         console.error('Error loading units:', err);
-        this.toast.error('Failed to load units', 'Error');
+        this.toast.info(err.message, 'Error');
       }
     });
   }

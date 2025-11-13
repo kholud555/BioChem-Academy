@@ -88,14 +88,22 @@ CancelEdit():void{
             });
             this.loadGrades();
           },
-          error: (err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: 'Failed to delete grade.',
-            });
-            console.error('Error deleting grade:', err);
-          }
+       error: (err) => {
+  const errorMessage =
+    err?.error?.message ||
+     err?.error?.detail || 
+    err?.message ||
+    'An unexpected error occurred while deleting the grade.';
+
+  Swal.fire({
+    icon: 'error',
+    title: 'Error!',
+    text: errorMessage,
+  });
+
+  console.error('Error deleting grade:', err);
+}
+
         });
       }
     });

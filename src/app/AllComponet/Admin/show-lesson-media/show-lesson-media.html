@@ -1,46 +1,56 @@
+<h2 class="mb-3">🎥 Lesson Media</h2>
+<h3 class="mb-4">{{ lessonName }}</h3>
+
 <div class="lesson-media-container" 
      (contextmenu)="disableRightClick($event)" 
      *ngIf="lessonMedia.length > 0">
-  <h2>🎥 Lesson Media</h2>
-  <h2>{{lessonName}}</h2>
-  
 
+  <div class="row g-3">
+    <div *ngFor="let media of lessonMedia" class="col-md-6 col-lg-4">
+      <div class="card media-card" (contextmenu)="disableRightClick($event)"  style="height: 250px; object-fit: cover;">
+        
+        <!-- ✅ Video -->
+        <video
+          *ngIf="media.mediaType.toLowerCase() === 'video'"
+          class="card-img-top"
+          controls
+          [src]="media.previewUrl"
+          controlsList="nodownload noremoteplayback"
+          disablePictureInPicture
+          (contextmenu)="disableRightClick($event)">
+        </video>
 
-  <div class="media-list">
-    <div *ngFor="let media of lessonMedia" class="media-card" (contextmenu)="disableRightClick($event)">
-     
-      <!-- ✅ منع التحميل -->
-      <video
-        *ngIf="media.mediaType.toLowerCase() === 'video'"
-        width="400"
-        controls
-        [src]="media.previewUrl"
-        controlsList="nodownload noremoteplayback"
-        disablePictureInPicture
-        (contextmenu)="disableRightClick($event)">
-      </video>
+        <!-- ✅ Audio -->
+        <audio
+          *ngIf="media.mediaType.toLowerCase() === 'audio'"
+          class="w-100 my-2"
+          controls
+          [src]="media.previewUrl"
+          controlsList="nodownload noremoteplayback"
+          (contextmenu)="disableRightClick($event)">
+        </audio>
 
-      <audio
-        *ngIf="media.mediaType.toLowerCase() === 'audio'"
-        controls
-        [src]="media.previewUrl"
-        controlsList="nodownload noremoteplayback"
-        (contextmenu)="disableRightClick($event)">
-      </audio>
+        <!-- ✅ Image -->
+        <img
+          *ngIf="media.mediaType.toLowerCase() === 'image'"
+          class="card-img-top"
+          [src]="media.previewUrl"
+          alt="{{ media.fileName }}"
+          draggable="false"
+          (contextmenu)="disableRightClick($event)"
+        />
 
-      <img
-        *ngIf="media.mediaType.toLowerCase() === 'image'"
-        [src]="media.previewUrl"
-        alt="{{ media.fileName }}"
-        width="300"
-        draggable="false"
-        (contextmenu)="disableRightClick($event)"
-      />
- <h4>{{ media.fileName }}</h4>
-      <p>Type: {{ media.mediaType }} | Format: {{ media.fileFormat }}</p>
+        <div class="card-body">
+          <h5 class="card-title">{{ media.fileName }}</h5>
+          <p class="card-text">Type: {{ media.mediaType }} | Format: {{ media.fileFormat }}</p>
 
-      <div class="media-actions">
-        <button class="delete-btn" (click)="onDeleteMedia(media.id)">🗑️ Delete</button>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-danger btn-sm" (click)="onDeleteMedia(media.id)">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

@@ -6,14 +6,7 @@
     <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
   </select>
 
-  <!-- 📅 Select Term -->
-  <label>Term:</label>
-  <select (change)="onTermChange($event)" [disabled]="!selectedGradeId">
-    <option [value]="null">Select Term</option>
-    <option *ngFor="let term of terms" [value]="term.id">
-      {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-    </option>
-  </select>
+ 
 
   <!-- 📚 Select Unit -->
   <label>Unit:</label>
@@ -21,7 +14,14 @@
     <option [value]="null">Select Unit</option>
     <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
   </select>
-
+ <!-- 📅 Select Term -->
+  <label>Term:</label>
+  <select (change)="onTermChange($event)" [disabled]="!selectedGradeId">
+    <option [value]="null">Select Term</option>
+    <option *ngFor="let term of terms" [value]="term.id">
+      {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+    </option>
+  </select>
   <!-- 🎓 Select Lesson -->
   <label>Lesson:</label>
   <select (change)="onLessonChange($event)" [disabled]="!selectedUnitId">
@@ -42,7 +42,12 @@
   (drop)="handleDrop($event)"
 >
   <p>🎬 Drag & drop your video here or <span class="browse">choose a file</span></p>
-  <input type="file" accept="video/*" (change)="onFileChange($event)" />
+  <input 
+  type="file" 
+  accept="video/*,image/*,application/pdf" 
+  (change)="onFileChange($event)" 
+/>
+
 </div>
 
 <!-- 📁 Selected File Info -->

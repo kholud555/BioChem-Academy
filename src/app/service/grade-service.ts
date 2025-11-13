@@ -29,9 +29,14 @@ private selectedGrade: GradeDTO | null = null;
 
 setGrade(grade : GradeDTO): void {
    this.selectedGrade = grade;
+    localStorage.setItem('selectedGrade', JSON.stringify(grade));
   }
 
   getGrade(): GradeDTO | null {
-    return this.selectedGrade;
+     if (this.selectedGrade) return this.selectedGrade;
+    const stored = localStorage.getItem('selectedGrade');
+  return stored ? JSON.parse(stored) : null;
+ 
+
   }
 }

@@ -111,10 +111,22 @@ export class Unit  implements OnInit  {
         this.newUnit = { title: '', description: '', order: 1, termId: 0 };
       this.loadUnits(); 
       },
-      error: (err) => {
-        console.error(err);
-        Swal.fire('Error', err.error.message, 'error' );
+         error: (err) => {
+        const errorMessage =
+          err?.error?.message ||
+           err?.error?.detail || 
+          err?.message ||
+          'An unexpected error occurred while deleting the grade.';
+      
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: errorMessage,
+        });
+      
+        console.error('Error deleting grade:', err);
       }
+      
     });
   }
   
@@ -128,7 +140,23 @@ export class Unit  implements OnInit  {
         Swal.fire('Updated', 'Unit updated successfully', 'success');
         this.selectedTUnitId =0;
       },
-      error: () => Swal.fire('Error', 'Failed to update unit', 'error')
+         error: (err) => {
+        const errorMessage =
+          err?.error?.message ||
+           err?.error?.detail || 
+          err?.message ||
+          'An unexpected error occurred while deleting the grade.';
+      
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: errorMessage,
+        });
+      
+        console.error('Error deleting grade:', err);
+      }
+      
+   
     });
   }
 
@@ -152,7 +180,23 @@ export class Unit  implements OnInit  {
             Swal.fire('Deleted', 'Unit deleted successfully', 'success');
             this.loadUnits();
           },
-          error: () => Swal.fire('Error', 'Failed to delete unit', 'error')
+            error: (err) => {
+           const errorMessage =
+             err?.error?.message ||
+              err?.error?.detail || 
+             err?.message ||
+             'An unexpected error occurred while deleting the grade.';
+         
+           Swal.fire({
+             icon: 'error',
+             title: 'Error!',
+             text: errorMessage,
+           });
+         
+           console.error('Error deleting grade:', err);
+         }
+         
+      
         });
       }
     });

@@ -20,13 +20,15 @@ namespace API.Controllers
         #region Fields
         private readonly StudentServices _service;
         private readonly IMapper _mapper;
+        private readonly R2CloudFlareService _r2;
         #endregion
 
         #region Constructor
-        public StudentController(StudentServices service, IMapper mapper)
+        public StudentController(StudentServices service, IMapper mapper , R2CloudFlareService r2)
         {
             _service = service;
            _mapper = mapper;
+            _r2 = r2;
         }
 
         #endregion
@@ -92,6 +94,20 @@ namespace API.Controllers
             var updateProfile = await _service.UpdateStudentAsync(userId, student);
 
             return Ok(updateProfile);
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpGet("MediaAccessForStudent")]
+        public async Task<ActionResult<IEnumerable<StudentAccessedMediaDTo>>> GetMediaByLessonForStudent (int lessonId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var mediaList = await _r2.GetMedioForStudentByLessonIdAsync (userId, lessonId);
+
+            if (mediaList == null)
+                return Forbid("You don't have permission to access this lesson.");
+
+            return Ok(mediaList);
         }
     }
 }

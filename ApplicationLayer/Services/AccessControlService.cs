@@ -59,9 +59,6 @@ namespace Application.Services
             var lessonIds = accessList.Where(a => a.LessonId != null).Select(a => a.LessonId.Value).ToList();
 
             //expand hierarchies
-
-            
-            
                 var expandedGradeTerms = await _context.Terms
                .Where(t => gradeIds.Contains(t.GradeId))
                .Select(t => t.Id)

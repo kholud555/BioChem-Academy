@@ -35,14 +35,6 @@ namespace API.Controllers
             return Ok(new { presignedUrl = url, storageKey = key });
         }
 
-        [Authorize(Roles = "Student")]
-        [HttpGet("presign-Watch")]
-        public IActionResult GetWatchUrl([FromQuery] string key)
-        {
-            var url = _r2.GenerateSignedUrlForViewing(key);
-            return Ok(new { presignedUrl = url });
-        }
-
         [Authorize(Roles = "Admin")]
         [HttpPost("AddMediaAfterUpload")]
         public async Task<IActionResult> AddMediaAfterUpload ([FromBody] MediaDTO dto)

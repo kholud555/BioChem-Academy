@@ -16,5 +16,5 @@ namespace Core.Interfaces
 
         Task<bool> UpdateStudentAsync(Student student);
 
-    }
+   }
 }

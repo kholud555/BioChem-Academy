@@ -20,26 +20,44 @@ namespace API.Controllers
         }
 
         [HttpGet("GetQuestionById")]
-        public async Task<IActionResult> GetQuestion(int id)
+        public async Task<ActionResult<QuestionDTO>> GetQuestionById(int id)
         {
             var question = await _service.GetQuestionByIdAsync(id);
-            return Ok(question);
+            var dto = _mapper.Map<QuestionDTO>(question);
+            return Ok(dto);
         }
 
-        //[HttpPost("AddQuestion")]
-        //public async Task<ActionResult> AddQuestion([FromBody] CreateQuestionDTO dto)
-        //{
-        //    var newQuestion = await _service.SaveQuestionAsync(dto);
-
-        //    var newQuestionDto = _mapper.Map<CreateQuestionDTO>(newQuestion);
-
-        //    return CreatedAtAction(nameof(GetQuestion), new { id = dto.Id }, newQuestionDto);
-        //}
-
-        [HttpPut("UpdateQuestion")]
-        public async Task<IActionResult> UpdateQuestion([FromBody] CreateQuestionDTO dto)
+        [HttpPost("AddQuestionHeader")]
+        public async Task<ActionResult<QuestionDTO>> AddQuestionHeader([FromBody] CreateQuestionDTO dto)
         {
-            var question = await _service.SaveQuestionAsync(dto);
+            var newQuestion = await _service.AddQuestionHeaderAsync(dto);
+
+            var newQuestionDto = _mapper.Map<QuestionDTO>(newQuestion);
+
+            return Ok(newQuestionDto);
+        }
+
+        [HttpPost("AddQuestionChoice")]
+        public async Task<ActionResult<QuestionChoicesDTO>> AddQuestionChoice ([FromBody] CreateQuestionChoicesDTO dto)
+        {
+            var newQuestionChoice = await _service.AddQuestionChoicesAsync(dto);
+
+            var newQuestionChoiceDto = _mapper.Map<QuestionChoicesDTO>(newQuestionChoice);
+
+            return Ok(newQuestionChoiceDto);
+        }
+
+        [HttpPut("UpdateQuestionHeader")]
+        public async Task<IActionResult> UpdateQuestionHeader ([FromBody] QuestionDTO dto)
+        {
+            var question = await _service.UpdateQuestionHeaderAsync(dto);
+            return NoContent();
+        }
+
+        [HttpPut("UpdateQuestionChoice")]
+        public async Task<IActionResult> UpdateQuestionChoice([FromBody] QuestionChoicesDTO dto)
+        {
+            var question = await _service.UpdateQuestionChoiceAsync(dto);
             return NoContent();
         }
 

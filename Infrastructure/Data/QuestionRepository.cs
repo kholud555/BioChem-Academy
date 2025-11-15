@@ -96,7 +96,7 @@ namespace Infrastructure.Data
             return true;
         }
 
-        public async Task<bool> UpdateQuestionAsync(Question question)
+        public async Task<bool> UpdateQuestionHeaderAsync(Question question)
         {
             var existedQuestion = await _context.Questions
                         .FirstOrDefaultAsync(q => q.Id == question.Id);

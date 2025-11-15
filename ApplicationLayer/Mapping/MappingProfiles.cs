@@ -44,6 +44,22 @@ namespace Infrastructure.Data
             CreateMap<MediaDTO, Media>();
 
             CreateMap<CreateQuestionDTO, Question>().ReverseMap();
+
+            // CreateExamDTO -> Exam
+            CreateMap<CreateExamDTO, Exam>();
+
+            // ExamDTO -> Exam
+            CreateMap<ExamDTO, Exam>();
+
+            // Exam -> ExamDTO
+            CreateMap<Exam, ExamDTO>();
+
+            // Exam -> ExamDetailsDTO
+            CreateMap<Exam, ExamDetailsDTO>()
+                .ForMember(dest => dest.QuestionsCount,
+                    opt => opt.MapFrom(src => src.Questions.Count))
+                .ForMember(dest => dest.StudentsAttempted,
+                    opt => opt.MapFrom(src => src.StudentExam.Count));
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Application.Services
             _repo = repo;
             _mapper = mapper;
         }
-
         public async Task<Question> GetQuestionByIdAsync(int id)
         {
             if (id <= 0)
@@ -33,9 +32,23 @@ namespace Application.Services
             return question;
 
         }
+        public async Task<QuestionChoice> AddQuestionChoicesAsync(CreateQuestionChoicesDTO dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
+            if (string.IsNullOrWhiteSpace(dto.ChoiceText))
+                throw new ArgumentException("Question choice cannot be empty.");
+            if (dto.QuestionId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.QuestionId), "Question ID must be greater than zero.");
 
+            var questionChoice = _mapper.Map<QuestionChoice>(dto);
 
-        public async Task<Question> SaveQuestionAsync(CreateQuestionDTO dto)
+            var newQuestionChoice = await _repo.AddQuestionChoicesAsync(questionChoice);
+            if (newQuestionChoice == null) throw new InvalidOperationException("Conflict : Question choice did not created");
+
+            return newQuestionChoice;
+        }
+        public async Task<Question> AddQuestionHeaderAsync(CreateQuestionDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
@@ -47,18 +60,48 @@ namespace Application.Services
                 throw new ArgumentOutOfRangeException(nameof(dto.Mark), "Mark must be greater than zero.");
 
             var question = _mapper.Map<Question>(dto);
+             var newQuestion = await _repo.AddQuestionHeaderAsync(question);
+            if (newQuestion == null) throw new InvalidOperationException("Conflict : Question did not created");
 
-            //if (dto.Id == null || dto.Id == 0)
-            //    return await _repo.AddQuestionHeaderAsync(question);
-
-            //var isUpdated = await _repo.UpdateQuestionAsync(question);
-            //if (!isUpdated)
-            //    throw new KeyNotFoundException($"Question with ID {dto.Id} not found.");
-
-            return question;
+            return newQuestion;
         }
+        public async Task<bool> UpdateQuestionHeaderAsync (QuestionDTO dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
+            if (string.IsNullOrWhiteSpace(dto.QuestionHeader))
+                throw new ArgumentException("Question header cannot be empty.");
+            if (dto.ExamId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.ExamId), "Exam ID must be greater than zero.");
+            if (dto.Id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.Id), "Question ID must be greater than zero.");
+            if (dto.Mark <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.Mark), "Mark must be greater than zero.");
 
+            var question = _mapper.Map<Question>(dto);
+            var isUpdated = await _repo.UpdateQuestionHeaderAsync(question);
+            if (! isUpdated) throw new InvalidOperationException("Conflict : Question did not Updated");
 
+            return isUpdated;
+        }
+        public async Task<bool> UpdateQuestionChoiceAsync (QuestionChoicesDTO dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
+            if (string.IsNullOrWhiteSpace(dto.ChoiceText))
+                throw new ArgumentException("Question choice cannot be empty.");
+            if (dto.QuestionId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.QuestionId), "Question ID must be greater than zero.");
+            if (dto.Id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dto.Id), "Question ID must be greater than zero.");
+
+            var questionChoice = _mapper.Map<QuestionChoice>(dto);
+
+            var isUpdated = await _repo.UpdateQuestionChoiceAsync(questionChoice);
+            if (!isUpdated) throw new InvalidOperationException("Conflict : Question choice did not Updated");
+
+            return isUpdated;
+        }
         public async Task<bool> DeleteQuestionAsync(int id)
         {
             if (id <= 0)

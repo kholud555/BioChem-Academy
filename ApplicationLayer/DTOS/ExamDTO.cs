@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class QuestionChoicesDTO : CreateQuestionChoicesDTO
+    public class ExamDTO : CreateExamDTO
     {
         [Required(ErrorMessage = "ID is required")]
         public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

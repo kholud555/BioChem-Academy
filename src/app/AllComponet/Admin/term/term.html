@@ -3,13 +3,7 @@
 <div class="card p-3 mt-4 border">
   <h5>Add New Term</h5>
 
-  <div class="mb-2">
-    <label>Term Name</label>
-   <select class="form-control" [(ngModel)]="editedTerm.termOrder">
-  <option [ngValue]="0">First Term</option>
-  <option [ngValue]="1">Second Term</option>
-</select>
-  </div>
+ 
 
   <div class="mb-2">
     <label>Select Grade</label>
@@ -20,7 +14,14 @@
       </option>
     </select>
   </div>
+ <div class="mb-2">
+    <label>Term Name</label>
+  <select class="form-control" [(ngModel)]="newTerm.termOrder">
+  <option [ngValue]="0">First Term</option>
+  <option [ngValue]="1">Second Term</option>
+</select>
 
+  </div>
   
 
   <button class="btn btn-Action" (click)="addNewTerm()">Add Term</button>

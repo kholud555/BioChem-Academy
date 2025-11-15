@@ -4,10 +4,12 @@ import { Header } from "../header/header";
 import { Footer } from "../../footer/footer";
 import { FixedIcon } from "../../fixedIcon/fixed-icon/fixed-icon";
 import { Slider } from "../../slider/slider";
+import { WhyChosseUs } from "../../why-chosse-us/why-chosse-us";
+import { ShowService } from "../../show-service/show-service";
 
 @Component({
   selector: 'app-main-home',
-  imports: [NavBar, Header, Footer, FixedIcon, Slider],
+  imports: [NavBar, Header, Footer, FixedIcon, Slider, WhyChosseUs, ShowService],
   templateUrl: './main-home.html',
   styleUrl: './main-home.css'
 })

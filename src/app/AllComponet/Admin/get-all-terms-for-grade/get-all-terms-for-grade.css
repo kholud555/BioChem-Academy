@@ -1,165 +1,125 @@
+/* ------- Main Container ------- */
 .terms-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.terms-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.term-item {
+  max-width: 800px;
+  margin: 40px auto;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.2s ease;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.terms-container h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #1d3557;
+}
+
+/* ------- Term Item ------- */
+.term-item {
+  margin-bottom: 15px;
+  background: #f8f9fc;
+  border-radius: 14px;
+  padding: 10px 14px;
+  transition: 0.3s ease;
+  border: 1px solid #e4e6ee;
 }
 
 .term-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: #eef2ff;
 }
 
-.term-header {
+/* ------- Header Row (Term - Unit) ------- */
+.term-header,
+.unit-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px 24px;
   cursor: pointer;
+  padding: 10px 5px;
+  font-weight: 600;
+  color: #1d3557;
+  transition: 0.3s ease;
   user-select: none;
-  background: #f9fafb;
-  transition: background-color 0.2s ease;
 }
 
-.term-header:hover {
-  background: #f3f4f6;
+.term-header:hover,
+.unit-header:hover {
+  color: #3a0ca3;
 }
 
+/* ------- Chevron Icon Animation ------- */
 .chevron-icon {
+  margin-right: 10px;
+  transition: transform 0.3s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #6b7280;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
 }
 
 .chevron-icon.expanded {
   transform: rotate(180deg);
 }
 
-.chevron-icon.small {
-  width: 16px;
-  height: 16px;
-}
-
-.term-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.units-container {
-  padding: 0 24px 16px 24px;
-  background: #ffffff;
-}
-
-.unit-item {
-  margin-top: 8px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fafafa;
-}
-
-.unit-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s ease;
-}
-
-.unit-header:hover {
-  background: #f3f4f6;
-}
-
-.unit-title {
-  font-size: 15px;
-  font-weight: 500;
-  color: #374151;
-}
-
+/* ------- Nested Containers ------- */
+.units-container,
 .lessons-container {
-  padding: 8px 16px 12px 42px;
-  background: #ffffff;
+  margin-left: 35px;
+  padding-left: 15px;
+  border-left: 2px dashed #c9c9c9;
+  margin-top: 8px;
 }
 
+/* ------- Unit Item ------- */
+.unit-item {
+  margin-bottom: 12px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  transition: 0.3s ease;
+}
+
+.unit-item:hover {
+  background: #f2f4ff;
+}
+
+/* ------- Lessons ------- */
 .lesson-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  margin-bottom: 6px;
-  background: #f9fafb;
-  border-radius: 6px;
-  border-left: 3px solid #3b82f6;
-  transition: all 0.2s ease;
+  padding: 8px 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
 .lesson-item:hover {
-  background: #eff6ff;
-  border-left-color: #2563eb;
-  transform: translateX(4px);
-}
-
-.lesson-icon {
-  font-size: 18px;
-  flex-shrink: 0;
+  background: #e7f0ff;
 }
 
 .lesson-title {
-  font-size: 14px;
-  color: #4b5563;
+  font-size: 15px;
+  margin-left: 8px;
+  font-weight: 500;
+  color: #1d3557;
 }
 
+.lesson-title:hover {
+  color: #3a0ca3;
+}
+
+/* ------- Loading Messages ------- */
 .loading-message {
-  padding: 16px;
-  text-align: center;
-  color: #6b7280;
-  font-size: 14px;
+  color: #888;
   font-style: italic;
+  padding: 10px;
 }
 
 .loading-message.small {
-  padding: 12px;
   font-size: 13px;
 }
 
-/* Animation classes for Angular animations */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    max-height: 2000px;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 1;
-    max-height: 2000px;
-  }
-  to {
-    opacity: 0;
-    max-height: 0;
-  }
+/* Small Chevron inside Units */
+.chevron-icon.small {
+  margin-right: 6px;
 }

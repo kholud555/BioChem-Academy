@@ -1,90 +1,235 @@
-.cards{
-    color:var( --footer-dark-color);
-}
 
-img{
-    margin-top: 100px;
-}
-
-h3{
-    color:var( --primary-teal );
-    transform: translateY(-2px);
-}
-
-/* Animation للنص من اليسار */
-@keyframes fadeInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-}
-
-/* Animation للصورة من اليمين */
-@keyframes fadeInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-}
-
-/* Animation للعنوان من أعلى */
-@keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-}
-
-/* Animation للنص Fade In */
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-}
-
-
-/* ✅ تطبيق الأنيميشن - دائم (loop) */
-.fade-in-left {
-  animation: fadeInLeft 1.5s ease-in-out forwards ;
-  -webkit-animation: fadeInLeft 1.5s ease-in-out forwards ;
-}
-
-.fade-in-right {
-  animation: fadeInRight 1.5s ease-in-out forwards;
-  -webkit-animation: fadeInRight 1.5s ease-in-out forwards;
-}
-
-.slide-up {
-  animation: slideUp 1.5s ease-in-out forwards ;
-  -webkit-animation: slideUp 1.5s ease-in-out forwards ;
-}
-
-.fade-in {
-  animation: fadeIn 2s ease-in-out  forwards;
-  -webkit-animation: fadeIn 2s ease-in-out  forwards;
-}
-
-
-/* Hover effect بسيط للصورة */
-.img-fluid {
-    transition: transform 0.3s ease;
-}
-
-.img-fluid:hover {
-    transform: scale(1.03);
-}
+  
+        
+        .cards {
+            color: var(--footer-dark-color);
+        }
+        
+        .container {
+         
+            margin: 0 auto;
+        }
+        
+       
+        
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .col-md-6 {
+            flex: 1;
+        }
+        
+        img {
+            margin-top: 100px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        h3 {
+            color: var(--primary-teal);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            transform: translateY(-2px);
+        }
+        
+        .card-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--footer-dark-color);
+            opacity: 0.9;
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        
+        /* Animation للنص من اليسار */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Animation للصورة من اليمين */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Animation للعنوان من أعلى */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Animation للنص Fade In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Animation للصورة - Floating */
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Animation دوران للعناصر حول الصورة */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Animation نبض للصورة */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(23, 162, 184, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(23, 162, 184, 0);
+            }
+        }
+        
+        /* Animation وميض */
+        @keyframes blink {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+            25%, 75% {
+                opacity: 0.6;
+            }
+        }
+        
+        /* Animation تكبير وتصغير */
+        @keyframes scaleInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Animation انزلاق من اليسار مع تدرج */
+        @keyframes slideInLeftGradual {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotateY(45deg);
+            }
+            50% {
+                transform: translateX(-30px) rotateY(20deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+            }
+        }
+        
+        /* Animation انزلاق من اليمين مع تدرج */
+        @keyframes slideInRightGradual {
+            0% {
+                opacity: 0;
+                transform: translateX(100px) rotateY(-45deg);
+            }
+            50% {
+                transform: translateX(30px) rotateY(-20deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+            }
+        }
+        
+        /* ✅ تطبيق الأنيميشن */
+        .fade-in-left {
+            animation: slideInLeftGradual 1.5s ease-in-out forwards;
+            -webkit-animation: slideInLeftGradual 1.5s ease-in-out forwards;
+        }
+        
+        .fade-in-right {
+            animation: slideInRightGradual 1.5s ease-in-out forwards;
+            -webkit-animation: slideInRightGradual 1.5s ease-in-out forwards;
+        }
+        
+        .slide-up {
+            animation: slideUp 1.5s ease-in-out forwards;
+            -webkit-animation: slideUp 1.5s ease-in-out forwards;
+        }
+        
+        .fade-in {
+            animation: fadeIn 2s ease-in-out forwards;
+            -webkit-animation: fadeIn 2s ease-in-out forwards;
+        }
+        
+        /* Hover effect للصورة */
+        .img-fluid {
+            transition: transform 0.3s ease;
+            animation: floating 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+        }
+        
+        .img-fluid:hover {
+            transform: scale(1.08);
+            animation: floating 3s ease-in-out infinite, scaleInOut 1.5s ease-in-out infinite;
+        }
+        
+        /* Floating animation مستمرة */
+        .floating {
+            animation: floating 4s ease-in-out infinite !important;
+        }
+        
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .col-md-6 {
+                width: 100%;
+                text-align: center;
+            }
+            
+            h3 {
+                font-size: 28px;
+            }
+            
+            .card-body {
+                padding: 30px 20px;
+            }
+            
+            img {
+                margin-top: 50px;
+            }
+        }
+   

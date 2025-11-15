@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
 import { LessonForMediaDTO } from '../../../InterFace/media-dto';
 import { UploadService } from '../../../service/upload-service';
@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./show-lesson-media.css']
 })
 export class ShowLessonMedia {
+
+  @ViewChildren('videoPlayer') videos!: QueryList<ElementRef<HTMLVideoElement>>;
+
   lessonId: number = 0;
   lessonName: string = '';
   lessonDescription: string = '';
@@ -28,10 +31,14 @@ export class ShowLessonMedia {
   ) {}
 
   ngOnInit(): void {
+
+    // منع كليك يمين
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+
     this.Lesson = this.lessonService.getLesson();
-   
     this.lessonId = this.Lesson?.id || 0;
-     sessionStorage.setItem('lessonId', String(this.Lesson?.id || 0));
+    sessionStorage.setItem('lessonId', String(this.lessonId));
+
     this.lessonName = this.Lesson?.title || '';
     this.lessonDescription = this.Lesson?.description || '';
 
@@ -41,20 +48,31 @@ export class ShowLessonMedia {
   async loadLessonMedia() {
     try {
       this.lessonMedia = await this.media.getLessonMedia(this.lessonId);
+      
     } catch (err) {
       console.error('Error fetching lesson media:', err);
       this.toast.error('Failed to load media', 'Error');
     }
   }
 
-  async onDeleteMedia(mediaId: number) {
+  // تحميل الفيديو كـ Blob للحماية
+  async loadVideoAsBlob(media: LessonForMediaDTO) {
     try {
-      await this.media.deleteMedia(mediaId);
-      this.lessonMedia = this.lessonMedia.filter(m => m.id !== mediaId);
-      this.toast.success('Media deleted successfully ✅', 'Deleted');
-    } catch (err) {
-      console.error('Error deleting media:', err);
-      this.toast.error('Failed to delete media', 'Error');
+      const response = await fetch(media.previewUrl);
+      const blob = await response.blob();
+    
+      const blobUrl = URL.createObjectURL(blob);
+  console.log("Blob type:", blob.type);
+      const videoEl = this.videos.find(
+        v => v.nativeElement.dataset['id'] === String(media.id)
+      );
+
+      if (videoEl) {
+        videoEl.nativeElement.src = blobUrl;
+      }
+
+    } catch (error) {
+      console.error('Error loading video blob:', error);
     }
   }
 
@@ -63,21 +81,15 @@ export class ShowLessonMedia {
     return false;
   }
 
-  // 🧩 التعامل مع أنواع الملفات المختلفة
-  isVideo(media: LessonForMediaDTO): boolean {
-    return media.mediaType.toLowerCase() === 'video';
+  async onDeleteMedia(mediaId: number) {
+    try {
+      await this.media.deleteMedia(mediaId);
+      this.lessonMedia = this.lessonMedia.filter(m => m.id !== mediaId);
+      this.toast.success('Media deleted successfully', 'Deleted');
+    } catch (err) {
+      console.error('Error deleting media:', err);
+      this.toast.error('Failed to delete media', 'Error');
+    }
   }
 
-  isImage(media: LessonForMediaDTO): boolean {
-    return media.mediaType.toLowerCase() === 'image';
-  }
-
-  isPdf(media: LessonForMediaDTO): boolean {
-    return media.mediaType.toLowerCase() === 'pdf';
-  }
-
-  // 📂 فتح PDF في نافذة جديدة
-  openPdf(media: LessonForMediaDTO) {
-    window.open(media.previewUrl, '_blank');
-  }
 }

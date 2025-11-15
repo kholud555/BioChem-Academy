@@ -61,11 +61,45 @@ export class AccessControl implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.SelectedStudent = this.studentService.getStudent();
-    if (this.SelectedStudent) {
-      this.loadStudentPermissions();
+    // ✅ استرجاع البيانات من sessionStorage
+    this.SelectedStudent = this.getFromSession<StudentDto>('selectedStudent');
+    this.permissions = this.getFromSession<any>('permissions');
+    this.grades = this.getFromSession<ExtendedGradeDTO[]>('grades') || [];
+    this.terms = this.getFromSession<ExtendedTermDTO[]>('terms') || [];
+    this.units = this.getFromSession<ExtendedUnitDTO[]>('units') || [];
+    this.lessons = this.getFromSession<LessonDTO[]>('lessons') || [];
+
+    // ✅ لو الطالب مش متخزن نحاول نجيبه من السيرفيس
+    if (!this.SelectedStudent) {
+      this.SelectedStudent = this.studentService.getStudent();
+      if (this.SelectedStudent) {
+        this.saveToSession('selectedStudent', this.SelectedStudent);
+      }
     }
-    this.loadGrades();
+
+    if (this.SelectedStudent) {
+      if (!this.permissions) {
+        this.loadStudentPermissions();
+      }
+    }
+
+    if (this.grades.length === 0) {
+      this.loadGrades();
+    }
+  }
+
+  // ✅ دوال تخزين واسترجاع البيانات من sessionStorage
+  saveToSession(key: string, data: any): void {
+    sessionStorage.setItem(key, JSON.stringify(data));
+  }
+
+  getFromSession<T>(key: string): T | null {
+    const value = sessionStorage.getItem(key);
+    return value ? (JSON.parse(value) as T) : null;
+  }
+
+  removeFromSession(key: string): void {
+    sessionStorage.removeItem(key);
   }
 
   // ✅ تحميل صلاحيات الطالب
@@ -76,7 +110,6 @@ export class AccessControl implements OnInit {
       next: res => {
         console.log('Student Permissions (raw):', res);
 
-        // ✅ تحويل الأسماء من API إلى الأسماء اللي الكومبوننت متوقعها
         this.permissions = {
           gradeIds: res.grantedGrade || [],
           termIds: res.grantedTerms || [],
@@ -84,14 +117,13 @@ export class AccessControl implements OnInit {
           lessonIds: res.grantedLessons || [],
         };
 
+        this.saveToSession('permissions', this.permissions);
         console.log('Mapped Permissions (used in UI):', this.permissions);
       },
-      error: err =>{
-         console.error('Error loading permissions:', err.message);
+      error: err => {
+        console.error('Error loading permissions:', err.message);
         this.toastr.error(err.message, 'Error');
       }
-        
-
     });
   }
 
@@ -100,15 +132,22 @@ export class AccessControl implements OnInit {
     this.gradeService.GetAllGrade().subscribe({
       next: res => {
         this.grades = res.map(grade => ({ ...grade, isOpen: false }));
+        this.saveToSession('grades', this.grades);
+
         this.grades.forEach(grade => {
           this.termService.getTermsByGrade(grade.id).subscribe(terms => {
             this.terms = [...this.terms, ...terms.map(t => ({ ...t, isOpen: false }))];
+            this.saveToSession('terms', this.terms);
+
             terms.forEach(term => {
               this.unitService.getUnitsByTerm(term.id).subscribe(units => {
                 this.units = [...this.units, ...units.map(u => ({ ...u, isOpen: false }))];
+                this.saveToSession('units', this.units);
+
                 units.forEach(unit => {
                   this.lessonService.getLessonsByUnit(unit.id).subscribe(lessons => {
                     this.lessons = [...this.lessons, ...lessons];
+                    this.saveToSession('lessons', this.lessons);
                   });
                 });
               });
@@ -116,11 +155,10 @@ export class AccessControl implements OnInit {
           });
         });
       },
-      error: err =>{
-           console.error('Error loading grades:', err.message);
-           this.toastr.error(err.message, 'Error');
+      error: err => {
+        console.error('Error loading grades:', err.message);
+        this.toastr.error(err.message, 'Error');
       }
-      
     });
   }
 
@@ -160,7 +198,7 @@ export class AccessControl implements OnInit {
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed ' , err.message);
+        this.toastr.error('Failed ', err.message);
       }
     });
   }
@@ -188,7 +226,7 @@ export class AccessControl implements OnInit {
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed to revoke access'   , err.message);
+        this.toastr.error('Failed to revoke access', err.message.detail || err.message);
       }
     });
   }

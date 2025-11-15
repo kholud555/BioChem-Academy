@@ -25,7 +25,7 @@ export class Term implements OnInit {
    
     gradeId: 0,
     
-     termOrder:1,
+     termOrder:0,
   };
 
   editingTermId: number | null = null;

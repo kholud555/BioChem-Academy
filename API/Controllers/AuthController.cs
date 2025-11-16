@@ -50,7 +50,8 @@ namespace API.Controllers
                 Token = token,
                 Role = user.Role.ToString(),
                 UserName = user.UserName,
-                UserId = user.Id
+            
+
 
             });
         }

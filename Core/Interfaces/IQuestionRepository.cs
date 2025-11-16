@@ -11,7 +11,7 @@ namespace Core.Interfaces
     {
         Task<Question> AddQuestionHeaderAsync(Question question);
         Task<QuestionChoice> AddQuestionChoicesAsync(QuestionChoice choice);
-        Task<bool> UpdateQuestionAsync(Question question);
+        Task<bool> UpdateQuestionHeaderAsync(Question question);
         Task<bool> DeleteQuestionAsync(int questionId);
         Task<bool> UpdateQuestionChoiceAsync(QuestionChoice choice);
 

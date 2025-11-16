@@ -108,7 +108,7 @@ export class AccessControl implements OnInit {
 
     this.accessService.getStudentPermissions(this.SelectedStudent.id, true).subscribe({
       next: res => {
-        console.log('Student Permissions (raw):', res);
+       
 
         this.permissions = {
           gradeIds: res.grantedGrade || [],
@@ -118,11 +118,11 @@ export class AccessControl implements OnInit {
         };
 
         this.saveToSession('permissions', this.permissions);
-        console.log('Mapped Permissions (used in UI):', this.permissions);
+        
       },
       error: err => {
         console.error('Error loading permissions:', err.message);
-        this.toastr.error(err.message, 'Error');
+        this.toastr.error(err.detail || 'Failed to revoke access', 'Error');
       }
     });
   }
@@ -157,7 +157,7 @@ export class AccessControl implements OnInit {
       },
       error: err => {
         console.error('Error loading grades:', err.message);
-        this.toastr.error(err.message, 'Error');
+        this.toastr.error(err.error?.detail || 'Failed to revoke access' , 'Error');
       }
     });
   }
@@ -198,7 +198,7 @@ export class AccessControl implements OnInit {
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed ', err.message);
+        this.toastr.error(err.error?.detail || 'Failed to revoke access', 'Error');
       }
     });
   }
@@ -222,11 +222,12 @@ export class AccessControl implements OnInit {
         this.loading = false;
         this.toastr.info(`Access revoked for ${type}`);
         this.loadStudentPermissions();
+        
       },
       error: err => {
         this.loading = false;
         console.error(err);
-        this.toastr.error('Failed to revoke access', err.message.detail || err.message);
+       
       }
     });
   }

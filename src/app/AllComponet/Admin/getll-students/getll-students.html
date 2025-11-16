@@ -34,7 +34,14 @@
             <th>
               <div class="header-cell">
                 <i class="bi bi-phone"></i>
-                <span>Phone Number</span>
+                <span>student Number</span>
+              </div>
+            </th>
+
+             <th>
+              <div class="header-cell">
+                <i class="bi bi-phone"></i>
+                <span>parent Number</span>
               </div>
             </th>
             <th>
@@ -74,6 +81,17 @@
                 <span>{{ std.phoneNumber }}</span>
               </div>
             </td>
+
+
+            <td>
+               <div class="info-row">
+          <div class="info-label">
+            <i class="bi bi-telephone-fill"></i>
+           
+          </div>
+          <div class="info-value">{{ std.parentNumber }}</div>
+        </div>
+            </td>
             <td>
               <a
                 class="access-button"
@@ -99,7 +117,7 @@
         </div>
         <div class="card-student-info">
           <h3 class="card-student-name">{{ std.userName }}</h3>
-          <span class="card-student-id">ID: {{ std.id }}</span>
+       
         </div>
         <span class="card-grade-badge">{{ std.grade }}</span>
       </div>
@@ -120,6 +138,10 @@
           </div>
           <div class="info-value">{{ std.phoneNumber }}</div>
         </div>
+
+          
+
+        
       </div>
       
       <div class="card-footer">

@@ -1,0 +1,46 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4">📚 Lesson Media</h2>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="text-center">
+    <p>Loading media...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Media list -->
+  <div *ngIf="!isLoading && !errorMessage">
+
+    <div *ngFor="let media of mediaList" class="card mb-3 p-3 shadow">
+
+      <h5>{{ media.fileName }}</h5>
+      <p>Type: {{ media.mediaType }}</p>
+
+      <!-- Video -->
+      <div *ngIf="media.mediaType === 'video'">
+        <video width="100%" height="350" controls>
+          <source [src]="media.previewUrl" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image -->
+      <div *ngIf="media.mediaType === 'image'">
+        <img [src]="media.previewUrl" class="img-fluid rounded" alt="Media preview">
+      </div>
+
+      <!-- PDF -->
+      <div *ngIf="media.mediaType === 'pdf'">
+        <a [href]="media.previewUrl" target="_blank" class="btn btn-primary mt-3">
+          Open PDF
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>

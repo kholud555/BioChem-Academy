@@ -32,15 +32,26 @@ export class ShowLessonMedia {
 
   ngOnInit(): void {
 
-    // منع كليك يمين
     document.addEventListener('contextmenu', (event) => event.preventDefault());
 
     this.Lesson = this.lessonService.getLesson();
-    this.lessonId = this.Lesson?.id || 0;
-    sessionStorage.setItem('lessonId', String(this.lessonId));
 
-    this.lessonName = this.Lesson?.title || '';
-    this.lessonDescription = this.Lesson?.description || '';
+    if (!this.Lesson) {
+      const savedLesson = sessionStorage.getItem("lesson");
+      if (savedLesson) {
+        this.Lesson = JSON.parse(savedLesson);
+      }
+    }
+
+    if (this.Lesson) {
+      sessionStorage.setItem("lesson", JSON.stringify(this.Lesson));
+      this.lessonId = this.Lesson.id;
+      this.lessonName = this.Lesson.title;
+      this.lessonDescription = this.Lesson.description || "";
+    } else {
+      this.toast.error("No lesson found!", "Error");
+      return;
+    }
 
     this.loadLessonMedia();
   }
@@ -48,21 +59,19 @@ export class ShowLessonMedia {
   async loadLessonMedia() {
     try {
       this.lessonMedia = await this.media.getLessonMedia(this.lessonId);
-      
     } catch (err) {
       console.error('Error fetching lesson media:', err);
       this.toast.error('Failed to load media', 'Error');
     }
   }
 
-  // تحميل الفيديو كـ Blob للحماية
+  // تحميل الفيديو Blob
   async loadVideoAsBlob(media: LessonForMediaDTO) {
     try {
       const response = await fetch(media.previewUrl);
       const blob = await response.blob();
-    
       const blobUrl = URL.createObjectURL(blob);
-  console.log("Blob type:", blob.type);
+
       const videoEl = this.videos.find(
         v => v.nativeElement.dataset['id'] === String(media.id)
       );
@@ -90,6 +99,16 @@ export class ShowLessonMedia {
       console.error('Error deleting media:', err);
       this.toast.error('Failed to delete media', 'Error');
     }
+  }
+
+  ngAfterViewInit() {
+    this.videos.changes.subscribe(() => {
+      this.lessonMedia.forEach(m => {
+        if (m.mediaType.toLowerCase() === 'video') {
+          this.loadVideoAsBlob(m);
+        }
+      });
+    });
   }
 
 }

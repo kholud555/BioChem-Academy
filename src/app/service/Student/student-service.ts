@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
 import { StudentDto } from '../../InterFace/student-dto';
+import { StudentAccessedMediaDTO } from '../../InterFace/media-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,15 @@ getUserName(): string {
     }
     return this.UserName;
   }
+getStudentId(): number | null {
+  if (this.getRole() === 'Student') {
+    const userId = sessionStorage.getItem('userId');
+    return userId ? Number(userId) : null ;
+  }
+
+  return null;
+}
+
 
   
    getRole(): string | null{
@@ -70,6 +80,7 @@ getUserName(): string {
   }
 IsStudent():boolean{
     if (this.getRole() == 'Student'){
+
       return true;
     }
     else{
@@ -103,4 +114,15 @@ loginStudent(loginData:Login) :Observable <any>{
   };
 return this.http.put(`${this.BaseUrl}/UpdateStudentProfile` , data , {headers})
   }
+
+  getMediaForStudentByLessonId(lessonId: number): Observable<StudentAccessedMediaDTO[]> {
+  const headers = {
+    Authorization: `Bearer ${this.token}`
+  };
+  return this.http.get<StudentAccessedMediaDTO[]>(
+    `${this.BaseUrl}/MediaAccessForStudent?lessonId=${lessonId}`, 
+    { headers }
+  );
+}
+
 } 

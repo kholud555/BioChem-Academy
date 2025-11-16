@@ -37,3 +37,10 @@ export enum FileFormatEnum {
   Jpg = 2,
   Png = 3,
 }
+export interface StudentAccessedMediaDTO {
+  fileName: string;
+  mediaType: string;
+  fileFormat: string;
+  duration: number | null;
+  previewUrl: string;
+}

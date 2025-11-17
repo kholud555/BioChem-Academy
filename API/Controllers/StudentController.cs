@@ -109,6 +109,13 @@ namespace API.Controllers
 
             return Ok(mediaList);
         }
+
+        [HttpGet("GetAllFreeContent")]
+        public async Task<ActionResult<IEnumerable<FreeContentDTO>>> GetAllFreeContent ()
+        {
+            var content = await _r2.GetAllFreeContentAsync();
+            return Ok(content);
+         }
         [Authorize(Roles = "Student")]
         [HttpGet("GetStudentdIdByUserId")]
         public async Task<ActionResult<int>> GetStudentdIdByUserId()

@@ -55,6 +55,9 @@ namespace API
             builder.Services.AddScoped<IMediaRepository, MediaRepository>();
             builder.Services.AddScoped<MediaService>();
 
+            builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+            builder.Services.AddScoped<QuestionService>();
+
             // Repository
             builder.Services.AddScoped<IExamRepository, ExamRepository>();
 

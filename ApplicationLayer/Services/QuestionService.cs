@@ -48,7 +48,7 @@ namespace Application.Services
 
             return newQuestionChoice;
         }
-        public async Task<Question> AddQuestionHeaderAsync(CreateQuestionDTO dto)
+        public async Task<Question> AddQuestionHeaderAsync(HeaderQuestionDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
@@ -62,7 +62,7 @@ namespace Application.Services
             var question = _mapper.Map<Question>(dto);
              var newQuestion = await _repo.AddQuestionHeaderAsync(question);
             if (newQuestion == null) throw new InvalidOperationException("Conflict : Question did not created");
-
+            
             return newQuestion;
         }
         public async Task<bool> UpdateQuestionHeaderAsync (QuestionDTO dto)

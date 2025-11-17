@@ -14,6 +14,7 @@ namespace Core.Interfaces
         Task<Lesson> AddLessonAsync(Lesson lesson);
         Task<bool> UpdateLessonAsync(Lesson lesson);
         Task<bool> DeleteLessonAsync(int id);
+        Task<bool> UpdateIsFree(int lessonId, bool isFree);
 
     }
 }

@@ -12,8 +12,9 @@ namespace Core.Entities
         public string? Description { get; set; }
         public int Order { get; set; }
         public int UnitId { get; set; }
-
         public Unit Unit { get; set; }
+
+        public bool IsFree { get; set; } = false;
 
         public ICollection<AccessControl> AccessControls { get; set; } = new List<AccessControl>();
         public ICollection<Media> Medias { get; set; } = new List<Media>();

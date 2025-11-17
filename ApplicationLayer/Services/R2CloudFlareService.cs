@@ -234,5 +234,66 @@ namespace Application.Services
 
             return null;
         }
+
+        // File: Services/ContentService.cs
+
+        public async Task<IEnumerable<FreeContentDTO>> GetAllFreeContentAsync()
+        {
+           
+            var data = await _context.Medias
+                .Where(m => m.Lesson.IsFree)
+                .Select(m => new
+                {
+                    LessonId = m.Lesson.Id,
+                    LessonTitle = m.Lesson.Title,
+                    m.StorageKey,
+                    m.FileFormat,
+                    m.MediaType,
+                    m.Duration
+                })
+                .ToListAsync(); 
+
+            if (data == null || data.Count == 0)
+                throw new KeyNotFoundException("No free lessons available");
+
+          
+            var grouped = data.GroupBy(d => d.LessonId);
+
+            var separators = new[] { '/', '\\' }; 
+
+            var result = grouped.Select(g =>
+            {
+                var sample = g.First();
+
+                
+                var parts = (sample.StorageKey ?? string.Empty)
+                    .Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                
+                var grade = parts.ElementAtOrDefault(0) ?? string.Empty;
+                var term = parts.ElementAtOrDefault(1) ?? string.Empty;
+                var unit = parts.ElementAtOrDefault(2) ?? string.Empty;
+
+                return new FreeContentDTO
+                {
+                    GradeName = grade,
+                    Term = term,
+                    UnitName = unit,
+                    LessonName = sample.LessonTitle ?? string.Empty,
+                    MediaOfFreeLesson = g.Select(m => new StudentAccessedMediaDTo
+                    {
+                        FileName = Path.GetFileName(m.StorageKey ?? string.Empty),
+                        FileFormat = m.FileFormat.ToString(),
+                        MediaType = m.MediaType.ToString(),
+                        Duration = m.Duration,
+                        PreviewUrl = GenerateSignedUrlForViewing(m.StorageKey) 
+                    }).ToList()
+                };
+            }).ToList();
+
+            return result;
+        }
+
+
     }
 }

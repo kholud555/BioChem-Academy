@@ -21,8 +21,8 @@ namespace API.Controllers
         }
 
       
-        [HttpGet("/api/lessons/{lessonId}/exams")]
-        public async Task<ActionResult<IEnumerable<ExamDTO>>> GetExamsByLesson(int lessonId)
+        [HttpGet("GetExamsByLessonId")]
+        public async Task<ActionResult<IEnumerable<ExamDTO>>> GetExamsByLessonId(int lessonId)
         {
             var exams = await _service.GetExamsByLessonAsync(lessonId);
             var dto = _mapper.Map<IEnumerable<ExamDTO>>(exams);
@@ -30,7 +30,7 @@ namespace API.Controllers
         }
 
        
-        [HttpGet("{id:int}")]
+        [HttpGet("GetExamById")]
         public async Task<ActionResult<ExamDetailsDTO>> GetExamById(int id)
         {
             var exam = await _service.GetExamByIdAsync(id);
@@ -38,10 +38,10 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-        // POST /api/exams
+
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<ActionResult> AddExam([FromBody] CreateExamDTO dto)
+        [HttpPost("Add Exam")]
+        public async Task<ActionResult> AddExamToLesson ([FromBody] CreateExamDTO dto)
         {
             var newExam = await _service.CreateExamAsync(dto);
             var finalNewExamDto = _mapper.Map<ExamDTO>(newExam);
@@ -49,7 +49,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPut("{id:int}")]
+        [HttpPut("Update Exam")]
         public async Task<IActionResult> UpdateExam(int id, [FromBody] ExamDTO dto)
         {
             if (id != dto.Id)
@@ -63,7 +63,7 @@ namespace API.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id:int}")]
+        [HttpDelete("Delete Exam")]
         public async Task<ActionResult> DeleteExam(int id)
         {
             var success = await _service.DeleteExamAsync(id);

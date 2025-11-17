@@ -9,7 +9,7 @@ namespace Application.DTOS
 {
     public class QuestionDTO : CreateQuestionDTO
     {
-        [Required(ErrorMessage = "ID is required")]
-        public int Id { get; set; }
+       
+        public int? Id { get; set; }
     }
 }

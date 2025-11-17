@@ -45,6 +45,9 @@ namespace Infrastructure.Data
 
             CreateMap<CreateQuestionDTO, Question>().ReverseMap();
 
+            CreateMap<HeaderQuestionDTO, Question>();
+            CreateMap<Question, HeaderQuestionDTO>();
+
             // CreateExamDTO -> Exam
             CreateMap<CreateExamDTO, Exam>();
 

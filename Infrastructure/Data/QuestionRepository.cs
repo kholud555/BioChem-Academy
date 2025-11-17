@@ -24,7 +24,7 @@ namespace Infrastructure.Data
         public async Task<Question> AddQuestionHeaderAsync(Question question)
         {
             var examExist = await _context.Exams.AnyAsync(e => e.Id == question.ExamId);
-            if (examExist) throw new KeyNotFoundException("Exam not found");
+            if (!examExist) throw new KeyNotFoundException("Exam not found");
 
             var isDuplicate = await _context.Questions
                                   .AnyAsync(q => q.QuestionHeader == question.QuestionHeader
@@ -38,7 +38,7 @@ namespace Infrastructure.Data
                 QuestionHeader = question.QuestionHeader,
                 Mark = question.Mark,
                 Type = question.Type,
-                ExamId = question.Exam.Id,
+                ExamId = question.ExamId,
             };
 
             await _context.Questions.AddAsync(newQuestion);

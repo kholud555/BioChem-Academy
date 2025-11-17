@@ -18,6 +18,16 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+        public async Task<bool> UpdateIsFree (int lessonId, bool isFree)
+        {
+            var existLesson = await _context.Lessons.FindAsync(lessonId);
+            if (existLesson == null) throw new KeyNotFoundException("Lesson not Found");
+
+            existLesson.IsFree = isFree;
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<IEnumerable<Lesson>> GetLessonsByUnitAsync(int unitId)
         {
             var lessons = await _context.Lessons

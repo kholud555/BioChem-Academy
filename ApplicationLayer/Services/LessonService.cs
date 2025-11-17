@@ -21,6 +21,15 @@ namespace Application.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> UpdateIsFree(int lessonId, bool isFree)
+        {
+            if (lessonId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");
+
+            var isUpdated = await _lessonRepo.UpdateIsFree(lessonId, isFree);
+            if (!isUpdated) throw new InvalidOperationException("Conflict: Lesson did not update");
+            return isUpdated;
+        }
+
         public async Task<IEnumerable<Lesson>> GetLessonsByUnitAsync(int unitId)
         {
             if (unitId <= 0) throw new ArgumentOutOfRangeException("Id Should Be Greater than 0");

@@ -28,11 +28,11 @@ namespace API.Controllers
         }
 
         [HttpPost("AddQuestionHeader")]
-        public async Task<ActionResult<QuestionDTO>> AddQuestionHeader([FromBody] CreateQuestionDTO dto)
+        public async Task<ActionResult<HeaderQuestionDTO>> AddQuestionHeader([FromBody] HeaderQuestionDTO dto)
         {
             var newQuestion = await _service.AddQuestionHeaderAsync(dto);
 
-            var newQuestionDto = _mapper.Map<QuestionDTO>(newQuestion);
+           var newQuestionDto = _mapper.Map<HeaderQuestionDTO>(newQuestion);
 
             return Ok(newQuestionDto);
         }

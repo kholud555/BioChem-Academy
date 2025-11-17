@@ -73,5 +73,12 @@ namespace API.Controllers
             if (!success) return NotFound("Lesson failed to delete");
             return NoContent();
         }
+
+        [HttpPut("UpdateIsFree")]
+        public async Task<IActionResult> UpdateIsFreeLesson (int lessonId , bool isFree)
+        {
+            var updated = await _lessonService.UpdateIsFree(lessonId, isFree);
+            return NoContent();
+        }
     }
 }

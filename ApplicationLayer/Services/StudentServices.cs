@@ -9,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
-    public class StudentServices 
+    public class StudentServices
     {
 
         #region Fields
         private readonly UserManager<User> _userManager;
         private readonly StoreContext _context;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
         private readonly IStudentRepository _repo;
         #endregion
 
 
         #region Constructor
-        public StudentServices(UserManager<User> userManager, StoreContext context, IMapper mapper , IStudentRepository repo)
+        public StudentServices(UserManager<User> userManager, StoreContext context, IMapper mapper, IStudentRepository repo)
         {
             _userManager = userManager;
             _context = context;
@@ -29,7 +29,7 @@ namespace Application.Services
             _repo = repo;
         }
 
-        
+
         #endregion
 
         public async Task<Student> Registration(StudentRegistrationModel studentModel)
@@ -58,10 +58,10 @@ namespace Application.Services
                     CreatedAt = DateTime.Now
                 };
 
-                
+
 
                 var ResultOfCreateUser = await _userManager.CreateAsync(newUser, studentModel.Password);
-                if(! ResultOfCreateUser.Succeeded)
+                if (!ResultOfCreateUser.Succeeded)
                 {
                     var errors = string.Join("; ", ResultOfCreateUser.Errors.Select(e => e.Description));
                     throw new InvalidOperationException($"Failed to create user: {errors}");
@@ -81,7 +81,7 @@ namespace Application.Services
                     User = newUser
                 };
 
-                
+
                 //?
                 newStudent.User.Student = null;
 
@@ -107,25 +107,25 @@ namespace Application.Services
             }
         }
 
-        public  async Task<StudentDTO> GetProfileAsync(string id)
+        public async Task<StudentDTO> GetProfileAsync(string id)
         {
-            
+
             if (String.IsNullOrWhiteSpace(id)) throw new ArgumentNullException("Id must be provided");
 
             if (!int.TryParse(id, out var userId))
             {
                 throw new UnauthorizedAccessException("Invalid or missing student ID claim.");
             }
-            var student =  await _repo.GetStudentByIdAsync(userId);
+            var student = await _repo.GetStudentByIdAsync(userId);
 
             var dto = _mapper.Map<StudentDTO>(student);
             return dto;
         }
 
-        public  async Task<IEnumerable<Student>> GetAllStudentAsync()
+        public async Task<IEnumerable<Student>> GetAllStudentAsync()
             => await _repo.GetAllStudentAsync();
 
-        public async Task<UpdateStudentProfileDTO> UpdateStudentAsync (string userIdClaim, UpdateStudentProfileDTO dto)
+        public async Task<UpdateStudentProfileDTO> UpdateStudentAsync(string userIdClaim, UpdateStudentProfileDTO dto)
         {
             if (!int.TryParse(userIdClaim, out var userId))
             {
@@ -133,7 +133,7 @@ namespace Application.Services
             }
 
             var existingStudent = await _context.Students.Include(s => s.User).FirstOrDefaultAsync(s => s.UserId == userId);
-            
+
             if (existingStudent == null) throw new KeyNotFoundException("Student Not Found");
 
             if (existingStudent.User == null) throw new KeyNotFoundException("User Not Found");
@@ -141,7 +141,7 @@ namespace Application.Services
 
             if (dto == null) throw new ArgumentNullException("Object can not be null");
 
-            if(! String.IsNullOrWhiteSpace(dto.UserName) )
+            if (!String.IsNullOrWhiteSpace(dto.UserName))
             {
                 existingStudent.User.UserName = dto.UserName;
             }
@@ -166,6 +166,15 @@ namespace Application.Services
 
             return dto;
         }
-      
+
+
+        public async Task<int> GetStudentIdByUserID(int userId)
+        {
+            if (userId <= 0) throw new ArgumentNullException("UserId must be provided and greater than zero");
+
+            return await _repo.GetStudentIdByUserID(userId);
+
+
+        }
     }
 }

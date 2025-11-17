@@ -40,6 +40,12 @@ namespace Infrastructure.Data
             return student;
         }
 
+        public async Task<int> GetStudentIdByUserID(int userId)
+        {
+            var student = await _Context.Students.FirstOrDefaultAsync(s => s.UserId == userId);
+            if (student == null) throw new KeyNotFoundException("student with not found");
+            return student.Id;
+        }
         public async Task<IEnumerable<Student>> GetAllStudentAsync()
         {
             var students = await _Context.Students.Include(s => s.User).ToListAsync();

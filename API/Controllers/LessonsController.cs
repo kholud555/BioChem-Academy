@@ -27,7 +27,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Admin")]
+      
         [HttpGet("{unitId:int}")]
         public async Task<ActionResult<IEnumerable<LessonDTO>>> GetLessonsByUnit(int unitId)
         {

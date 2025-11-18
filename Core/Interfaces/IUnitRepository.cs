@@ -16,5 +16,7 @@ namespace Core.Interfaces
         Task<bool> DeleteUnitAsync(int id);
 
         Task<IEnumerable<Unit>> GetUnitsByTermIdAsync(int termId);
+
+       
     }
 }

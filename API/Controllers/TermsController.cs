@@ -22,7 +22,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("GetTermsByGrade")]
         public async Task<ActionResult<IEnumerable<TermDTO>>> GetTermsByGrade(int gradeId)
         {
@@ -31,7 +30,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-        [Authorize(Roles = "Admin")]
+       
         [HttpGet("{id:int}")]
         public async Task<ActionResult<TermDTO>> GetTermById(int id)
         {

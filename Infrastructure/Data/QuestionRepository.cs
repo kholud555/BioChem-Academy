@@ -60,7 +60,7 @@ namespace Infrastructure.Data
 
                 if (question.Type == ExamTypeEnum.ChoiceType && choicesCount >= 4)
 
-                    throw new InvalidOperationException("Multi choices question only has 4 answers");
+                    throw new ArgumentException("Multi choices question only has 4 answers");
 
 
                 if (question.Type == ExamTypeEnum.TrueFalseType && choicesCount >= 2)
@@ -71,7 +71,7 @@ namespace Infrastructure.Data
             var hasCorrectAnswer = question.QuestionChoices.Any(c => c.IsCorrect);
 
             if(hasCorrectAnswer && choice.IsCorrect)
-                throw new InvalidOperationException(" Conflict : This question already has a correct answer.");
+                throw new InvalidOperationException("Conflict : This question already has a correct answer.");
 
 
             var newChoice = new QuestionChoice

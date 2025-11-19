@@ -1,13 +1,7 @@
-﻿using Amazon.Runtime;
-using API.DTOS;
-using Application.DTOS;
+﻿using Application.DTOS;
 using AutoMapper;
 using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Data
 {
@@ -75,6 +69,29 @@ namespace Infrastructure.Data
                     opt => opt.MapFrom(src => src.Questions.Count))
                 .ForMember(dest => dest.StudentsAttempted,
                     opt => opt.MapFrom(src => src.StudentExam.Count));
+
+
+            // SubmitExamDTO -> StudentExam
+            CreateMap<SubmitExamDTO, StudentExam>()
+                .ForMember(dest => dest.SubmittedAt, opt => opt.MapFrom(src => DateTime.Now));
+
+            // StudentExam -> StudentExamDTO
+            CreateMap<StudentExam, StudentExamDTO>()
+                .ForMember(dest => dest.ExamTitle, opt => opt.MapFrom(src => src.Exam.Title))
+                .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.Student.User.UserName));
+
+            // StudentExam -> StudentExamResultDTO
+            CreateMap<StudentExam, StudentExamResultDTO>()
+                .ForMember(dest => dest.TotalQuestions,
+                    opt => opt.MapFrom(src => src.Exam.Questions.Count))
+                .ForMember(dest => dest.Percentage,
+                    opt => opt.MapFrom(src => src.Score))
+                .ForMember(dest => dest.ExamTitle,
+                    opt => opt.MapFrom(src => src.Exam.Title))
+                .ForMember(dest => dest.ExamDescription,
+                    opt => opt.MapFrom(src => src.Exam.Description))
+                .ForMember(dest => dest.TimeLimit,
+                    opt => opt.MapFrom(src => src.Exam.TimeLimit));
         }
     }
 }

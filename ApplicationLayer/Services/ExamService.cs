@@ -91,5 +91,31 @@ namespace Application.Services
 
             return await _examRepo.DeleteExamAsync(id);
         }
+
+        public async Task<IEnumerable<QuestionsOfExamDTO>> GetExamQuestionByExamIdAsync (int examId)
+        {
+            if (examId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(examId), "ID must be greater than zero");
+            }
+
+            var examQuestionList = await _examRepo.GetExamQuestionsByIdAsync(examId);
+
+            return examQuestionList.Select(q => new QuestionsOfExamDTO
+            {
+                Id = q.Id,
+                QuestionHeader = q.QuestionHeader,
+                Mark = q.Mark,
+                Type = q.Type,
+
+                ChoicesOfQuestion = q.QuestionChoices.Select(qc => new ChoicesOfQuestionDTO
+                {
+                    Id = qc.Id,
+                    ChoiceText = qc.ChoiceText,
+                    IsCorrect = qc.IsCorrect,
+                    QuestionId = qc.QuestionId
+                }).ToList()
+            });
+        }
     }
 }

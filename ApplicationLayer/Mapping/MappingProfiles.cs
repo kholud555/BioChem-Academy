@@ -1,4 +1,5 @@
-﻿using API.DTOS;
+﻿using Amazon.Runtime;
+using API.DTOS;
 using Application.DTOS;
 using AutoMapper;
 using Core.Entities;
@@ -47,6 +48,17 @@ namespace Infrastructure.Data
 
             CreateMap<HeaderQuestionDTO, Question>();
             CreateMap<Question, HeaderQuestionDTO>();
+
+            CreateMap<ChoicesOfQuestionDTO, QuestionChoice>();
+            CreateMap<QuestionChoice, ChoicesOfQuestionDTO>()
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<QuestionDTO, Question>()
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<Question ,QuestionDTO>();
 
             // CreateExamDTO -> Exam
             CreateMap<CreateExamDTO, Exam>();

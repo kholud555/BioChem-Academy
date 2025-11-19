@@ -55,14 +55,18 @@ namespace Infrastructure.Data
 
             var choicesCount = question.QuestionChoices.Count;
 
-            if( choice.Question.Type == ExamTypeEnum.ChoiceType && choicesCount >= 4)
-            
-              throw new InvalidOperationException("Multi choices question only has 4 answers");
+            if (choicesCount != 0)
+            {
+
+                if (question.Type == ExamTypeEnum.ChoiceType && choicesCount >= 4)
+
+                    throw new InvalidOperationException("Multi choices question only has 4 answers");
 
 
-             if(choice.Question.Type == ExamTypeEnum.TrueFalseType && choicesCount >= 2)
-            
-              throw new InvalidOperationException("True or false question only has 2 answers");
+                if (question.Type == ExamTypeEnum.TrueFalseType && choicesCount >= 2)
+
+                    throw new InvalidOperationException("True or false question only has 2 answers");
+            }
             
             var hasCorrectAnswer = question.QuestionChoices.Any(c => c.IsCorrect);
 

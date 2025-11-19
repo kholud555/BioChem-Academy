@@ -38,11 +38,11 @@ namespace API.Controllers
         }
 
         [HttpPost("AddQuestionChoice")]
-        public async Task<ActionResult<QuestionChoicesDTO>> AddQuestionChoice ([FromBody] CreateQuestionChoicesDTO dto)
+        public async Task<ActionResult<ChoicesOfQuestionDTO>> AddQuestionChoice ([FromBody] ChoicesOfQuestionDTO dto)
         {
             var newQuestionChoice = await _service.AddQuestionChoicesAsync(dto);
 
-            var newQuestionChoiceDto = _mapper.Map<QuestionChoicesDTO>(newQuestionChoice);
+            var newQuestionChoiceDto = _mapper.Map<ChoicesOfQuestionDTO>(newQuestionChoice);
 
             return Ok(newQuestionChoiceDto);
         }
@@ -55,7 +55,7 @@ namespace API.Controllers
         }
 
         [HttpPut("UpdateQuestionChoice")]
-        public async Task<IActionResult> UpdateQuestionChoice([FromBody] QuestionChoicesDTO dto)
+        public async Task<IActionResult> UpdateQuestionChoice([FromBody] ChoicesOfQuestionDTO dto)
         {
             var question = await _service.UpdateQuestionChoiceAsync(dto);
             return NoContent();

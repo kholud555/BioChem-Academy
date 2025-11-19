@@ -32,7 +32,7 @@ namespace Application.Services
             return question;
 
         }
-        public async Task<QuestionChoice> AddQuestionChoicesAsync(CreateQuestionChoicesDTO dto)
+        public async Task<QuestionChoice> AddQuestionChoicesAsync(ChoicesOfQuestionDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");
@@ -84,7 +84,7 @@ namespace Application.Services
 
             return isUpdated;
         }
-        public async Task<bool> UpdateQuestionChoiceAsync (QuestionChoicesDTO dto)
+        public async Task<bool> UpdateQuestionChoiceAsync (ChoicesOfQuestionDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto), "Question object cannot be null.");

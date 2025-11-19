@@ -122,7 +122,7 @@ export class AccessControl implements OnInit {
       },
       error: err => {
         console.error('Error loading permissions:', err.message);
-        this.toastr.error(err.detail || 'Failed to revoke access', 'Error');
+        this.toastr.error(err.message.detail || '', 'Error');
       }
     });
   }

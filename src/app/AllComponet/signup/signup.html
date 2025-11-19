@@ -1,7 +1,7 @@
 <div class="signup-container">
-   <div class="floating-circle circle-1"></div>
-        <div class="floating-circle circle-2"></div>
-        <div class="floating-circle circle-3"></div>
+  <div class="floating-circle circle-1"></div>
+  <div class="floating-circle circle-2"></div>
+  <div class="floating-circle circle-3"></div>
 
   <form class="signup-form mt-5" [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
     <h2 class="text-center mb-4">Sign up</h2>
@@ -10,103 +10,82 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" id="name" placeholder="Full Name" formControlName="userName" />
-      @if (f['userName'].touched) {
-        @if (f['userName'].hasError('required')) {
-          <div class="error-message">Name is required.</div>
-        }
-        @if (f['userName'].hasError('maxlength')) {
-          <div class="error-message">Name must be 20 characters or less.</div>
-        }
-      }
+      <div *ngIf="f['userName'].touched && f['userName'].invalid" class="error-message">
+        <div *ngIf="f['userName'].errors?.['required']">Name is required.</div>
+        <div *ngIf="f['userName'].errors?.['maxlength']">Name must be 20 characters or less.</div>
+      </div>
     </div>
+
+    <!-- Student Phone -->
     <div class="form-group">
       <label for="studentPhone">Student Phone Number</label>
       <input type="text" id="studentPhone" placeholder="01xxxxxxxxx" formControlName="phoneNumber" />
-   
-   @if (RegisterForm.get('phoneNumber')?.touched && RegisterForm.get('phoneNumber')?.invalid) {
-      <div class="error-message">Phone number is required and must be valid.</div>
-    
-    }
+      <div *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid" class="error-message">
+        Phone number is required and must be valid.
+      </div>
     </div>
 
+    <!-- Parent Phone -->
     <div class="form-group">
       <label for="parentPhone">Parent Phone Number</label>
       <input type="text" id="parentPhone" placeholder="01xxxxxxxxx" formControlName="parentPhone" />
-    @if (RegisterForm.get('parentPhone')?.touched && RegisterForm.get('parentPhone')?.invalid ) {
-      <div class="error-message">Phone number is required </div>
-    }
-     @if ( RegisterForm.hasError('samePhone')) {
-      <div class="error-message">parent phone must be different </div>
-    }
+      <div *ngIf="f['parentPhone'].touched && f['parentPhone'].invalid" class="error-message">
+        Parent phone is required and must be valid.
+      </div>
+      <div *ngIf="RegisterForm.hasError('samePhone')" class="error-message">
+        Parent phone must be different from student phone
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="grade">Grade</label>
-      <input type="text" id="grade" placeholder="Grade" formControlName="grade" />
-    </div>
+    <!-- Grade Dropdown -->
+   <div class="form-group">
+  <label for="grade">Grade</label>
+  <select id="grade" formControlName="grade" (change)="onGradeChange($event)">
+    <option value="" disabled selected>Select Grade</option>
+    <option *ngFor="let g of grades" [value]="g.gradeName">{{ g.gradeName }}</option>
+  </select>
+</div>
 
+
+
+    <!-- Email -->
     <div class="form-group">
       <label for="email">E-mail</label>
       <input type="email" id="email" placeholder="your@gmail.com" formControlName="email" />
-    @if (RegisterForm.get('email')?.touched && RegisterForm.get('email')?.invalid) {
-      <div class="error-message">A valid email is required.</div> 
-    }
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="error-message">
+        A valid email is required.
+      </div>
     </div>
 
+    <!-- Password -->
     <div class="form-group">
       <label>Password</label>
       <div class="password-wrapper position-relative">
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          class="form-control form-control-lg"
-          placeholder="Enter your password"
-          formControlName="password"
-        />
-        <button
-          type="button"
-          class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2 p-0"
-          (click)="togglePassword()"
-        >
-          <i class="bi" [class.bi-eye-slash]="showPassword" [class.bi-eye]="!showPassword"></i>
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" formControlName="password" />
+        <button type="button" (click)="togglePassword()">
+           <i class="bi" [class.bi-eye-slash]="showPassword" [class.bi-eye]="!showPassword"></i>
         </button>
       </div>
-    @if (RegisterForm.get('password')?.touched && RegisterForm.get('password')?.invalid) {
-      <div class="error-message">Password is required and must be at least 6 characters long.</div>
-    }
+      <div *ngIf="f['password'].touched && f['password'].invalid" class="error-message">
+        Password is required (min 6 chars, must include uppercase, number & special char)
+      </div>
     </div>
 
+    <!-- Confirm Password -->
     <div class="form-group">
       <label>Confirm Password</label>
       <div class="password-wrapper position-relative">
-        <input
-          [type]="showConfirmPassword ? 'text' : 'password'"
-          class="form-control form-control-lg"
-          placeholder="Confirm password"
-          formControlName="confirmPassword"
-        />
-        <button
-          type="button"
-          class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2 p-0"
-          (click)="toggleConfirmPassword()"
-        >
-          <i class="bi" [class.bi-eye-slash]="showConfirmPassword" [class.bi-eye]="!showConfirmPassword"></i>
+        <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm password" formControlName="confirmPassword" />
+        <button type="button" (click)="toggleConfirmPassword()">
+            <i class="bi" [class.bi-eye-slash]="showConfirmPassword" [class.bi-eye]="!showConfirmPassword"></i>
         </button>
       </div>
-  @if (
-
-  RegisterForm.get('confirmPassword')?.touched
-  && RegisterForm.get('password')?.invalid
- 
-) {
-  <div class="error-message">conform password is required</div>
-}
-@if (
-    RegisterForm.hasError('passwordMismatch') 
-  
-) {
-  <div class="error-message">conform password must match password</div>
-}
-
+      <div *ngIf="f['confirmPassword'].touched && f['confirmPassword'].invalid" class="error-message">
+        Confirm password is required
+      </div>
+      <div *ngIf="RegisterForm.hasError('passwordMismatch')" class="error-message">
+        Confirm password must match password
+      </div>
     </div>
 
     <button type="submit" class="btn-submit">Sign up</button>

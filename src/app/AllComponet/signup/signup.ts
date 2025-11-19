@@ -6,41 +6,27 @@ import { ToastrService } from 'ngx-toastr';
 import { GradeService } from '../../service/grade-service';
 import { GradeDTO } from '../../InterFace/grade-dto';
 import { CommonModule } from '@angular/common';
+import { PixelService } from '../../services/pixel';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule , CommonModule,FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './signup.html',
-  styleUrl: './signup.css'
+  styleUrls: ['./signup.css']
 })
 export class Signup {
-  selectedGradeId: number = 0;
-  
+  selectedGradeName: string = '';
   isLoading: boolean = false;
   showPassword = false;
   showConfirmPassword = false;
   grades: GradeDTO[] = [];
 
-ngOnInit(): void {
-      this.loadGrades();
-    }
-    loadGrades(): void {
-      this.gradeService.GetAllGrade().subscribe(
-        (data: GradeDTO[]) => {
-          this.grades = data;
-          
-        },
-        (error) => {
-          console.error('Error fetching grades:', error);
-        }
-      );
-    }
   RegisterForm: FormGroup = new FormGroup(
     {
       userName: new FormControl('', [
         Validators.required,
-        Validators.maxLength(20) // 👈 تم تعديل الحد الأقصى من 5 إلى 20
+        Validators.maxLength(20)
       ]),
       phoneNumber: new FormControl('', [
         Validators.required,
@@ -70,6 +56,30 @@ ngOnInit(): void {
     }
   );
 
+  constructor(
+    private register: StudentService,
+    private router: Router,
+    private toaster: ToastrService,
+    private gradeService: GradeService,
+    private pixelService :PixelService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadGrades();
+   
+  }
+
+  loadGrades(): void {
+    this.gradeService.GetAllGrade().subscribe(
+      (data: GradeDTO[]) => {
+        this.grades = data;
+      },
+      (error) => {
+        console.error('Error fetching grades:', error);
+      }
+    );
+  }
+
   static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirm = control.get('confirmPassword')?.value;
@@ -89,13 +99,6 @@ ngOnInit(): void {
     return this.RegisterForm.controls;
   }
 
-  constructor(
-    private register: StudentService,
-    private router: Router,
-    private toaster: ToastrService,
-    private gradeService: GradeService
-  ) {}
-
   GoLogin() {
     this.router.navigate(['/login']);
   }
@@ -112,23 +115,47 @@ ngOnInit(): void {
     if (this.RegisterForm.invalid) {
       this.toaster.error('Please fill all fields correctly');
       this.RegisterForm.markAllAsTouched();
+       this.pixelService.trackCompleteRegistration();
+
       return;
     }
 
     this.isLoading = true;
-    console.log(this.RegisterForm.value);
 
-    this.register.RegistrationStudent(this.RegisterForm.value).subscribe({
+    const formValue = this.RegisterForm.value;
+
+    const payload = {
+      userName: formValue.userName,
+      email: formValue.email,
+      grade: this.selectedGradeName, // الآن نصي
+      phoneNumber: formValue.phoneNumber,
+      parentPhone: formValue.parentPhone,
+      password: formValue.password,
+      confirmPassword: formValue.confirmPassword
+    };
+
+    
+
+    this.register.RegistrationStudent(payload).subscribe({
       next: (res) => {
+        this.toaster.success('Registration Successful');
         this.router.navigate(['/login']);
-        this.toaster.success('Registration Successfully');
         this.RegisterForm.reset();
         this.isLoading = false;
       },
       error: (err) => {
         this.isLoading = false;
-        this.toaster.error(err.error.message);
+        this.toaster.error(err.error.message || 'Registration failed');
       }
     });
   }
+
+  
+
+onGradeChange(event: Event) {
+  const selectElement = event.target as HTMLSelectElement;
+  this.selectedGradeName = selectElement.value;
+  this.RegisterForm.get('grade')?.setValue(this.selectedGradeName);
+}
+
 }

@@ -30,6 +30,7 @@ export class LessonService {
   updateLesson(dto: LessonDTO): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/lessons/${dto.id}`, dto);
   }
+  
 
   // 🔹 Delete lesson
   deleteLesson(id: number): Observable<void> {
@@ -43,4 +44,11 @@ export class LessonService {
     getLesson(): LessonDTO | null {
       return this.selectedLesson;
     }
+
+     updateIsFree(lessonId: number, isFree: boolean): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/UpdateIsFree?lessonId=${lessonId}&isFree=${isFree}`,
+      {} // لازم Body فاضي علشان PUT
+    );
+  }
 }

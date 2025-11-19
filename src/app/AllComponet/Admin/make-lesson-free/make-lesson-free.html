@@ -1,0 +1,51 @@
+<div class="container p-3">
+  <h3>Make Lesson Free</h3>
+
+  <!-- Select Grade -->
+  <div class="mb-3">
+    <label>Select Grade</label>
+    <select class="form-control" (change)="onGradeChange($event)">
+      <option value="0" disabled selected>Select Grade</option>
+      <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
+    </select>
+  </div>
+
+  <!-- Select Term -->
+  <div class="mb-3">
+    <label>Select Term</label>
+    <select class="form-control" (change)="onTermChange($event)">
+      <option value="0" disabled selected>Select Term</option>
+      <option *ngFor="let term of terms" [value]="term.id">
+        {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Select Unit -->
+  <div class="mb-3">
+    <label>Select Unit</label>
+    <select class="form-control" (change)="onUnitChange($event)">
+      <option value="0" disabled selected>Select Unit</option>
+      <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
+    </select>
+  </div>
+
+  <!-- Select Lesson -->
+  <div class="mb-3">
+    <label>Select Lesson</label>
+    <select class="form-control" (change)="onLessonChange($event)">
+      <option value="0" disabled selected>Select Lesson</option>
+      <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
+    </select>
+  </div>
+
+  <!-- Checkbox for Free -->
+  <div class="mb-3" *ngIf="selectedLessonId">
+    <label>
+      <input type="checkbox"
+             [checked]="isLessonFree(selectedLessonId)"
+             (change)="toggleLessonFree($event)" />
+      Make Lesson Free
+    </label>
+  </div>
+</div>

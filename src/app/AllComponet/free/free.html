@@ -1,0 +1,47 @@
+<!-- Component HTML Template -->
+<div class="grade-selector-container">
+  <div class="content-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+        </svg>
+      </div>
+      <h2 class="title">free content</h2>
+      <p class="subtitle">Select Your Grade Level</p>
+    </div>
+
+    <!-- Selected Grade Alert -->
+    <div class="alert-container" *ngIf="SelectedGradeName">
+      <div class="alert">
+        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Selected: {{ SelectedGradeName }}</span>
+      </div>
+    </div>
+
+    <!-- Grade Cards Grid -->
+    <div class="grid">
+      <div class="card-wrapper" *ngFor="let grade of grades; let i = index" 
+           [style.animation-delay.ms]="i * 100">
+        <div class="card" 
+             [class.selected]="SelectedGradeName === grade.gradeName"
+             (click)="onSelectGrade(grade)">
+          <div class="card-inner">
+            <h5 class="grade-name">{{ grade.gradeName }}</h5>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

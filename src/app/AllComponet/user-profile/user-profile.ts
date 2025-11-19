@@ -1,57 +1,86 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { StudentAccess } from '../../service/student-access';
 import { StudentService } from '../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../InterFace/register';
+import { GradeService } from '../../service/grade-service';
+import { GradeDTO } from '../../InterFace/grade-dto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [RouterLink , FormsModule ],
+  imports: [RouterLink, FormsModule ,CommonModule],
   templateUrl: './user-profile.html',
-  styleUrl: './user-profile.css'
+  styleUrls: ['./user-profile.css']
 })
-export class UserProfile implements OnInit{
-   studentData: Profile = {
-   userName  :  ""  ,
-    email  :    ""  ,
-    grade  :    ""   ,
-    phoneNumber  :   ""   ,
-    parentNumber  :    "" 
+export class UserProfile implements OnInit {
+  studentData: Profile = {
+    userName: "",
+    email: "",
+    grade: "",
+    phoneNumber: "",
+    parentNumber: ""
   };
 
-  
+  grades: GradeDTO[] = [];
+  selectedGradeName: string = "";
 
-  constructor (private StudentService : StudentService , private Toast : ToastrService){}
+  constructor(
+    private studentService: StudentService,
+    private gradeService: GradeService,
+    private toast: ToastrService
+  ) {}
+
   ngOnInit(): void {
-    this.LoadProfile();
+    this.loadGrades();
+    this.loadProfile();
   }
-  LoadProfile(){
-    this.StudentService.getStudentProfile().subscribe({
-      next:(res)=>{
-         console.log('API response:', res); // 
-        this.studentData=res;
+
+  loadGrades(): void {
+    this.gradeService.GetAllGrade().subscribe({
+      next: (data: GradeDTO[]) => {
+        this.grades = data;
       },
-      error:(err)=>{
-  console.error('Error loading profile', err);
+      error: (err) => {
+        console.error('Error fetching grades:', err);
       }
-    })
-    
+    });
   }
-UpdateProfile():void{
-  this.StudentService.UpdateStudentProfile(this.studentData).subscribe({
-    next:(res)=>{
 
-     this.Toast.success("Update ")
-    }
-    ,
-    error:(err)=>{
- this.Toast.error("Error")
-    }
-  })
 
-  
-}
+  loadProfile(): void {
+    this.studentService.getStudentProfile().subscribe({
+      next: (res) => {
+        this.studentData = res;
+       
+      if (this.grades.length > 0) {
+        const match = this.grades.find(g => g.gradeName === res.grade);
+        this.studentData.grade = match ? match.gradeName : '';
+      }
+       
+      },
+      error: (err) => {
+        console.error('Error loading profile', err);
+      }
+    });
+  }
 
+  onGradeChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedGradeName = selectElement.value;
+    this.studentData.grade = this.selectedGradeName;
+  }
+
+  updateProfile(): void {
+    this.studentService.UpdateStudentProfile(this.studentData).subscribe({
+      next: () => {
+        this.toast.success('Profile updated successfully!');
+      },
+      error: (err) => {
+        this.toast.error('Error updating profile');
+        console.error(err);
+      }
+    });
+  }
 }

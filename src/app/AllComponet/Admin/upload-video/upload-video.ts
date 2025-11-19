@@ -177,9 +177,13 @@ export class UploadVideo implements OnInit {
 
   // رجعت string بدل any
   getTermName(): string {
-    const t = this.terms.find((t) => t.id === this.selectedTermId)?.termOrder;
-    return t !== undefined && t !== null ? String(t) : 'Term';
-  }
+  const termMap: { [key: number]: string } = {
+    0: 'first term',
+    1:'second term'
+  };
+  const term = this.terms.find(t => t.id === this.selectedTermId)?.termOrder;
+  return termMap[term ?? 2] || 'term';
+}
 
   getUnitName(): string {
     return this.units.find((u) => u.id === this.selectedUnitId)?.title || 'Unit';

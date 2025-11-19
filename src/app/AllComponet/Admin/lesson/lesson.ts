@@ -7,6 +7,9 @@ import { TermService } from '../../../service/term-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { GradeDTO } from '../../../InterFace/grade-dto';
+import { TermDTO } from '../../../InterFace/term-dto';
+import { UnitDTO } from '../../../InterFace/unit-dto';
 
 @Component({
   selector: 'app-lesson',
@@ -16,9 +19,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./lesson.css']
 })
 export class Lesson implements OnInit {
-  grades: any[] = [];
-  terms: any[] = [];
-  units: any[] = [];
+  grades: GradeDTO[] = [];
+  terms: TermDTO[] = [];
+  units:UnitDTO[] = [];
   lessons: LessonDTO[] = [];
 
   selectedGradeId = 0;
@@ -150,6 +153,7 @@ export class Lesson implements OnInit {
   enableEdit(lessonId: number): void {
     this.selectedLessonId = lessonId;
   }
+
 
   // ✅ حفظ التعديل
   saveEdit(lesson: LessonDTO): void {

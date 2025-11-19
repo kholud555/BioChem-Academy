@@ -1,0 +1,22 @@
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+  }
+  
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .card-media {
+    border-radius: 12px 12px 0 0;
+  }
+  
+  audio {
+    border-radius: 8px;
+  }
+  
+  video {
+    border-radius: 8px;
+  }

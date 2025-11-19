@@ -1,0 +1,60 @@
+
+<app-nav-bar></app-nav-bar>
+<div class="container mt-4" (contextmenu)="disableRightClick($event)" *ngIf="mediaList.length > 0; else noMedia">
+
+  <h2 class="text-center mb-4">Available Lesson Content</h2>
+  <h3>{{SelectLesson?.title}}</h3>
+
+  <div class="row g-4">
+    <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let media of mediaList">
+      <div class="card h-100 shadow-sm">
+        <div class="card-media p-2">
+
+          <!-- Image -->
+          <img *ngIf="media.mediaType === 'Image'" 
+               [src]="media.previewUrl" 
+               class="card-img-top" 
+               alt="Image"
+               (contextmenu)="$event.preventDefault()">
+
+          <!-- Video -->
+          <video *ngIf="media.mediaType === 'Video'" 
+                 class="w-100" 
+                 controls 
+                 controlsList="nodownload" 
+                 (contextmenu)="$event.preventDefault()">
+            <source [src]="media.previewUrl" type="video/mp4">
+          </video>
+
+          <!-- PDF -->
+          <img *ngIf="media.mediaType === 'Pdf'" 
+               src="assets/pdf-icon.png" 
+               class="img-fluid" 
+               alt="PDF"
+               (contextmenu)="$event.preventDefault()">
+
+          <!-- Audio -->
+          <audio *ngIf="media.mediaType === 'Audio'" 
+                 controls 
+                 class="w-100" 
+                 (contextmenu)="$event.preventDefault()">
+            <source [src]="media.previewUrl" type="audio/mpeg">
+          </audio>
+
+        </div>
+
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ media.fileName }}</h5>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #noMedia>
+  <div class="text-center mt-5">
+    <p class="text-muted fs-5">No content available for this lesson.</p>
+  </div>
+</ng-template>

@@ -1,46 +1,38 @@
+<app-nav-bar></app-nav-bar>
 <div class="container mt-4">
+  <h2 class="mb-4">Student Courses: {{ studentData.userName }}</h2>
+ <h2 class="mb-4">Student grade {{ studentData.grade }}</h2>
 
-  <h2 class="text-center mb-4">📚 Lesson Media</h2>
+  <!-- Terms List -->
+  <div *ngFor="let term of terms" class="card mb-3 shadow-sm">
+    <div class="card-header  text-white d-flex justify-content-between align-items-center" 
+         style="cursor: pointer;" 
+         (click)="toggleTerm(term.id)">
+      <span>
+         {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+      </span>
+      <i class="bi" [ngClass]="{'bi-caret-down-fill': expandedTerms.has(term.id), 'bi-caret-right-fill': !expandedTerms.has(term.id)}"></i>
+    </div>
 
-  <!-- Loading state -->
-  <div *ngIf="isLoading" class="text-center">
-    <p>Loading media...</p>
-  </div>
+    <!-- Units -->
+    <div *ngIf="expandedTerms.has(term.id)" class="card-body bg-light">
+      <div *ngFor="let unit of getUnitsForTerm(term.id)" class="mb-2">
+        <div class="d-flex justify-content-between align-items-center p-2 border rounded" 
+             style="cursor: pointer; background-color: #e9ecef;" 
+             (click)="toggleUnit(unit.id)">
+          <span>{{ unit.title }}</span>
+          <i class="bi" [ngClass]="{'bi-caret-down-fill': expandedUnits.has(unit.id), 'bi-caret-right-fill': !expandedUnits.has(unit.id)}"></i>
+        </div>
 
-  <!-- Error message -->
-  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger text-center">
-    {{ errorMessage }}
-  </div>
-
-  <!-- Media list -->
-  <div *ngIf="!isLoading && !errorMessage">
-
-    <div *ngFor="let media of mediaList" class="card mb-3 p-3 shadow">
-
-      <h5>{{ media.fileName }}</h5>
-      <p>Type: {{ media.mediaType }}</p>
-
-      <!-- Video -->
-      <div *ngIf="media.mediaType === 'video'">
-        <video width="100%" height="350" controls>
-          <source [src]="media.previewUrl" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <!-- Lessons -->
+        <ul *ngIf="expandedUnits.has(unit.id)" class="list-group list-group-flush mt-1">
+          <li *ngFor="let lesson of getLessonsForUnit(unit.id)" class="list-group-item list-group-item-action"
+              style="cursor: pointer;" 
+              (click)="goToLesson(lesson)">
+            {{ lesson.title }}
+          </li>
+        </ul>
       </div>
-
-      <!-- Image -->
-      <div *ngIf="media.mediaType === 'image'">
-        <img [src]="media.previewUrl" class="img-fluid rounded" alt="Media preview">
-      </div>
-
-      <!-- PDF -->
-      <div *ngIf="media.mediaType === 'pdf'">
-        <a [href]="media.previewUrl" target="_blank" class="btn btn-primary mt-3">
-          Open PDF
-        </a>
-      </div>
-
     </div>
   </div>
-
 </div>

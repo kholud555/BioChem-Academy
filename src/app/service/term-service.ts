@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -10,6 +10,8 @@ import { CreateTermDTO , TermDTO } from '../InterFace/term-dto';
 })
 export class TermService {
   private baseUrl=`http://localhost:5292/api/Terms`;
+  private token = localStorage.getItem('token') || '';
+  
   constructor(private http: HttpClient) {}
 
 
@@ -22,6 +24,11 @@ export class TermService {
   return this.http.get<TermDTO[]>(`${this.baseUrl}/GetTermsByGrade?gradeId=${gradeId}`);
 }
 
+  getTermById(id: number): Observable<TermDTO> {
+    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+    return this.http.get<TermDTO>(`${this.baseUrl}/${id}`, { headers });
+  }
+
   
   // 🔹 Update term
   updateTerm(termData:TermDTO): Observable<any> {
@@ -32,5 +39,7 @@ export class TermService {
   deleteTerm(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+ 
 
 }

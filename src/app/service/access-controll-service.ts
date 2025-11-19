@@ -27,4 +27,5 @@ export class AccessControlService {
   getStudentPermissions(studentId: number, includeNames = false): Observable<StudentPermissionsDTO> {
     return this.http.get<StudentPermissionsDTO>(`${this.apiUrl}/student/${studentId}?IncludedNames=${includeNames}`);
   }
+  
 }

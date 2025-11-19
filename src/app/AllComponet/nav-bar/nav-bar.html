@@ -29,9 +29,7 @@
           <li class="nav-item">
             <a class="nav-link  fw-bold nav-hover" routerLink="/" routerLinkActive="active-link">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link  fw-bold nav-hover" routerLink="/courses" routerLinkActive="active-link">Learning Paths</a>
-          </li>
+         
           <li class="nav-item">
             <a class="nav-link  fw-bold nav-hover" routerLinkActive="active-link" (click)="scrollToSection('header')">About US</a>
           </li>
@@ -44,6 +42,10 @@
           @if(isLoggedIn()){
 
             @if(isStudent()){
+
+               <li class="nav-item">
+            <a class="nav-link  fw-bold nav-hover" routerLink="/courses" routerLinkActive="active-link">courses</a>
+          </li>
                <li class="nav-item">
               <a class="nav-link  fw-bold nav-hover" routerLink="/profile" routerLinkActive="active-link">
                 <i class="bi bi-person-circle me-1"></i> Welcome {{getUserName()}}

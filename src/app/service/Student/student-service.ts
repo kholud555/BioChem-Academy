@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
 import { StudentDto } from '../../InterFace/student-dto';
-import { StudentAccessedMediaDTO } from '../../InterFace/media-dto';
+import { FreeContentDTO, StudentAccessedMediaDTO } from '../../InterFace/media-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ getUserName(): string {
     }
     return this.UserName;
   }
-getStudentId(): number | null {
+getuserId(): number | null {
   if (this.getRole() === 'Student') {
     const userId = sessionStorage.getItem('userId');
     return userId ? Number(userId) : null ;
@@ -87,6 +87,10 @@ IsStudent():boolean{
       return false;
     }
   }
+    GetStudentdIdByUserId(): Observable<number> {
+      //http://localhost:5292/api/Student/GetStudentdIdByUserId
+    return this.http.get<number>(`${this.BaseUrl}/GetStudentdIdByUserId`);
+  }
   RegistrationStudent(RegistertionData:Register) :Observable <any>{
     return this.http.post(this.BaseUrl+"/RegisterStudent",RegistertionData);
 
@@ -114,15 +118,20 @@ loginStudent(loginData:Login) :Observable <any>{
   };
 return this.http.put(`${this.BaseUrl}/UpdateStudentProfile` , data , {headers})
   }
-
-  getMediaForStudentByLessonId(lessonId: number): Observable<StudentAccessedMediaDTO[]> {
+getMediaByLessonForStudent(lessonId: number): Observable<StudentAccessedMediaDTO[]> {
   const headers = {
     Authorization: `Bearer ${this.token}`
   };
+
   return this.http.get<StudentAccessedMediaDTO[]>(
-    `${this.BaseUrl}/MediaAccessForStudent?lessonId=${lessonId}`, 
+    `${this.BaseUrl}/MediaAccessForStudent?lessonId=${lessonId}`,
     { headers }
   );
 }
+
+getAllFreeContent(): Observable<FreeContentDTO[]> {
+    return this.http.get<FreeContentDTO[]>(`${this.BaseUrl}/GetAllFreeContent`);
+  }
+
 
 } 

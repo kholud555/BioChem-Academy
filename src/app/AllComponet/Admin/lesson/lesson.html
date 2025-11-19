@@ -81,7 +81,7 @@
       />
     </div>
 
-    
+  
 
     <button class="btn btn-Action" (click)="addLesson()">Add Lesson</button>
   </div>
@@ -144,7 +144,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Order</th>
-            
+            <th>free</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -181,6 +181,9 @@
               <td>{{ lesson.order }}</td>
               
               <td>
+             
+  
+
                 <button
                   class="btn-action btn-edit"
                   (click)="enableEdit(lesson.id)"

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 
 declare global {
-  interface Window {
-    fbq: any;
-    _fbq: any;
-  }
+  interface Window { fbq: any; _fbq: any; }
 }
 
 @Injectable({
@@ -12,47 +9,42 @@ declare global {
 })
 export class PixelService {
 
-  loadPixel(pixelId: string) {
+  constructor() { this.loadPixel(); }
 
-    // لو الـ Pixel اتحمّل قبل كده — ما تعيديش تحميله
-    if (window.fbq) return;
-
-    (function (f: any, b: Document, e: string, v: string) {
-      if (f.fbq) return;
-
-      const n: any = function () {
-        n.callMethod
-          ? n.callMethod.apply(n, arguments)
-          : n.queue.push(arguments);
+  private loadPixel() {
+    // Facebook Pixel code مُعدل ليعمل مع TypeScript
+    if (!window.fbq) {
+      window.fbq = function() {
+        window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
       };
+      window.fbq.queue = [];
+      window.fbq.loaded = true;
+      window.fbq.version = '2.0';
 
-      f.fbq = n;
-      if (!f._fbq) f._fbq = n;
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      const firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode?.insertBefore(script, firstScript);
+    }
 
-      n.push = n;
-      n.loaded = true;
-      n.version = '2.0';
-      n.queue = [];
-
-      const t = b.createElement(e) as HTMLScriptElement; // ✔️ حل مشكلة async + src
-      t.async = true;
-      t.src = v;
-
-      const s = b.getElementsByTagName(e)[0];
-      s.parentNode?.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-
-    // ✔️ تهيئة الـ Pixel
-    window.fbq('init', pixelId);
-
-    // ✔️ تسجيل PageView تلقائي
+    // استبدل بـ Pixel ID الخاص بك
+    window.fbq('init', 'YOUR_PIXEL_ID');
     window.fbq('track', 'PageView');
   }
 
-  // 🔥 للتتبع عند الضغط على زر، أو فتح درس، أو أي event
-  track(eventName: string, params: any = {}) {
+  trackEvent(eventName: string, params?: any) {
     if (window.fbq) {
       window.fbq('track', eventName, params);
     }
   }
+
+  trackLead() { this.trackEvent('Lead'); }
+  trackAddToCart(value?: number, currency?: string) {
+    this.trackEvent('AddToCart', { value, currency });
+  }
+  trackPurchase(value: number, currency: string) {
+    this.trackEvent('Purchase', { value, currency });
+  }
+  trackCompleteRegistration() { this.trackEvent('CompleteRegistration'); }
 }

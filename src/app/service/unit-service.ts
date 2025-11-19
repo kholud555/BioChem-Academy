@@ -29,5 +29,8 @@ export class UnitService {
   deleteUnit(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+  GetUnitByLessonId(lessonId:number):Observable<UnitDTO>{
+    return this.http.get<UnitDTO>(`${this.baseUrl}/byLesson/${lessonId}`);
+  }
 }
 

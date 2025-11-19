@@ -52,7 +52,10 @@
                             <span class="icon-email"></span>
                             EMAIL ADDRESS
                         </label>
-                        <input type="email" class="form-input" value="" [(ngModel)]="studentData.email"  name="email" readonly>
+                        <input type="email" class="form-input readonly-input" [(ngModel)]="studentData.email" name="email" readonly>
+  <small class="text-muted">You cannot change your email address.</small>
+                   
+                   
                     </div>
 
                     <div class="form-group">
@@ -70,16 +73,19 @@
                         </label>
                         <input type="tel" class="form-input" value="" [(ngModel)]="studentData.parentNumber"  name="parentNumber" >
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">
-                            <span class="icon-"></span>
-                        GRADE
-                        </label>
-                        <input type="tel" class="form-input" value="" [(ngModel)]="studentData.grade"   name="grade">
-                    </div>
+                    
+  <!-- Grade Dropdown -->
+<div class="form-group" *ngIf="grades.length > 0">
+  <label for="grade">Grade</label>
+  <select id="grade" [(ngModel)]="studentData.grade" name="grade" class="form-control">
+    <option value="" disabled>Select Grade</option>
+    <option *ngFor="let g of grades" [value]="g.gradeName">{{ g.gradeName }}</option>
+  </select>
+</div>
+
 
                     <div class="button-group">
-                        <button type="button" class="update-btn" (click)="UpdateProfile()">Update</button>
+                        <button type="button" class="update-btn" (click)="updateProfile()">Update</button>
                     </div>
                 </form>
             </div>

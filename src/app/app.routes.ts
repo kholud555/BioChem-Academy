@@ -24,7 +24,14 @@ import { GetAllTermsForGrade } from './AllComponet/Admin/get-all-terms-for-grade
 import { ShowLessonMedia } from './AllComponet/Admin/show-lesson-media/show-lesson-media';
 import { UploadVideo } from './AllComponet/Admin/upload-video/upload-video';
 import { Courses } from './AllComponet/courses/courses';
-
+import { CourseLessonMedia } from './AllComponet/course-lesson-media/course-lesson-media';
+import { Free } from './AllComponet/free/free';
+import { MakeLessonFree } from './AllComponet/Admin/make-lesson-free/make-lesson-free';
+import { ShowFreeMedia } from './AllComponet/show-free-media/show-free-media';
+import { ShowFreeMediaPart2 } from './AllComponet/show-free-media-part2/show-free-media-part2';
+import { CreateExam } from './AllComponet/Admin/exam/create-exam/create-exam';
+import { CreateQuestion } from './AllComponet/Admin/exam/create-question/create-question';
+import { MainHomeExam } from './AllComponet/Admin/exam/main-home-exam/main-home-exam';
 
 export const routes: Routes = [
     {path:"" ,component:MainHome},
@@ -35,6 +42,12 @@ export const routes: Routes = [
     {path:"upload-video",component:UploadVideo },
     
      {path:"profile" , component:UserProfile},
+      {path:"CourseLessonMedia" ,component:CourseLessonMedia},
+       {path:"free" ,component:Free},
+ { path: "ShowFreeMedia", component: ShowFreeMedia },
+ { path: "ShowFreeMediaPart2", component: ShowFreeMediaPart2 },
+
+
  
 {path:"AdmenBody",component:Body,
     canActivate:[authGuard],
@@ -50,7 +63,15 @@ export const routes: Routes = [
      {path:"AccessControl" , component:AccessControl},
       {path:"Courses" , component:CourseContent},
      {path:"get-all-terms-for-grade" , component:GetAllTermsForGrade},
-     {path:"ShowLessonMedia" ,component:ShowLessonMedia}
+     {path:"ShowLessonMedia" ,component:ShowLessonMedia},
+       {path:"MakeLessonFree" ,component:MakeLessonFree},
+         {path:"createExam" ,component:CreateExam},
+
+            {path:"MainHomeExam" ,component:MainHomeExam},
+         
+         
+{path:"createQuestion" , component:CreateQuestion},
+     
 
 ]
 }

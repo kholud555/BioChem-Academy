@@ -111,5 +111,18 @@ namespace Infrastructure.Data
             _context.Exams.Remove(exam);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<IEnumerable<Question>> GetExamQuestionsByIdAsync (int examId)
+        {
+            var existExam = await _context.Exams.FindAsync(examId);
+            if (existExam == null) throw new KeyNotFoundException("Exam With this id not found");
+
+            var listOfQuestionExam = await _context.Questions.Include(q => q.QuestionChoices)
+                                     .Where(q => q.ExamId == examId).ToListAsync();
+
+            if (listOfQuestionExam.Count == 0) throw new ArgumentException("No question for this exam");
+
+            return listOfQuestionExam;
+        }
     }
 }

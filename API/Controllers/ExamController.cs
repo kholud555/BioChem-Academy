@@ -70,5 +70,12 @@ namespace API.Controllers
             if (!success) return NotFound("Exam failed to delete");
             return NoContent();
         }
+
+        [HttpGet("GetQuestionOfExamByExamId")]
+        public async Task<ActionResult<IEnumerable<QuestionsOfExamDTO>>> GetQuestionOfExamByExamId (int examId)
+        {
+            var questionsList = await _service.GetExamQuestionByExamIdAsync(examId);
+            return Ok(questionsList);
+        }
     }
 }

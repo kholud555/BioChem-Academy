@@ -14,5 +14,6 @@ namespace Core.Interfaces
         Task<Exam> AddExamAsync(Exam exam);
         Task<bool> UpdateExamAsync(Exam exam);
         Task<bool> DeleteExamAsync(int id);
+        Task<IEnumerable<Question>> GetExamQuestionsByIdAsync (int examId);
     }
 }

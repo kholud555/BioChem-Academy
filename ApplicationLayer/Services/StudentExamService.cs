@@ -42,13 +42,15 @@ namespace Application.Services
             if (UserId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(UserId), "StudentId must be greater than zero");
 
-            if (dto.Answers == null || dto.Answers.Count == 0)
-                throw new ArgumentException("Answers cannot be empty", nameof(dto.Answers));
+            if (dto.AnswerId <= 0)
+                throw new ArgumentException("AnswerId must be greater than zero", nameof(dto.AnswerId));
 
-          
+            if (dto.QuestionId <= 0)
+                throw new ArgumentException("QuestionId must be greater than zero", nameof(dto.QuestionId));
+
             var exam = await _examRepo.GetExamByIdAsync(dto.ExamId);
 
-            int score = CalculateScore(dto.Answers, exam.Questions.ToList());
+            int score = await CalculateScore(dto.AnswerId , dto.QuestionId , exam.Id);
 
             var student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == UserId);
             if (student == null)
@@ -64,12 +66,16 @@ namespace Application.Services
             return await _studentExamRepo.SubmitExamAsync(studentExam);
         }
 
-        public async Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int studentId)
+        public async Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int userId)
         {
-            if (studentId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(studentId), "StudentId must be greater than zero");
+            if (userId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(userId), "StudentId must be greater than zero");
 
-            return await _studentExamRepo.GetStudentResultsAsync(studentId);
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == userId);
+            if (student == null)
+                throw new KeyNotFoundException("Student with this user id not found");
+
+            return await _studentExamRepo.GetStudentResultsAsync(student.Id);
         }
 
         public async Task<IEnumerable<StudentExam>> GetExamResultsAsync(int examId)
@@ -80,25 +86,23 @@ namespace Application.Services
             return await _studentExamRepo.GetExamResultsAsync(examId);
         }
 
-        private int CalculateScore(List<StudentAnswerDTO> studentAnswers, List<Question> questions)
+        private async Task<int> CalculateScore(int answerId, int questionId , int examId)
         {
-            int correctAnswers = 0;
+           var question = await _context.Questions.Include(q => q.QuestionChoices)
+                .FirstOrDefaultAsync(q => q.Id == questionId && q.ExamId == examId);
+            if (question == null) throw new KeyNotFoundException("Question not found");
 
-            foreach (var studentAnswer in studentAnswers)
+
+            var rightAnswer = question.QuestionChoices.Where(qc =>qc.IsCorrect).FirstOrDefault();
+
+            if (rightAnswer == null) throw new KeyNotFoundException("No answer to this question");
+
+            if(rightAnswer.Id == answerId)
             {
-                var question = questions.FirstOrDefault(q => q.Id == studentAnswer.QuestionId);
-                if (question == null) continue;
-
-                var correctAnswer = question.QuestionChoices.FirstOrDefault(a => a.IsCorrect);
-                if (correctAnswer != null && correctAnswer.Id == studentAnswer.AnswerId)
-                {
-                    correctAnswers++;
-                }
+                return question.Mark;
             }
 
-         
-            if (questions.Count == 0) return 0;
-            return (int)Math.Round((double)correctAnswers / questions.Count * 100);
+            return 0;
         }
     }
 }

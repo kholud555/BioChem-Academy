@@ -38,7 +38,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        // GET /api/studentexams/myresults — [Student] View own results
+
         [Authorize(Roles = "Student")]
         [HttpGet("myresults")]
         public async Task<ActionResult<IEnumerable<StudentExamResultDTO>>> GetMyResults()
@@ -55,8 +55,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-        // GET /api/studentexams/{studentId} — [Admin] Student results
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{studentId:int}")]
         public async Task<ActionResult<IEnumerable<StudentExamResultDTO>>> GetStudentResults(int studentId)
         {
@@ -65,8 +64,7 @@ namespace API.Controllers
             return Ok(dto);
         }
 
-        // GET /api/studentexams/exam/{examId} — [Admin] Exam results
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("exam/{examId:int}")]
         public async Task<ActionResult<ExamResultsDTO>> GetExamResults(int examId)
         {

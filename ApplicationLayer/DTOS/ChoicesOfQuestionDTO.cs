@@ -12,7 +12,7 @@ namespace Application.DTOS
         public int? Id { get; set; }
         [Required(ErrorMessage = "Choice فext is required")]
         public string ChoiceText { get; set; } = string.Empty;
-        public bool IsCorrect { get; set; }
+        public bool? IsCorrect { get; set; }
         [Required(ErrorMessage = "Question id  is required")]
         public int QuestionId { get; set; }
     }

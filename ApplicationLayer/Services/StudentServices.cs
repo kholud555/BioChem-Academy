@@ -17,16 +17,20 @@ namespace Application.Services
         private readonly StoreContext _context;
         private readonly IMapper _mapper;
         private readonly IStudentRepository _repo;
+        private readonly IExamRepository _examRepo;
         #endregion
 
 
         #region Constructor
-        public StudentServices(UserManager<User> userManager, StoreContext context, IMapper mapper, IStudentRepository repo)
+        public StudentServices(UserManager<User> userManager, StoreContext context, 
+            IMapper mapper, IStudentRepository repo,
+            IExamRepository examRepo)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _repo = repo;
+            _examRepo = examRepo;
         }
 
 
@@ -175,6 +179,31 @@ namespace Application.Services
             return await _repo.GetStudentIdByUserID(userId);
 
 
+        }
+
+        public async Task<IEnumerable<QuestionsOfExamDTO>> GetExamQuestionByExamIdAsync(int examId)
+        {
+            if (examId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(examId), "ID must be greater than zero");
+            }
+
+            var examQuestionList = await _examRepo.GetExamQuestionsByIdAsync(examId);
+
+            return examQuestionList.Select(q => new QuestionsOfExamDTO
+            {
+                Id = q.Id,
+                QuestionHeader = q.QuestionHeader,
+                Mark = q.Mark,
+                Type = q.Type,
+
+                ChoicesOfQuestion = q.QuestionChoices.Select(qc => new ChoicesOfQuestionDTO
+                {
+                    Id = qc.Id,
+                    ChoiceText = qc.ChoiceText,
+                    QuestionId = qc.QuestionId
+                }).ToList()
+            });
         }
     }
 }

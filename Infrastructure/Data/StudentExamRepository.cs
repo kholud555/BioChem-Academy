@@ -34,12 +34,21 @@ namespace Infrastructure.Data
             if (!studentExists)
                 throw new KeyNotFoundException("Student not found");
 
-            
-            var alreadySubmitted = await _context.StudentExams
-                .AnyAsync(se => se.StudentId == studentExam.StudentId && se.ExamId == studentExam.ExamId);
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            if (alreadySubmitted)
-                throw new InvalidOperationException("Student has already submitted this exam");
+            var alreadySubmitted = await _context.StudentExams
+                .FirstOrDefaultAsync(se => se.StudentId == studentExam.StudentId && se.ExamId == studentExam.ExamId);
+
+            if (alreadySubmitted != null)
+            {
+                alreadySubmitted.Score += studentExam.Score;
+                alreadySubmitted.SubmittedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return alreadySubmitted;
+            }
 
             var newStudentExam = new StudentExam
             {

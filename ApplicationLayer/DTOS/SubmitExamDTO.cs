@@ -13,7 +13,10 @@ namespace Application.DTOS
         [Range(1, int.MaxValue, ErrorMessage = "ExamId must be a positive number")]
         public int ExamId { get; set; }
 
-        [Required(ErrorMessage = "Answers are required")]
-        public List<StudentAnswerDTO> Answers { get; set; }
+        [Required(ErrorMessage = "QuestionId is required")]
+        public int QuestionId { get; set; }
+
+        [Required(ErrorMessage = "AnswerId is required")]
+        public int AnswerId { get; set; } = 0;
     }
 }

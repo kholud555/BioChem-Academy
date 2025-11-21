@@ -129,5 +129,12 @@ namespace API.Controllers
             var studentId = await _service.GetStudentIdByUserID(userIdInt);
             return Ok(studentId);
         }
+        [Authorize(Roles = "Student")]
+        [HttpGet("GetQuestionOfExamByExamId")]
+        public async Task<ActionResult<IEnumerable<QuestionsOfExamDTO>>> GetQuestionOfExamByExamId(int examId)
+        {
+            var questionsList = await _service.GetExamQuestionByExamIdAsync(examId);
+            return Ok(questionsList);
+        }
     }
 }

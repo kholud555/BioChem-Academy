@@ -30,7 +30,7 @@ namespace API.Controllers
         [HttpPost("presign-upload")]
         public IActionResult GetUploadUrl([FromBody] PresignRequestDTO dto)
         {
-            var key = $"{dto.Grade}/{dto.Term}/{dto.Unit}/Lesson{dto.LessonId}/{dto.FileName}";
+            var key = $"{dto.Subject}/{dto.Grade}/{dto.Term}/{dto.Unit}/Lesson{dto.LessonId}/{dto.FileName}";
             var url = _r2.GenerateUrlToUploadFiles(key);
             return Ok(new { presignedUrl = url, storageKey = key });
         }

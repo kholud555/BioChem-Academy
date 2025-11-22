@@ -12,6 +12,8 @@ namespace Core.Entities
         public int StudentId { get; set; }
         public Student student { get; set; }
 
+        public int? SubjectId { get; set; }
+        public Subject? Subject { get; set; }
         public int? GradeId { get; set; } 
         public Grade? Grade { get; set; }
 
@@ -23,11 +25,6 @@ namespace Core.Entities
 
         public int? LessonId { get; set; }
         public Lesson? Lesson { get; set; }
-
-
-
-
-        
 
     }
 }

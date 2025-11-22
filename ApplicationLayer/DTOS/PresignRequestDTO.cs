@@ -8,6 +8,7 @@ namespace Application.DTOS
 {
     public class PresignRequestDTO
     {
+            public string Subject { get; set; }
             public string Grade { get; set; }
             public string Term { get; set; }
             public string Unit { get; set; }

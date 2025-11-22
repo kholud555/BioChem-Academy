@@ -63,7 +63,7 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteGrade (int id)
         {
             var success = await _service.DeleteGradeAsync(id);
-            if (!success) return NotFound("Term failed to delete");
+            if (!success) return NotFound("Grade failed to delete");
             return NoContent();
         }
 

@@ -92,6 +92,10 @@ namespace Infrastructure.Data
                     opt => opt.MapFrom(src => src.Exam.Description))
                 .ForMember(dest => dest.TimeLimit,
                     opt => opt.MapFrom(src => src.Exam.TimeLimit));
+
+            //Subject
+            CreateMap<Subject, SubjectDTO>();
+            CreateMap<SubjectDTO ,Subject>();
         }
     }
 }

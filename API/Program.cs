@@ -66,6 +66,10 @@ namespace API
             builder.Services.AddScoped<IStudentExamRepository, StudentExamRepository>();
             builder.Services.AddScoped<StudentExamService>();
 
+            // Repository
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+            builder.Services.AddScoped<SubjectService>();
+
             //=========================================
             // Register R2 Cloud Flare Service
             builder.Services.AddScoped<R2CloudFlareService>();

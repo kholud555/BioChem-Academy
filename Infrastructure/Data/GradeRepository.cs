@@ -34,14 +34,17 @@ namespace Infrastructure.Data
             return await GetGradeByIdInternalAsync(id);
         }
 
-        public async Task<Grade> CreateGradeAsync(string gradeName)
+        public async Task<Grade> CreateGradeAsync(string gradeName , int subjectId)
         {
+            var isSubjectExist = await _context.Subjects.AnyAsync(s => s.Id == subjectId);
+            if(! isSubjectExist) throw new KeyNotFoundException("Subject not found"); 
+
             // Check for duplicate
             var existing = await _context.Grades
-                .FirstOrDefaultAsync(g => g.GradeName == gradeName);
+                .FirstOrDefaultAsync(g => g.GradeName == gradeName && g.SubjectId == subjectId);
             if (existing != null)
-                throw new InvalidOperationException ("Conflict: Grade  name already exists.");
-            var newGrade = new Grade { GradeName = gradeName};
+                throw new InvalidOperationException ("Conflict: Grade  name already exists for the same subject.");
+            var newGrade = new Grade { GradeName = gradeName , SubjectId = subjectId};
 
             await _context.Grades.AddAsync(newGrade);
             await _context.SaveChangesAsync();
@@ -50,10 +53,14 @@ namespace Infrastructure.Data
 
         public async Task<bool> UpdateGradeNameAsync (Grade grade)
         {
+            var isSubjectExist = await _context.Subjects.AnyAsync(s => s.Id == grade.SubjectId);
+            if (!isSubjectExist) throw new KeyNotFoundException("Subject not found");
+
             var existing =  await _context.Grades.FindAsync(grade.Id);
             if(existing == null) return false;
 
             existing.GradeName = grade.GradeName;
+            existing.SubjectId = grade.SubjectId;
   
             return await _context.SaveChangesAsync() > 0;
         }

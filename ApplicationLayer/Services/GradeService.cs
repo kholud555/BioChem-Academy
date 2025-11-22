@@ -32,12 +32,12 @@ namespace Application.Services
             CheckIdValidation(id);
             return await _repo.GetGradeByIdAsync(id);
         }
-        public async Task<Grade> CreateGradeAsync(string gradeName)
+        public async Task<Grade> CreateGradeAsync(string gradeName , int subjectId)
         {
 
             if(String.IsNullOrWhiteSpace(gradeName)) throw new ArgumentNullException(nameof(gradeName), "Grade should not be null");
 
-            return await _repo.CreateGradeAsync(gradeName);
+            return await _repo.CreateGradeAsync(gradeName , subjectId);
             
         }
 
@@ -48,6 +48,9 @@ namespace Application.Services
 
             if (grade.Id <= 0)
                 throw new ArgumentOutOfRangeException("Invalid Grade ID");
+
+            if (grade.SubjectId <= 0)
+                throw new ArgumentOutOfRangeException("Invalid Subject ID");
 
             if (String.IsNullOrWhiteSpace(grade.GradeName))
                 throw new ArgumentNullException(nameof(grade.GradeName),"Grade name should not be null");

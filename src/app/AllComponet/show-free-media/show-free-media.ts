@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FreeContentDTO } from '../../InterFace/media-dto';
 import { StudentService } from '../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,15 +16,34 @@ interface FreeContentViewModel extends FreeContentDTO {
 @Component({
   selector: 'app-show-free-media',
   templateUrl: './show-free-media.html',
-  styleUrl: './show-free-media.css',
+  styleUrls: ['./show-free-media.css'],
   imports: [CommonModule, NavBar]
 })
 export class ShowFreeMedia implements OnInit {
 
+  @HostListener('document:contextmenu', ['$event'])
+  disableRightClick(event: MouseEvent) {
+    event.preventDefault();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  disableKeys(e: KeyboardEvent) {
+    // F12
+    if (e.key === "F12") e.preventDefault();
+    // Ctrl+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") e.preventDefault();
+    // Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") e.preventDefault();
+    // Ctrl+U
+    if (e.ctrlKey && e.key.toLowerCase() === "u") e.preventDefault();
+    // Ctrl+S
+    if (e.ctrlKey && e.key.toLowerCase() === "s") e.preventDefault();
+  }
   freeContents: FreeContentViewModel[] = [];
   loading = false;
   selectedGrade: string | null = null;
-selectedLessonId:number | null=null;
+  selectedLesson: FreeContentDTO | null = null; // الدرس المختار
+
   constructor(
     private student: StudentService,
     private toastr: ToastrService,
@@ -46,7 +65,6 @@ selectedLessonId:number | null=null;
         this.freeContents = res
           .filter(item => item.gradeName === this.selectedGrade)
           .map(item => ({ ...item, show: false }));
-          
 
         this.loading = false;
 
@@ -62,4 +80,17 @@ selectedLessonId:number | null=null;
       }
     });
   }
+
+  // اختيار درس
+  selectLesson(lesson: FreeContentDTO) {
+    this.selectedLesson = lesson;
+  }
+
+  // العودة لقائمة الدروس
+  backToLessons() {
+    this.selectedLesson = null;
+  }
+
+  
+
 }

@@ -5,6 +5,7 @@ import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
 import { StudentDto } from '../../InterFace/student-dto';
 import { FreeContentDTO, StudentAccessedMediaDTO } from '../../InterFace/media-dto';
+import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -132,6 +133,11 @@ getMediaByLessonForStudent(lessonId: number): Observable<StudentAccessedMediaDTO
 getAllFreeContent(): Observable<FreeContentDTO[]> {
     return this.http.get<FreeContentDTO[]>(`${this.BaseUrl}/GetAllFreeContent`);
   }
+// exam-service.ts
+
+getExamQuestionsByExamId(examId: number) {
+  return this.http.get<QuestionsOfExamDTO[]>(`/api/Exam/GetQuestionOfExamByExamId?examId=${examId}`);
+}
 
 
 } 

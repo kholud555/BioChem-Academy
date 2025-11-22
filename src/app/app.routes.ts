@@ -28,10 +28,10 @@ import { CourseLessonMedia } from './AllComponet/course-lesson-media/course-less
 import { Free } from './AllComponet/free/free';
 import { MakeLessonFree } from './AllComponet/Admin/make-lesson-free/make-lesson-free';
 import { ShowFreeMedia } from './AllComponet/show-free-media/show-free-media';
-import { ShowFreeMediaPart2 } from './AllComponet/show-free-media-part2/show-free-media-part2';
+
+
 import { CreateExam } from './AllComponet/Admin/exam/create-exam/create-exam';
-import { CreateQuestion } from './AllComponet/Admin/exam/create-question/create-question';
-import { MainHomeExam } from './AllComponet/Admin/exam/main-home-exam/main-home-exam';
+import { ExamDetails } from './AllComponet/Admin/exam/exam-details/exam-details';
 
 export const routes: Routes = [
     {path:"" ,component:MainHome},
@@ -45,9 +45,7 @@ export const routes: Routes = [
       {path:"CourseLessonMedia" ,component:CourseLessonMedia},
        {path:"free" ,component:Free},
  { path: "ShowFreeMedia", component: ShowFreeMedia },
- { path: "ShowFreeMediaPart2", component: ShowFreeMediaPart2 },
-
-
+ 
  
 {path:"AdmenBody",component:Body,
     canActivate:[authGuard],
@@ -67,10 +65,10 @@ export const routes: Routes = [
        {path:"MakeLessonFree" ,component:MakeLessonFree},
          {path:"createExam" ,component:CreateExam},
 
-            {path:"MainHomeExam" ,component:MainHomeExam},
+           
          
          
-{path:"createQuestion" , component:CreateQuestion},
+{path:"examDetails" , component:ExamDetails},
      
 
 ]

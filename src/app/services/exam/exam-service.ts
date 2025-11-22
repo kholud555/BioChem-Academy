@@ -7,30 +7,43 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ExamService {
+  
   private baseUrl = "http://localhost:5292/api/Exam";
 
   constructor(private http: HttpClient) {}
 
+
+  
   getExamsByLesson(lessonId: number): Observable<ExamDTO[]> {
     return this.http.get<ExamDTO[]>(`${this.baseUrl}/GetExamsByLessonId?lessonId=${lessonId}`);
   }
 
+  
   getExamById(id: number): Observable<ExamDetailsDTO> {
     return this.http.get<ExamDetailsDTO>(`${this.baseUrl}/GetExamById?id=${id}`);
   }
 
+  
   createExam(dto: CreateExamDTO): Observable<ExamDTO> {
     return this.http.post<ExamDTO>(`${this.baseUrl}/Add Exam`, dto);
+  }
+
+  
+  getExamQuestions(examId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/GetQuestionOfExamByExamId?examId=${examId}`);
   }
 
   updateExam(dto: ExamDTO): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/Update Exam?id=${dto.id}`, dto);
   }
 
+ 
   deleteExam(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/Delete Exam?id=${id}`);
   }
-   private examIdKey = 'selectedExamId';
+
+
+  private examIdKey = 'selectedExamId';
 
   setExamId(examId: number): void {
     sessionStorage.setItem(this.examIdKey, examId.toString());

@@ -1,0 +1,141 @@
+<div class="page-container">
+
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">← Back</button>
+    <h2>{{ examDetails?.title }}</h2>
+    <button class="add-btn" (click)="showAddForm = true">+ Add Question</button>
+  </div>
+
+  <!-- Add Question Header Card -->
+  <div *ngIf="showAddForm" class="card shadow-sm mb-4 border-0 rounded-3">
+    <div class="card-header bg-info text-white py-3">
+      <h5 class="mb-0"><i class="bi bi-question-circle me-2"></i>Add Question</h5>
+    </div>
+
+    <div class="card-body p-4">
+
+      <form [formGroup]="questionForm" (ngSubmit)="addQuestionHeader()">
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Question Text</label>
+            <input type="text" class="form-control form-control-lg" formControlName="questionHeader" placeholder="Enter question...">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Mark</label>
+            <input type="number" class="form-control form-control-lg" formControlName="mark" min="1">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Question Type</label>
+            <select class="form-select form-select-lg" formControlName="type">
+              <option [value]="0">Multiple Choice (4 options)</option>
+              <option [value]="1">True / False</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- TRUE / FALSE Correct Answer Selector -->
+        <div *ngIf="questionForm.value.type == 1" class="mt-4 p-3 border rounded bg-light shadow-sm">
+          <label class="fw-bold mb-2 d-block">Select Correct Answer</label>
+
+          <div class="d-flex gap-4 ms-2 mt-2">
+            <label class="d-flex align-items-center gap-2">
+              <input type="radio" name="tfCorrect" (change)="setTFAnswer(true)" class="form-check-input" />
+              <span class="fw-semibold">True</span>
+            </label>
+
+            <label class="d-flex align-items-center gap-2">
+              <input type="radio" name="tfCorrect" (change)="setTFAnswer(false)" class="form-check-input" />
+              <span class="fw-semibold">False</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-info text-white btn-lg w-100 mt-4">
+          Add Question
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MCQ Choices Section -->
+  <div *ngIf="addedQuestion && addedQuestion.type === 0" class="card shadow-sm rounded-3 border-0 mb-4">
+    <div class="card-header bg-warning py-3">
+      <h5 class="mb-0">Add 4 Choices for:
+        <strong>{{ addedQuestion.questionHeader }}</strong>
+      </h5>
+    </div>
+
+    <div class="card-body p-4">
+
+      <form (ngSubmit)="submitAllChoices()">
+
+        <div class="row g-4" *ngFor="let c of mcqChoices; let i = index">
+
+          <div class="col-md-9">
+            <label class="form-label fw-semibold">Choice {{ i + 1 }}</label>
+            <input type="text" class="form-control form-control-lg" [(ngModel)]="mcqChoices[i].choiceText"
+                   name="choice{{ i }}" placeholder="Enter choice text..." required>
+          </div>
+
+          <div class="col-md-3 d-flex align-items-end">
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="radio"
+                     name="correctChoice{{ addedQuestion?.id }}"
+                     (change)="setCorrect(i)"
+                     [checked]="mcqChoices[i].isCorrect">
+              <label class="form-check-label fw-semibold">
+                Correct
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-warning btn-lg w-100 mt-4">
+          Save All Choices
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading exam details...</div>
+
+  <div *ngIf="!loading">
+
+    <div class="question-card" *ngFor="let q of questions">
+
+      <div class="question-header">
+        <h3>{{ q.questionHeader }}</h3>
+      </div>
+
+      <p class="mark">Mark: <strong>{{ q.mark }}</strong></p>
+
+      <ul class="choices">
+        <li *ngFor="let c of q.choicesOfQuestion" [class.correct-choice]="c.isCorrect">
+          <span>{{ c.choiceText }}</span>
+          <span *ngIf="c.isCorrect" class="correct">✔</span>
+        </li>
+      </ul>
+
+      <div class="correct-answer">
+        Correct Answer: <strong>{{ getCorrectAnswer(q.choicesOfQuestion) }}</strong>
+      </div>
+
+      <div class="actions">
+        <!-- <button class="edit-btn" (click)="editQuestion(q.id)">Edit</button>
+       -->
+        <button class="delete-btn" (click)="deleteQuestion(q.id)">Delete</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,10 +1,113 @@
-
-
 /* Main Container */
 .free-content-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #e8f5f7 0%, #fff5f0 50%, #e0f2f7 100%);
   padding: 2rem 1rem;
+}
+
+/* Videos Row */
+.videos-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Individual Video/Card */
+.video-card {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+/* منع السحب والتحميل */
+video, img, iframe, audio {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: auto;
+}
+
+/* منع زر التحميل من Controls */
+video::-internal-media-controls-download-button {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+/* Overlay أسود إضافي */
+#blackOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 9999999;
+}
+
+/* منع زر التحميل من Controls */
+video::-internal-media-controls-download-button {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+/* Overlay أسود إذا حبيت تستخدمه لاحقًا */
+#blackOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 9999999;
+}
+
+/* شكل الكروت */
+.media-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  text-align: center;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.media-card:hover {
+  transform: scale(1.02);
+}
+
+/* شكل الصور والفيديو */
+.media-content {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* زر العودة */
+.btn-primary {
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 
 /* Header */
@@ -90,7 +193,6 @@
 
 /* Content Card */
 .content-card {
-  background: white;
   border-radius: 1rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
@@ -117,11 +219,6 @@
   font-weight: 600;
 }
 
-.badge-icon {
-  width: 2rem;
-  height: 2rem;
-}
-
 /* Card Details */
 .card-details {
   padding: 1.5rem;
@@ -135,7 +232,6 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: #f8f9fa;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
 }
@@ -143,17 +239,6 @@
 .detail-item:hover {
   background: #e9ecef;
   transform: translateX(5px);
-}
-
-.detail-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #17a2b8;
-  flex-shrink: 0;
-}
-
-.lesson-item .detail-icon {
-  color: #ff6b35;
 }
 
 .detail-item span {
@@ -191,56 +276,6 @@
   transform: translateY(0);
 }
 
-.button-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-/* Media Section */
-.media-section {
-  border-top: 2px solid #e9ecef;
-  background: #f8f9fa;
-  animation: slideDown 0.4s ease-out;
-}
-
-.media-header {
-  padding: 1.5rem 1.5rem 1rem;
-}
-
-.media-header h6 {
-  color: #2c3e50;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.media-list {
-  padding: 0 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.media-item {
-  background: white;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  border: 2px solid #e9ecef;
-  transition: all 0.3s ease;
-}
-
-.media-item:hover {
-  border-color: #17a2b8;
-  box-shadow: 0 4px 15px rgba(23, 162, 184, 0.1);
-}
-
-.media-title {
-  color: #2c3e50;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
 /* Media Elements */
 .media-video,
 .media-image {
@@ -253,83 +288,31 @@
   background: #000;
 }
 
-.pdf-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-}
-
-.pdf-button:hover {
-  background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-  color: white;
-}
-
-.pdf-button svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .main-title {
-    font-size: 2rem;
-  }
+  .main-title { font-size: 2rem; }
 
-  .cards-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+  .cards-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 
-  .free-content-container {
-    padding: 1.5rem 0.5rem;
-  }
+  .free-content-container { padding: 1.5rem 0.5rem; }
 }

@@ -1,7 +1,6 @@
-<!-- Free Content Component Template -->
- <app-nav-bar></app-nav-bar>
+<app-nav-bar></app-nav-bar>
 <div class="free-content-container">
-  
+
   <!-- Header -->
   <div class="content-header">
     <h1 class="main-title">Free Content</h1>
@@ -15,66 +14,65 @@
   </div>
 
   <!-- Main Content -->
-  <div *ngIf="!loading" class="content-wrapper">
+  <div *ngIf="!loading">
 
-    <!-- No Content Message -->
-    <div *ngIf="freeContents.length === 0" class="no-content">
-      <svg class="no-content-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-      </svg>
-      <p>No content available for this grade.</p>
-    </div>
+    <!-- عرض الدروس فقط إذا لم يتم اختيار درس -->
+    <div *ngIf="!selectedLesson" class="cards-grid">
 
-    <!-- Content Cards Grid -->
-    <div class="cards-grid">
-      <div class="card-wrapper" *ngFor="let item of freeContents; let i = index"
-           [style.animation-delay.ms]="i * 100">
-        
+      <!-- لا يوجد محتوى -->
+      <div *ngIf="freeContents.length === 0" class="no-content">
+        <p>No content available for this grade.</p>
+      </div>
+
+      <!-- قائمة الدروس -->
+      <div class="card-wrapper" *ngFor="let item of freeContents" 
+           (click)="selectLesson(item)">
         <div class="content-card">
-          
-          <!-- Card Header with Grade Badge -->
           <div class="card-header-section">
             <div class="grade-badge">
-              <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
               <span>lesson : {{ item.lessonName }}</span>
             </div>
           </div>
-
-          <!-- Card Details -->
           <div class="card-details">
-            <div class="detail-item">
-              <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <span>term : {{ item.term=="0"?"first term" : "second term" }}</span>
-            </div>
-
-            <div class="detail-item">
-              <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-              </svg>
-              <span>unit : {{ item.unitName }}</span>
-            </div>
-
-          
-
-         
-          
+            <span>term : {{ item.term=="0" ? "first term" : "second term" }}</span>
+            <span>unit : {{ item.unitName }}</span>
+          </div>
         </div>
       </div>
+
     </div>
+
+   <!-- عرض الفيديوهات بعد اختيار درس -->
+<div *ngIf="selectedLesson" class="videos-grid" (contextmenu)="$event.preventDefault()">
+  <button (click)="backToLessons()" class="btn-primary btn">← Back to Lessons</button>
+
+  <div class="videos-row">
+    <div class="video-card media-card" *ngFor="let media of selectedLesson.mediaOfFreeLesson">
+
+      <h3>{{ media.fileName }}</h3>
+
+      <!-- فيديو -->
+      <video *ngIf="media.mediaType=='Video'" class="media-content" controls
+             controlsList="nodownload nofullscreen noremoteplayback"
+             (contextmenu)="$event.preventDefault()"
+             (dragstart)="$event.preventDefault()">
+        <source [src]="media.previewUrl" type="video/mp4">
+        Your browser does not support HTML video.
+      </video>
+
+      <!-- PDF -->
+      <iframe *ngIf="media.mediaType=='Pdf'" class="media-content" [src]="media.previewUrl"
+              (contextmenu)="$event.preventDefault()"
+              (dragstart)="$event.preventDefault()"></iframe>
+
+      <!-- صورة -->
+      <img *ngIf="media.mediaType=='Image'" class="media-content" [src]="media.previewUrl"
+           (contextmenu)="$event.preventDefault()"
+           (dragstart)="$event.preventDefault()" />
+          
+    </div>
+  </div>
+</div>
 
   </div>
 </div>

@@ -16,7 +16,6 @@
           controlsList="nodownload noremoteplayback"
           disablePictureInPicture
           (contextmenu)="disableRightClick($event)"
-          [attr.data-id]="media.id"
         ></video>
 
         <!-- 🔊 Audio -->
@@ -45,16 +44,94 @@
           <p class="card-text text-muted small">
             {{ media.mediaType }} • {{ media.fileFormat }}
           </p>
-
-          <div class="mt-auto">
-            <button class="btn btn-danger btn-sm w-100" (click)="onDeleteMedia(media.id)">
-              🗑️ Delete
-            </button>
-          </div>
+          
         </div>
 
       </div>
     </div>
   </div>
 
+</div>
+
+<!-- ===== Exams Section ===== -->
+<div class="exams-section mt-5" *ngIf="exams.length > 0">
+  <h3 class="mb-4">📝 Available Exams</h3>
+
+  <div class="row g-4">
+    <div *ngFor="let exam of exams" class="col-md-6 col-lg-4">
+      <div class="card exam-card h-100 shadow-sm">
+        <div *ngIf="studentResults.length > 0">
+          <div *ngFor="let result of studentResults" class="card mb-3 p-3 shadow-sm">
+    <h5>{{ result.examTitle }}</h5>
+    <p>Score: {{ result.score }} / {{ result.totalQuestions }}</p>
+   
+    <p *ngIf="result.submittedAt">Submitted At: {{ result.submittedAt | date:'short' }}</p>
+  </div>
+        </div>
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title">{{ exam.title }}</h5>
+          <p class="card-text text-muted mb-3">
+            Test your knowledge and skills! 🎯
+          </p>
+          <button class="btn btn-primary w-100" (click)="startExam(exam.id, exam.title)">
+            Start Exam
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Exam Questions ===== -->
+<div *ngIf="ExamStarted" class="exam-questions mt-4">
+  <h4>{{ selectedExamTitle }}</h4>
+ <div *ngFor="let question of examQuestions" class="card mb-3 p-3">
+  <p><strong>{{ question.questionHeader }}</strong> ({{ question.mark }} pts)</p>
+
+  <ul class="list-group">
+   <div *ngFor="let question of examQuestions" class="card mb-3 p-3">
+  <p><strong>{{ question.questionHeader.questionHeader }}</strong> ({{ question.mark }} pts)</p>
+  <div *ngIf="ExamStarted" class="exam-questions mt-4">
+  <h4>{{ selectedExamTitle }}</h4>
+
+  <div *ngFor="let question of examQuestions" class="card mb-3 p-3">
+    <p><strong>{{ question.questionHeader.questionHeader }}</strong> ({{ question.mark }} pts)</p>
+
+    <ul class="list-group">
+      <li *ngFor="let choice of question.choicesOfQuestion" class="list-group-item">
+        <input
+          type="radio"
+          [name]="'q' + question.id"
+          [value]="choice.id"
+          (change)="selectAnswer(question.id, choice.id)"
+          [checked]="examAnswers[question.id] === choice.id"
+        />
+        {{ choice.choiceText }}
+      </li>
+    </ul>
+  </div>
+
+  <button class="btn btn-success" (click)="submitExam()" [disabled]="submitting">
+    {{ submitting ? 'Submitting...' : 'Submit Exam' }}
+  </button>
+</div>
+
+</div>
+
+  </ul>
+</div>
+
+
+  <button class="btn btn-success" (click)="submitExam()" [disabled]="submitting">
+    {{ submitting ? 'Submitting...' : 'Submit Exam' }}
+  </button>
+</div>
+
+<!-- ===== Exam Result ===== -->
+<div *ngIf="showResult" class="exam-result mt-4 alert alert-info">
+  <h4>Result</h4>
+  <p>Total Score: {{ totalScore }} / {{ maxScore }}</p>
+  <p>Percentage: {{ getPercentage() }}%</p>
+  <button class="btn btn-secondary" (click)="closeResult()">Close</button>
 </div>

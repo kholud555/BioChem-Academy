@@ -1,11 +1,8 @@
-// ==========================================
-// Exam DTOs
-// ==========================================
 
 export interface CreateExamDTO {
   title: string;
   description?: string;
-  level: number;          // استخدمي نفس enum
+  level: number;          
   referenceId: number;
   timeLimit: number;
   isPublished: boolean;
@@ -13,32 +10,25 @@ export interface CreateExamDTO {
 
 export interface ExamDTO extends CreateExamDTO {
   id: number;
-  createdAt: string;      // ISO string
+  createdAt: string;      
 }
 
 export interface ExamDetailsDTO extends CreateExamDTO {
   id: number;
   createdAt: string;
-  studentsAttempted: number;  // camelCase مطابق للـ API
-  questionsCount: number;     // camelCase مطابق للـ API
+  studentsAttempted: number;  
+  questionsCount: number;     
 }
 
-// ==========================================
-// Exam Level Enum
-// ==========================================
 export enum ExamLevelEnum {
   Easy = 0,
   Medium = 1,
   Hard = 2
 }
 
-// ==========================================
-// Question DTOs
-// ==========================================
 
-// لإنشاء سؤال جديد (header)
 export interface HeaderQuestionDTO {
-  id?: number;                   // اختياري عند الإنشاء
+  id?: number;                   
   questionHeader: string;
   mark: number;
   type: ExamTypeEnum;
@@ -61,15 +51,42 @@ export interface QuestionChoicesDTO extends CreateQuestionChoicesDTO {
 export interface QuestionDTO extends HeaderQuestionDTO {
   id?: number;
 }
+export interface ChoicesOfQuestionDTO {
+  id: number;
+  choiceText: string;
+  isCorrect: boolean;
+  questionId: number;
+}
 
-// ==========================================
-// ExamTypeEnum
-// ==========================================
 export enum ExamTypeEnum {
   ChoiceType = 0,
   TrueFalseType = 1
 }
 
+
+export interface SingleAnswerDTO {
+  examId: number;       
+  questionId: number;   // رقم السؤال
+  answerId: number;     // رقم الإجابة المختارة (أو true/false للأسئلة الصحيحة/خاطئة)
+}
+
+export interface StudentExamDTO {
+  id: number;
+  score: number;
+  submittedAt: string; // date كـ string من API
+  examId: number;
+  examTitle: string;
+  studentId: number;
+  studentName: string;
+}export interface ExamResultsDTO {
+  examId: number;
+  ExamTitle : string;
+   TotalStudents: number;
+ AverageScore: number;
+  HighestScore: number;
+  LowestScore: number;
+  StudentResults: StudentExamDTO[]; 
+}
 
 export interface PresignRequestDTO {
   grade: string;
@@ -77,4 +94,11 @@ export interface PresignRequestDTO {
   unit: string;
   lessonId: number;
   fileName: string;
+}
+export interface QuestionsOfExamDTO {
+  id: number;
+  choicesOfQuestion: ChoicesOfQuestionDTO[];
+  type: ExamTypeEnum;
+  mark: number;
+  questionHeader: HeaderQuestionDTO
 }

@@ -15,8 +15,116 @@
   
   audio {
     border-radius: 8px;
-  }
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
   
   video {
     border-radius: 8px;
   }
+
+
+  .exam-section-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.exam-card {
+  border-radius: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: white;
+}
+
+.exam-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.exam-icon {
+  font-size: 40px;
+  color: #4a6cf7;
+}
+
+.exam-btn {
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+/* ========== Video Protection Styles ========== */
+
+/* Disable video download button */
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px);
+}
+
+/* Hide download button in Chrome */
+video::-webkit-media-controls-download-button {
+  display: none !important;
+}
+
+/* Hide overflow menu (3 dots) */
+video::-webkit-media-controls-overflow-button {
+  display: none !important;
+}
+
+/* Prevent text/element selection */
+.protected-video {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* Overlay to prevent easy inspection */
+.video-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 40px; /* Leave space for controls */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Disable drag */
+.protected-video {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Prevent selection on entire page */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide Picture-in-Picture button */
+video::-webkit-media-controls-picture-in-picture-button {
+  display: none !important;
+}
+
+/* Firefox specific */
+video::-moz-media-controls-download-button {
+  display: none !important;
+}

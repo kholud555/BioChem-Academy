@@ -1,10 +1,13 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
-import { LessonForMediaDTO } from '../../../InterFace/media-dto';
-import { UploadService } from '../../../service/upload-service';
-import { LessonService } from '../../../service/lesson-service';
-import { ToastrService } from 'ngx-toastr';
+import { StudentAccessedMediaDTO } from '../../../InterFace/media-dto';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { StudentExamDTO, StudentExamResultDTO, SubmitExamDTO } from '../../../InterFace/student-exam';
+import { StudentService } from '../../../service/Student/student-service';
+import { ExamService } from '../../../services/exam/exam-service';
+import { StudentExamService } from '../../../service/student-exam';
+import { QuestionsOfExamDTO } from '../../../InterFace/exam-dto';
 
 @Component({
   selector: 'app-show-lesson-media',
@@ -13,102 +16,168 @@ import { CommonModule } from '@angular/common';
   templateUrl: './show-lesson-media.html',
   styleUrls: ['./show-lesson-media.css']
 })
-export class ShowLessonMedia {
-
-  @ViewChildren('videoPlayer') videos!: QueryList<ElementRef<HTMLVideoElement>>;
-
-  lessonId: number = 0;
+export class ShowLessonMedia implements OnInit, OnDestroy {
+  // ===== Lesson info =====
+  SelectLesson: LessonDTO | null = null;
   lessonName: string = '';
-  lessonDescription: string = '';
+  lessonMedia: StudentAccessedMediaDTO[] = [];
 
-  Lesson: LessonDTO | null = null;
-  lessonMedia: LessonForMediaDTO[] = [];
+  studentId: number | null = null;
+studentResults:any;
+  // ===== Exams =====
+  exams: any[] = [];
+  ExamStarted: boolean = false;
+  selectedExamId: number | null = null;
+  examQuestions: QuestionsOfExamDTO[] = [];
+  examAnswers: { [questionId: number]: number } = {};
+  selectedExamTitle: string = '';
+
+  showResult: boolean = false;
+  totalScore: number = 0;
+  maxScore: number = 0;
+  submitting: boolean = false;
 
   constructor(
-    private media: UploadService,
-    private toast: ToastrService,
-    private lessonService: LessonService
+    private studentService: StudentService,
+    private router: Router,
+    private examService: ExamService,
+    private studentExamService: StudentExamService
   ) {}
 
   ngOnInit(): void {
+    document.addEventListener("keydown", this.disableKeys);
 
-    document.addEventListener('contextmenu', (event) => event.preventDefault());
-
-    this.Lesson = this.lessonService.getLesson();
-
-    if (!this.Lesson) {
-      const savedLesson = sessionStorage.getItem("lesson");
-      if (savedLesson) {
-        this.Lesson = JSON.parse(savedLesson);
-      }
+    const storedLesson = sessionStorage.getItem('selectedLesson');
+    if (storedLesson) {
+      this.SelectLesson = JSON.parse(storedLesson) as LessonDTO;
+      this.lessonName = this.SelectLesson.title;
     }
 
-    if (this.Lesson) {
-      sessionStorage.setItem("lesson", JSON.stringify(this.Lesson));
-      this.lessonId = this.Lesson.id;
-      this.lessonName = this.Lesson.title;
-      this.lessonDescription = this.Lesson.description || "";
-    } else {
-      this.toast.error("No lesson found!", "Error");
-      return;
-    }
+    const savedStudentId = sessionStorage.getItem('studentId');
+    if (savedStudentId) this.studentId = Number(savedStudentId);
 
     this.loadLessonMedia();
+    this.loadExams();
+   if (this.studentId) {
+      this.loadStudentResults(this.studentId);
+    }
+    
   }
 
-  async loadLessonMedia() {
-    try {
-      this.lessonMedia = await this.media.getLessonMedia(this.lessonId);
-    } catch (err) {
-      console.error('Error fetching lesson media:', err);
-      this.toast.error('Failed to load media', 'Error');
-    }
+  ngOnDestroy(): void {
+    document.removeEventListener("keydown", this.disableKeys);
   }
 
-  // تحميل الفيديو Blob
-  async loadVideoAsBlob(media: LessonForMediaDTO) {
-    try {
-      const response = await fetch(media.previewUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const videoEl = this.videos.find(
-        v => v.nativeElement.dataset['id'] === String(media.id)
-      );
-
-      if (videoEl) {
-        videoEl.nativeElement.src = blobUrl;
-      }
-
-    } catch (error) {
-      console.error('Error loading video blob:', error);
-    }
+  disableKeys = (e: KeyboardEvent) => {
+    if (["F12", "s", "u"].includes(e.key.toLowerCase())) e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && ["i", "j"].includes(e.key.toLowerCase())) e.preventDefault();
   }
 
   disableRightClick(event: MouseEvent) {
     event.preventDefault();
-    return false;
   }
 
-  async onDeleteMedia(mediaId: number) {
-    try {
-      await this.media.deleteMedia(mediaId);
-      this.lessonMedia = this.lessonMedia.filter(m => m.id !== mediaId);
-      this.toast.success('Media deleted successfully', 'Deleted');
-    } catch (err) {
-      console.error('Error deleting media:', err);
-      this.toast.error('Failed to delete media', 'Error');
+  loadLessonMedia() {
+    if (!this.SelectLesson) return;
+    this.studentService.getMediaByLessonForStudent(this.SelectLesson.id).subscribe({
+      next: (res: StudentAccessedMediaDTO[]) => this.lessonMedia = res
+    });
+  }
+
+  loadExams() {
+    if (!this.SelectLesson) return;
+    this.examService.getExamsByLesson(this.SelectLesson.id).subscribe({
+      next: (res: any[]) => this.exams = res
+    });
+  }
+
+  onDeleteMedia(mediaId: number) {
+    console.log('Delete media', mediaId);
+    // هنا ممكن تضيف كود الحذف من السيرفر
+  }
+
+  // ===== Exams logic =====
+  startExam(examId: number, examTitle: string) {
+    this.selectedExamId = examId;
+    this.selectedExamTitle = examTitle;
+    
+    this.examAnswers = {};
+    this.showResult = false;
+    this.totalScore = 0;
+
+    this.examService.getExamQuestions(examId).subscribe({
+      next: (res: QuestionsOfExamDTO[]) => {
+        this.examQuestions = res;
+      console.log("🔥 Loaded Questions:", this.examQuestions);
+
+        this.ExamStarted = true;
+        this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
+      },
+      error: (err) => console.error("Failed to load exam questions", err)
+    });
+  }
+
+  selectAnswer(questionId: number, choiceId: number) {
+    this.examAnswers[questionId] = choiceId;
+  }
+
+  submitExam() {
+    if (!this.selectedExamId || this.submitting) return;
+
+    const answeredQuestions = Object.keys(this.examAnswers);
+    if (answeredQuestions.length === 0) {
+      alert('Please answer at least one question!');
+      return;
     }
-  }
 
-  ngAfterViewInit() {
-    this.videos.changes.subscribe(() => {
-      this.lessonMedia.forEach(m => {
-        if (m.mediaType.toLowerCase() === 'video') {
-          this.loadVideoAsBlob(m);
+    this.submitting = true;
+    this.totalScore = 0;
+
+    let completedCount = 0;
+    let hasError = false;
+
+    answeredQuestions.forEach(qId => {
+      const dto: SubmitExamDTO = {
+        ExamId: this.selectedExamId!,
+        QuestionId: Number(qId),
+        // studentId: this.studentId!, 
+        AnswerId: this.examAnswers[Number(qId)]
+      };
+
+      this.studentExamService.submitAnswer(dto).subscribe({
+        next: (result: StudentExamDTO) => {
+          this.totalScore += result.score || 0;
+        },
+        error: (err) => {
+          console.error("Failed to submit answer for question", qId, err);
+          hasError = true;
+        },
+        complete: () => {
+          completedCount++;
+          if (completedCount === answeredQuestions.length) {
+            this.ExamStarted = false;
+            this.showResult = true;
+            this.submitting = false;
+           
+          }
         }
       });
     });
   }
+ loadStudentResults(studentId: number) {
+    this.studentExamService.getStudentResults(studentId).subscribe({
+      next: (res: StudentExamResultDTO[]) => this.studentResults = res,
+      error: (err) => console.error('Failed to load student results', err)
+    });
+  }
+  closeResult() {
+    this.showResult = false;
 
+    this.examAnswers = {};
+  }
+
+  getPercentage(): number {
+    if (this.maxScore === 0) return 0;
+    return Math.round((this.totalScore / this.maxScore) * 100);
+  }
 }

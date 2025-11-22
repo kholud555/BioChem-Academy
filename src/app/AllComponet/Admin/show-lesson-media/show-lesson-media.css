@@ -24,6 +24,10 @@ video::-webkit-media-controls-enclosure {
   pointer-events: none;
   transition: opacity 0.2s ease-in-out;
   z-index: 9999999;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -ms-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
 }
 
 /* شكل الكروت */
@@ -36,10 +40,44 @@ video::-webkit-media-controls-enclosure {
 
 .media-card:hover {
   transform: scale(1.02);
+  -webkit-transform: scale(1.02);
+  -moz-transform: scale(1.02);
+  -ms-transform: scale(1.02);
+  -o-transform: scale(1.02);
 }
 
 /* شكل الصور والفيديو */
 .media-content {
   height: 200px;
   object-fit: cover;
+}
+exam-card {
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+}
+
+.exam-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.exam-card .card-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.exam-card .card-text {
+  font-size: 0.9rem;
+}
+
+.exam-card .btn-primary {
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.exam-card .btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
 }

@@ -127,40 +127,82 @@ export class AccessControl implements OnInit {
     });
   }
 
-  // ✅ تحميل جميع البيانات (الدرجات، الترمات، الوحدات، الدروس)
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: res => {
-        this.grades = res.map(grade => ({ ...grade, isOpen: false }));
-        this.saveToSession('grades', this.grades);
+loadGrades(): void {
 
-        this.grades.forEach(grade => {
-          this.termService.getTermsByGrade(grade.id).subscribe(terms => {
-            this.terms = [...this.terms, ...terms.map(t => ({ ...t, isOpen: false }))];
-            this.saveToSession('terms', this.terms);
+  // 🔥 مهم جداً — فضي كل حاجة قبل التحميل عشان ميحصلش تراكم من session
+  this.grades = [];
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
 
-            terms.forEach(term => {
-              this.unitService.getUnitsByTerm(term.id).subscribe(units => {
-                this.units = [...this.units, ...units.map(u => ({ ...u, isOpen: false }))];
-                this.saveToSession('units', this.units);
+  this.saveToSession('grades', []);
+  this.saveToSession('terms', []);
+  this.saveToSession('units', []);
+  this.saveToSession('lessons', []);
 
-                units.forEach(unit => {
-                  this.lessonService.getLessonsByUnit(unit.id).subscribe(lessons => {
-                    this.lessons = [...this.lessons, ...lessons];
-                    this.saveToSession('lessons', this.lessons);
-                  });
+  this.gradeService.GetAllGrade().subscribe({
+    next: gradesRes => {
+      this.grades = gradesRes.map(g => ({ ...g, isOpen: false }));
+      this.saveToSession('grades', this.grades);
+
+      // 🔥 استخدم for … of بدل nested subscribe
+      for (const grade of this.grades) {
+
+        this.termService.getTermsByGrade(grade.id).subscribe(termsRes => {
+
+          // 🛑 منع تكرار الترمات تماماً
+          for (const term of termsRes) {
+            if (!this.terms.some(t => t.id === term.id)) {
+              this.terms.push({ ...term, isOpen: false });
+            }
+          }
+
+          this.saveToSession('terms', this.terms);
+
+          for (const term of termsRes) {
+
+            this.unitService.getUnitsByTerm(term.id).subscribe(unitsRes => {
+
+              for (const unit of unitsRes) {
+                if (!this.units.some(u => u.id === unit.id)) {
+                  this.units.push({ ...unit, isOpen: false });
+                }
+              }
+
+              this.saveToSession('units', this.units);
+
+              for (const unit of unitsRes) {
+
+                this.lessonService.getLessonsByUnit(unit.id).subscribe(lessonsRes => {
+
+                  for (const lesson of lessonsRes) {
+                    if (!this.lessons.some(l => l.id === lesson.id)) {
+                      this.lessons.push(lesson);
+                    }
+                  }
+
+                  this.saveToSession('lessons', this.lessons);
                 });
-              });
+
+              }
+
             });
-          });
+
+          }
+
         });
-      },
-      error: err => {
-        console.error('Error loading grades:', err.message);
-        this.toastr.error(err.error?.detail || 'Failed to revoke access' , 'Error');
+
       }
-    });
-  }
+
+    },
+    error: err => {
+      console.error('Error loading grades:', err.message);
+      this.toastr.error(err.error?.detail || 'Failed to load data', 'Error');
+    }
+  });
+}
+
+
 
   // ✅ فلاتر
   getTermsForGrade(gradeId: number): ExtendedTermDTO[] {

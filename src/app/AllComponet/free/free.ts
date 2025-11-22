@@ -30,8 +30,7 @@ export class Free implements OnInit{
     this.gradeService.GetAllGrade().subscribe(
       (data: GradeDTO[]) => {
         this.grades = data;
-        this.toast.success("Grades loaded successfully");
-       
+      
       },
       (error) => {
         console.error('Error fetching grades:', error);

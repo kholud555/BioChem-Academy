@@ -19,7 +19,7 @@
   background-color: #c82333;
   transform: scale(1.1);
 }
-* Action Buttons */
+
 .action-buttons {
   display: flex;
   flex-wrap: wrap;

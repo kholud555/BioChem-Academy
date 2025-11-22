@@ -1,116 +1,296 @@
-<div class="upload-form">
- 
-  <label>Grade:</label>
-  <select (change)="onGradeChange($event)">
-    <option [value]="null">Select Grade</option>
-    <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
-  </select>
+<div class="container-fluid py-4">
 
- 
-
-  <!-- 📚 Select Unit -->
-  <label>Unit:</label>
-  <select (change)="onUnitChange($event)" [disabled]="!selectedTermId">
-    <option [value]="null">Select Unit</option>
-    <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
-  </select>
- <!-- 📅 Select Term -->
-  <label>Term:</label>
-  <select (change)="onTermChange($event)" [disabled]="!selectedGradeId">
-    <option [value]="null">Select Term</option>
-    <option *ngFor="let term of terms" [value]="term.id">
-      {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-    </option>
-  </select>
-  <!-- 🎓 Select Lesson -->
-  <label>Lesson:</label>
-  <select (change)="onLessonChange($event)" [disabled]="!selectedUnitId">
-    <option [value]="null">Select Lesson</option>
-    <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
-  </select>
-</div>
-
-<hr />
-<hr />
-  <form [formGroup]="examForm" (ngSubmit)="createExam()">
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" type="text" class="form-control" formControlName="title">
+  <!-- Selection Section -->
+  <div class="card shadow-sm mb-4 border-0 rounded-3">
+    <div class="card-header bg-gradient text-white py-3">
+      <h5 class="mb-0"><i class="bi bi-funnel-fill me-2"></i>Select Exam Context</h5>
     </div>
+    <div class="card-body p-4">
+      <div class="row g-3">
 
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea id="description" class="form-control" formControlName="description" rows="3"></textarea>
-    </div>
+        <!-- Grade Selection -->
+        <div class="col-md-6 col-lg-3">
+          <label class="form-label fw-semibold text-secondary">
+            <i class="bi bi-mortarboard-fill me-1"></i>Grade
+          </label>
+          <select class="form-select form-select-lg" (change)="onGradeChange($event)">
+            <option [value]="null">Choose Grade</option>
+            <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
+          </select>
+        </div>
 
-    <div class="mb-3">
-      <label for="level" class="form-label">Level</label>
-      <select id="level" class="form-select" formControlName="level">
-        <option [value]="levels.Easy">Easy</option>
-        <option [value]="levels.Medium">Medium</option>
-        <option [value]="levels.Hard">Hard</option>
-      </select>
-    </div>
+        <!-- Term -->
+        <div class="col-md-6 col-lg-3">
+          <label class="form-label fw-semibold text-secondary">
+            <i class="bi bi-calendar3 me-1"></i>Term
+          </label>
+          <select class="form-select form-select-lg" (change)="onTermChange($event)" [disabled]="!selectedGradeId">
+            <option [value]="null">Choose Term</option>
+            <option *ngFor="let term of terms" [value]="term.id">
+              {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+            </option>
+          </select>
+        </div>
 
-  
-    <button type="submit" class="btn btn-primary">Create Exam</button>
+        <!-- Unit -->
+        <div class="col-md-6 col-lg-3">
+          <label class="form-label fw-semibold text-secondary">
+            <i class="bi bi-book-fill me-1"></i>Unit
+          </label>
+          <select class="form-select form-select-lg" (change)="onUnitChange($event)" [disabled]="!selectedTermId">
+            <option [value]="null">Choose Unit</option>
+            <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
+          </select>
+        </div>
 
+        <!-- Lesson -->
+        <div class="col-md-6 col-lg-3">
+          <label class="form-label fw-semibold text-secondary">
+            <i class="bi bi-journal-text me-1"></i>Lesson
+          </label>
+          <select class="form-select form-select-lg" (change)="onLessonChange($event)" [disabled]="!selectedUnitId">
+            <option [value]="null">Choose Lesson</option>
+            <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
+          </select>
+        </div>
 
-   <button (click)="goToQuestion()">goToQuestion</button>
-
-  </form>
-
-<hr>
-
-<div class="container mt-4">
-  <h2>Add Questions to Exam</h2>
-
-  <form [formGroup]="questionForm" (ngSubmit)="addQuestionHeader()">
-    <div class="mb-3">
-      <label for="header" class="form-label">Question Header</label>
-      <input type="text" id="header" class="form-control" formControlName="questionHeader">
-    </div>
-
-    <div class="mb-3">
-      <label for="mark" class="form-label">Mark</label>
-      <input type="number" id="mark" class="form-control" formControlName="mark">
-    </div>
-
-    <div class="mb-3">
-      <label for="type" class="form-label">Question Type</label>
-      <select id="type" class="form-select" formControlName="type">
-        <option [value]="0">Choice Type</option>
-        <option [value]="1">True/False Type</option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Add Question Header</button>
-  </form>
-
-  <hr />
-
-  <div *ngIf="addedQuestion">
-    <h4>Add Choices for: {{ addedQuestion.questionHeader }}</h4>
-
-    <form [formGroup]="choiceForm" (ngSubmit)="addChoice()">
-      <div class="mb-3">
-        <label for="choiceText" class="form-label">Choice Text</label>
-        <input type="text" id="choiceText" class="form-control" formControlName="choiceText">
       </div>
-
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="isCorrect" formControlName="isCorrect">
-        <label for="isCorrect" class="form-check-label">Is Correct</label>
-      </div>
-
-      <button type="submit" class="btn btn-success mt-2">Add Choice</button>
-    </form>
+    </div>
   </div>
 
-  <hr />
+  <!-- Action Buttons -->
+  <div class="text-center mb-4">
+    <div class="btn-group shadow" role="group">
+      <button class="btn btn-primary btn-lg px-5" (click)="toggleCreate()">
+        <i class="bi bi-plus-circle me-2"></i>Create New Exam
+      </button>
+      <button class="btn btn-outline-primary btn-lg px-5" (click)="toggleExams()">
+        <i class="bi bi-list-ul me-2"></i>View Exams
+      </button>
+    </div>
+  </div>
 
-  <h4>Existing Questions</h4>
-  <ul>
-    <li *ngFor="let q of questions">{{ q.questionHeader }}</li>
-  </ul>
+  <!-- Create Exam Section -->
+  <div *ngIf="showCreate" class="create-section">
+
+    <!-- Exam Details Card -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3">
+      <div class="card-header text-white py-3">
+        <h5 class="mb-0"><i class="bi bi-file-earmark-plus me-2"></i>Create New Exam</h5>
+      </div>
+      <div class="card-body p-4">
+        <form [formGroup]="examForm" (ngSubmit)="createExam()">
+          <div class="row g-3">
+
+            <div class="col-md-12">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-pencil-square me-1"></i>Exam Title
+              </label>
+              <input type="text" class="form-control form-control-lg" formControlName="title" placeholder="Enter exam title...">
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-card-text me-1"></i>Description
+              </label>
+              <textarea class="form-control" rows="3" formControlName="description" placeholder="Enter exam description..."></textarea>
+            </div>
+
+          </div>
+
+          <button type="submit  " class="btn btn-lg w-100 mt-4  btn btn-primary">
+            <i class="bi bi-check-circle me-2"></i>Create Exam
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Question Header Card -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3">
+      <div class="card-header bg-info text-white py-3">
+        <h5 class="mb-0"><i class="bi bi-question-circle me-2"></i>Add Question</h5>
+      </div>
+
+      <div class="card-body p-4">
+
+        <form [formGroup]="questionForm" (ngSubmit)="addQuestionHeader()">
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-chat-square-text me-1"></i>Question Text
+              </label>
+              <input type="text" class="form-control form-control-lg" formControlName="questionHeader" placeholder="Enter question...">
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-star-fill me-1"></i>Mark
+              </label>
+              <input type="number" class="form-control form-control-lg" formControlName="mark" min="1">
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-list-check me-1"></i>Question Type
+              </label>
+              <select class="form-select form-select-lg" formControlName="type">
+                <option [value]="0">Multiple Choice (4 options)</option>
+                <option [value]="1">True / False</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- TRUE / FALSE Correct Answer Selector -->
+          <div *ngIf="questionForm.value.type == 1" class="mt-4 p-3 border rounded bg-light shadow-sm">
+            <label class="fw-bold mb-2 d-block">
+              <i class="bi bi-toggle-on text-primary me-1"></i>
+              Select Correct Answer (True / False)
+            </label>
+
+            <div class="d-flex gap-4 ms-2 mt-2">
+              <label class="d-flex align-items-center gap-2">
+                <input type="radio" name="tfCorrect" (change)="setTFAnswer(true)" class="form-check-input" style="transform: scale(1.3);" />
+                <span class="fw-semibold">True</span>
+              </label>
+
+              <label class="d-flex align-items-center gap-2">
+                <input type="radio" name="tfCorrect" (change)="setTFAnswer(false)" class="form-check-input" style="transform: scale(1.3);" />
+                <span class="fw-semibold">False</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-info text-white btn-lg w-100 mt-4">
+            <i class="bi bi-plus-lg me-2"></i>Add Question
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- MCQ Choices Section -->
+    <div *ngIf="addedQuestion && addedQuestion.type === 0" class="card shadow-sm rounded-3 border-0 mb-4">
+      <div class="card-header bg-warning py-3">
+        <h5 class="mb-0">
+          <i class="bi bi-check2-square me-2"></i>Add 4 Choices for:
+          <strong>{{ addedQuestion.questionHeader }}</strong>
+        </h5>
+        <small class="text-muted">Enter 4 choices and select only ONE as the correct answer.</small>
+      </div>
+
+      <div class="card-body p-4">
+
+        <form (ngSubmit)="submitAllChoices()">
+
+          <div class="row g-4" *ngFor="let c of mcqChoices; let i = index">
+
+            <div class="col-md-9">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-ui-checks me-1"></i>Choice {{ i + 1 }}
+              </label>
+              <input type="text" class="form-control form-control-lg" [(ngModel)]="mcqChoices[i].choiceText"
+                     name="choice{{ i }}" placeholder="Enter choice text..." required>
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="radio"
+                       name="correctChoice{{ addedQuestion?.id }}"
+                       (change)="setCorrect(i)"
+                       [checked]="mcqChoices[i].isCorrect"
+                       style="transform: scale(1.25); margin-right: 10px;">
+                <label class="form-check-label fw-semibold">
+                  <i class="bi bi-check-circle-fill me-1"></i>Correct
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn btn-warning btn-lg w-100 mt-4">
+            <i class="bi bi-plus-square me-2"></i>Save All 4 Choices
+          </button>
+
+        </form>
+
+        <div class="alert alert-info mt-3 mb-0">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          <strong>Note:</strong> You must add exactly 4 choices for MCQ questions. One must be marked as correct.
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Exams List Section -->
+  <div *ngIf="showExams">
+    <div class="card shadow-sm border-0 rounded-3">
+
+      <div class="card-header bg-primary text-white py-3">
+        <h5 class="mb-0"><i class="bi bi-card-list me-2"></i>Exams List</h5>
+      </div>
+
+      <div class="card-body p-4">
+
+        <div class="row g-3">
+
+          <div class="col-md-6 col-lg-4" *ngFor="let exam of exams">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+              <div class="card-body">
+
+                <h5 class="card-title text-primary">
+                  <i class="bi bi-file-text me-2"></i>{{ exam.title }}
+                </h5>
+
+                <p class="card-text text-muted">{{ exam.description }}</p>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="badge bg-primary" (click)="viewExamDetails(exam.id)" >View Details</span>
+               
+               <span class="badge bg-success" (click)="loadResults(exam.id)" >View Result</span>
+               
+                  <span class="badge bg-danger" (click)="deleteExam(exam.id)">Delete</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="exams.length === 0" class="col-12 text-center py-5">
+            <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
+            <h4 class="text-muted mt-3">No exams found</h4>
+            <p class="text-secondary">Create your first exam to get started</p>
+ 
+
+
+
+</div>
+<div class="admin-exam-results">
+  <h2>Exam Results</h2>
+
+  
+  <div *ngIf="examResults">
+    <h4>{{ examResults.ExamTitle }} ({{ examResults.TotalStudents }} students)</h4>
+    <p>Average Score: {{ examResults.AverageScore | number:'1.0-0' }}</p>
+    <p>Highest Score: {{ examResults.HighestScore }}</p>
+    <p>Lowest Score: {{ examResults.LowestScore }}</p>
+
+    <div *ngFor="let student of examResults.StudentResults" class="card mb-2 shadow-sm p-3">
+      <h5>{{ student.studentName }}</h5>
+      <p>Score: {{ student.score }}</p>
+      <p>Submitted At: {{ student.submittedAt | date:'short' }}</p>
+    </div>
+  </div>
+</div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

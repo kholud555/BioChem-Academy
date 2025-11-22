@@ -11,7 +11,7 @@ namespace Core.Interfaces
     {
         Task<Grade> GetGradeByIdAsync (int id);
 
-        Task<Grade> CreateGradeAsync(string gradeName);
+        Task<Grade> CreateGradeAsync(string gradeName, int subjectId);
 
         Task<bool> UpdateGradeNameAsync(Grade grade);
 

@@ -36,9 +36,9 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("{gradeName}")]
-        public async Task<ActionResult> AddGrade(string gradeName)
+        public async Task<ActionResult> AddGrade(string gradeName, int subjectId)
         {
-            var newGrade = await _service.CreateGradeAsync(gradeName);
+            var newGrade = await _service.CreateGradeAsync(gradeName, subjectId);
 
             var newGradeDto = _mapper.Map<GradeDTO> (newGrade);
 
@@ -52,8 +52,10 @@ namespace API.Controllers
             var grade = new Grade
             { 
                 Id = dto.ID,
-                GradeName = dto.GradeName
+                GradeName = dto.GradeName,
+                SubjectId = dto.SubjectId,
             };
+
             var existGrade = await _service.UpdateGradeAsync(grade);
             return Ok(dto);
         }

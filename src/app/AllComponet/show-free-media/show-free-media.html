@@ -53,7 +53,7 @@
 
       <!-- فيديو -->
       <video *ngIf="media.mediaType=='Video'" class="media-content" controls
-             controlsList="nodownload nofullscreen noremoteplayback"
+             controlsList="nodownload  noremoteplayback"
              (contextmenu)="$event.preventDefault()"
              (dragstart)="$event.preventDefault()">
         <source [src]="media.previewUrl" type="video/mp4">

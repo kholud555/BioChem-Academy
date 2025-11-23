@@ -250,7 +250,6 @@
                 <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="badge bg-primary" (click)="viewExamDetails(exam.id)" >View Details</span>
                
-               <span class="badge bg-success" (click)="loadResults(exam.id)" >View Result</span>
                
                   <span class="badge bg-danger" (click)="deleteExam(exam.id)">Delete</span>
                 </div>
@@ -267,23 +266,6 @@
 
 
 
-</div>
-<div class="admin-exam-results">
-  <h2>Exam Results</h2>
-
-  
-  <div *ngIf="examResults">
-    <h4>{{ examResults.ExamTitle }} ({{ examResults.TotalStudents }} students)</h4>
-    <p>Average Score: {{ examResults.AverageScore | number:'1.0-0' }}</p>
-    <p>Highest Score: {{ examResults.HighestScore }}</p>
-    <p>Lowest Score: {{ examResults.LowestScore }}</p>
-
-    <div *ngFor="let student of examResults.StudentResults" class="card mb-2 shadow-sm p-3">
-      <h5>{{ student.studentName }}</h5>
-      <p>Score: {{ student.score }}</p>
-      <p>Submitted At: {{ student.submittedAt | date:'short' }}</p>
-    </div>
-  </div>
 </div>
 
 

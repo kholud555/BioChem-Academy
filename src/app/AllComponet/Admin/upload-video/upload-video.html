@@ -1,12 +1,12 @@
 <div class="upload-form">
- 
+  <!-- 📚 Select Grade -->
   <label>Grade:</label>
   <select (change)="onGradeChange($event)">
     <option [value]="null">Select Grade</option>
     <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
   </select>
 
- 
+  
 
   <!-- 📚 Select Unit -->
   <label>Unit:</label>
@@ -14,7 +14,8 @@
     <option [value]="null">Select Unit</option>
     <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
   </select>
- <!-- 📅 Select Term -->
+
+  <!-- 📅 Select Term -->
   <label>Term:</label>
   <select (change)="onTermChange($event)" [disabled]="!selectedGradeId">
     <option [value]="null">Select Term</option>
@@ -43,11 +44,10 @@
 >
   <p>🎬 Drag & drop your video here or <span class="browse">choose a file</span></p>
   <input 
-  type="file" 
-  accept="video/*,image/*,application/pdf" 
-  (change)="onFileChange($event)" 
-/>
-
+    type="file" 
+    accept="video/*,image/*,application/pdf" 
+    (change)="onFileChange($event)" 
+  />
 </div>
 
 <!-- 📁 Selected File Info -->
@@ -56,7 +56,7 @@
 
   <div class="buttons">
     <button class="upload-btn" (click)="handleUpload()" [disabled]="isUploading || !selectedLessonId">
-      ⬆️ Upload Video
+      ⬆️ Upload 
     </button>
     <button class="remove-btn" (click)="handleRemove()">🗑 Remove</button>
   </div>

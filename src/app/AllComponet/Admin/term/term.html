@@ -8,7 +8,7 @@
   <div class="mb-2">
     <label>Select Grade</label>
     <select class="form-control" [(ngModel)]="newTerm.gradeId">
-      <option value="0" disabled>Select Grade</option>
+      <option value="0" disabled>Select Subject</option>
       <option *ngFor="let grade of grades" [value]="grade.id">
         {{ grade.gradeName }}
       </option>
@@ -17,14 +17,14 @@
  <div class="mb-2">
     <label>Term Name</label>
   <select class="form-control" [(ngModel)]="newTerm.termOrder">
-  <option [ngValue]="0">First Term</option>
-  <option [ngValue]="1">Second Term</option>
+  <option [ngValue]="0">First grade</option>
+  <option [ngValue]="1">Second grade</option>
 </select>
 
   </div>
   
 
-  <button class="btn btn-Action" (click)="addNewTerm()">Add Term</button>
+  <button class="btn btn-Action" (click)="addNewTerm()">Add gride</button>
 </div>
 
 <!-- Update/Delete Section -->

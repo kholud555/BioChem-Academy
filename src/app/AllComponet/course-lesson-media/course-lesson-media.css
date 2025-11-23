@@ -1,43 +1,48 @@
-
-  .hover-lift:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
-  }
-  
-  .card {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  .card-media {
-    border-radius: 12px 12px 0 0;
-  }
-  
-  audio {
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
+/* ================= Hover & Card Styles ================= */
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
+.card, .exam-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-media {
   
-  video {
-    border-radius: 8px;
-  }
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
+.card-media img,
+.card-media video,
+.card-media audio {
+  max-width: 100%;
 
-  .exam-section-title {
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ================= Exam Card Styles ================= */
+.exam-section-title {
   font-weight: 700;
   font-size: 1.6rem;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin: 40px 0 20px 0;
   color: #333;
 }
 
 .exam-card {
   border-radius: 14px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  background: white;
 }
 
 .exam-card:hover {
@@ -55,7 +60,8 @@
   padding: 8px 16px;
   font-weight: 600;
 }
-/* ========== Video Protection Styles ========== */
+
+/* ================= Video Protection Styles ================= */
 
 /* Disable video download button */
 video::-webkit-media-controls-enclosure {
@@ -66,23 +72,30 @@ video::-webkit-media-controls-panel {
   width: calc(100% + 30px);
 }
 
-/* Hide download button in Chrome */
-video::-webkit-media-controls-download-button {
+video::-webkit-media-controls-download-button,
+video::-webkit-media-controls-overflow-button,
+video::-webkit-media-controls-picture-in-picture-button,
+video::-moz-media-controls-download-button {
   display: none !important;
 }
 
-/* Hide overflow menu (3 dots) */
-video::-webkit-media-controls-overflow-button {
-  display: none !important;
-}
-
-/* Prevent text/element selection */
-.protected-video {
+/* Prevent text selection */
+.protected-video,
+.no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   pointer-events: auto;
+}
+
+/* Disable drag */
+.protected-video {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 /* Overlay to prevent easy inspection */
@@ -97,34 +110,7 @@ video::-webkit-media-controls-overflow-button {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 40px; /* Leave space for controls */
+  bottom: 40px; /* leave space for controls */
   z-index: 1;
   pointer-events: none;
-}
-
-/* Disable drag */
-.protected-video {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
-
-/* Prevent selection on entire page */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Hide Picture-in-Picture button */
-video::-webkit-media-controls-picture-in-picture-button {
-  display: none !important;
-}
-
-/* Firefox specific */
-video::-moz-media-controls-download-button {
-  display: none !important;
 }

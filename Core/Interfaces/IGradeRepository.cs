@@ -17,6 +17,8 @@ namespace Core.Interfaces
 
         Task<bool> DeleteGradeAsync(int id);
 
-        Task<IEnumerable<Grade>> GetAllGradesAsync(); 
+        Task<IEnumerable<Grade>> GetAllGradesAsync();
+
+        Task<IEnumerable<Grade>> GetGradeBySubjectIdAsync(int subjectId);
     }
 }

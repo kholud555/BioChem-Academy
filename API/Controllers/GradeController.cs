@@ -77,5 +77,13 @@ namespace API.Controllers
             return Ok(dto);
         }
 
+        [HttpGet("GetGradeBySubjectId")]
+        public async Task<ActionResult<IEnumerable<GradeDTO>>> GetGradeBySubjectId (int subjectId)
+        {
+            var grades = await _service.GetGradeBySubjectIdAsync(subjectId);
+            var dto = _mapper.Map<IEnumerable<GradeDTO>>(grades);
+            return Ok(dto);
+        }
+
     }
 }

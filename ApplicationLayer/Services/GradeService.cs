@@ -71,5 +71,13 @@ namespace Application.Services
 
         public async Task<IEnumerable<Grade>> GetAllGradeAsync ()
         => await _repo.GetAllGradesAsync();
+
+        public async Task<IEnumerable<Grade>> GetGradeBySubjectIdAsync(int subjectId)
+        {
+            if (subjectId <= 0)
+                throw new ArgumentOutOfRangeException("Invalid Subject ID");
+
+            return await _repo.GetGradeBySubjectIdAsync(subjectId);
+        }
     }
 }

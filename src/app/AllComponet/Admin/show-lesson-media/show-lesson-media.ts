@@ -22,20 +22,22 @@ export class ShowLessonMedia implements OnInit, OnDestroy {
   lessonName: string = '';
   lessonMedia: StudentAccessedMediaDTO[] = [];
 
-  studentId: number | null = null;
-studentResults:any;
-  // ===== Exams =====
-  exams: any[] = [];
-  ExamStarted: boolean = false;
-  selectedExamId: number | null = null;
-  examQuestions: QuestionsOfExamDTO[] = [];
-  examAnswers: { [questionId: number]: number } = {};
-  selectedExamTitle: string = '';
+  // studentId: number | null = null;
+  // studentResults: StudentExamResultDTO[] = [];
+  // studentSubmittedExams: number[] = [];
 
-  showResult: boolean = false;
-  totalScore: number = 0;
-  maxScore: number = 0;
-  submitting: boolean = false;
+  // //exam
+  // exams: any[] = [];
+  // ExamStarted: boolean = false;
+  // selectedExamId: number | null = null;
+  // selectedExamTitle: string = '';
+  // examQuestions: QuestionsOfExamDTO[] = [];
+  // examAnswers: { [questionId: number]: number } = {};
+
+  // showResult: boolean = false;
+  // totalScore: number = 0;
+  // maxScore: number = 0;
+  // submitting: boolean = false;
 
   constructor(
     private studentService: StudentService,
@@ -53,15 +55,15 @@ studentResults:any;
       this.lessonName = this.SelectLesson.title;
     }
 
-    const savedStudentId = sessionStorage.getItem('studentId');
-    if (savedStudentId) this.studentId = Number(savedStudentId);
+    // const savedStudentId = sessionStorage.getItem('studentId');
+    // if (savedStudentId) this.studentId = Number(savedStudentId);
 
     this.loadLessonMedia();
-    this.loadExams();
-   if (this.studentId) {
-      this.loadStudentResults(this.studentId);
-    }
-    
+    //this.loadExams();
+
+    // if (this.studentId) {
+    //   this.loadStudentResults(this.studentId);
+    // }
   }
 
   ngOnDestroy(): void {
@@ -84,100 +86,94 @@ studentResults:any;
     });
   }
 
-  loadExams() {
-    if (!this.SelectLesson) return;
-    this.examService.getExamsByLesson(this.SelectLesson.id).subscribe({
-      next: (res: any[]) => this.exams = res
-    });
-  }
+//   loadExams() {
+//     if (!this.SelectLesson) return;
+//     this.examService.getExamsByLesson(this.SelectLesson.id).subscribe({
+//       next: (res: any[]) => this.exams = res
+//     });
+//   }
 
-  onDeleteMedia(mediaId: number) {
-    console.log('Delete media', mediaId);
-    // هنا ممكن تضيف كود الحذف من السيرفر
-  }
+//   loadStudentResults(studentId: number) {
+//     this.studentExamService.getStudentResults(studentId).subscribe({
+//       next: (res: StudentExamResultDTO[]) => {
+//         this.studentResults = res;
+//         this.studentSubmittedExams = res.map(r => r.examId);
+//       },
+//       error: (err) => console.error('Failed to load student results', err)
+//     });
+//   }
 
-  // ===== Exams logic =====
-  startExam(examId: number, examTitle: string) {
-    this.selectedExamId = examId;
-    this.selectedExamTitle = examTitle;
-    
-    this.examAnswers = {};
-    this.showResult = false;
-    this.totalScore = 0;
+//   startExam(examId: number, examTitle: string) {
+//     if (this.studentSubmittedExams.includes(examId)) {
+//       alert('You have already submitted this exam.');
+//       return;
+//     }
 
-    this.examService.getExamQuestions(examId).subscribe({
-      next: (res: QuestionsOfExamDTO[]) => {
-        this.examQuestions = res;
-      console.log("🔥 Loaded Questions:", this.examQuestions);
+//     this.selectedExamId = examId;
+//     this.selectedExamTitle = examTitle;
+//     this.examAnswers = {};
+//     this.showResult = false;
+//     this.totalScore = 0;
 
-        this.ExamStarted = true;
-        this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
-      },
-      error: (err) => console.error("Failed to load exam questions", err)
-    });
-  }
+//     this.examService.getExamQuestions(examId).subscribe({
+//       next: (res) => {
+//         this.examQuestions = res;
+//         this.ExamStarted = true;
+       
+//       },
+//       error: (err) => console.error('Failed to load exam questions', err)
+//     });
+//   }
 
-  selectAnswer(questionId: number, choiceId: number) {
-    this.examAnswers[questionId] = choiceId;
-  }
+//   selectAnswer(questionId: number, choiceId: number) {
+//     this.examAnswers[questionId] = choiceId;
+//   }
 
-  submitExam() {
-    if (!this.selectedExamId || this.submitting) return;
+//   submitExam() {
+//     if (!this.selectedExamId || this.submitting) return;
 
-    const answeredQuestions = Object.keys(this.examAnswers);
-    if (answeredQuestions.length === 0) {
-      alert('Please answer at least one question!');
-      return;
-    }
+//     this.submitting = true;
+//     this.totalScore = 0;
 
-    this.submitting = true;
-    this.totalScore = 0;
+//     const answerEntries = Object.entries(this.examAnswers);
+//     const submitNext = (index: number) => {
+//       if (index >= answerEntries.length) {
+//         this.showResult = true;
+//         this.ExamStarted = false;
+//         this.submitting = false;
+//         this.loadStudentResults(this.studentId!);
+//         return;
+//       }
 
-    let completedCount = 0;
-    let hasError = false;
+//       const [qId, aId] = answerEntries[index];
+//       const dto: SubmitExamDTO = {
+//         ExamId: this.selectedExamId!,
+//         QuestionId: Number(qId),
+//         AnswerId: Number(aId)
+//       };
 
-    answeredQuestions.forEach(qId => {
-      const dto: SubmitExamDTO = {
-        ExamId: this.selectedExamId!,
-        QuestionId: Number(qId),
-        // studentId: this.studentId!, 
-        AnswerId: this.examAnswers[Number(qId)]
-      };
+//       this.studentExamService.submitAnswer(dto).subscribe({
+//         next: (result) => {
+//           this.totalScore += result.score;
+//           submitNext(index + 1);
+//         },
+//         error: (err) => {
+//           console.error('Failed to submit answer', err);
+//           this.submitting = false;
+//         }
+//       });
+//     };
 
-      this.studentExamService.submitAnswer(dto).subscribe({
-        next: (result: StudentExamDTO) => {
-          this.totalScore += result.score || 0;
-        },
-        error: (err) => {
-          console.error("Failed to submit answer for question", qId, err);
-          hasError = true;
-        },
-        complete: () => {
-          completedCount++;
-          if (completedCount === answeredQuestions.length) {
-            this.ExamStarted = false;
-            this.showResult = true;
-            this.submitting = false;
-           
-          }
-        }
-      });
-    });
-  }
- loadStudentResults(studentId: number) {
-    this.studentExamService.getStudentResults(studentId).subscribe({
-      next: (res: StudentExamResultDTO[]) => this.studentResults = res,
-      error: (err) => console.error('Failed to load student results', err)
-    });
-  }
-  closeResult() {
-    this.showResult = false;
+//     submitNext(0);
+//   }
 
-    this.examAnswers = {};
-  }
+//   closeResult() {
+//     this.showResult = false;
+//     this.examAnswers = {};
+//   }
 
-  getPercentage(): number {
-    if (this.maxScore === 0) return 0;
-    return Math.round((this.totalScore / this.maxScore) * 100);
-  }
-}
+//   getPercentage(): number {
+//     if (this.maxScore === 0) return 0;
+//     return Math.round((this.totalScore / this.maxScore) * 100);
+//   }
+ }

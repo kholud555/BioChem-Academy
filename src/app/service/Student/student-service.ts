@@ -17,7 +17,7 @@ export class StudentService {
  private  token=this.getToken();
   
   constructor(private http:HttpClient) {}
-setLoginData(token: string, userName: string ,role:string , userId:any)  {
+setLoginData(token: string, userName: string ,role:string , userId:string)  {
      sessionStorage.setItem("token",token);
    sessionStorage.setItem('userName', userName);
    sessionStorage.setItem('role', role);

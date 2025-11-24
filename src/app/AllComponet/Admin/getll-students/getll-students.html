@@ -50,6 +50,13 @@
                 <span>Actions</span>
               </div>
             </th>
+
+            <th>
+              <div class="header-cell">
+                <i class="bi bi-sliders"></i>
+                <span></span>Result
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -92,16 +99,31 @@
           <div class="info-value">{{ std.parentNumber }}</div>
         </div>
             </td>
-            <td>
-              <a
-                class="access-button"
-               
-               (click)="onSelectStudent(std)"
-                >
-                <i class="bi bi-shield-check"></i>
-                <span>Manage Access</span>
-              </a>
-            </td>
+           <td>
+  <a
+    class="access-button"
+    (click)="onSelectStudent(std)"
+  >
+    <i class="bi bi-shield-check"></i>
+    <span> Access</span>
+  </a>
+
+  <!-- NEW Result Button -->
+  
+</td>
+
+           <td>
+  <a
+    class="access-button"
+    (click)="onSelectStudent(std)"
+  >
+    <i class="bi bi-shield-check"></i>
+    <span> Result</span>
+  </a>
+
+  <!-- NEW Result Button -->
+  
+</td>
           </tr>
         </tbody>
       </table>

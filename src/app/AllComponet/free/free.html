@@ -1,6 +1,6 @@
-<!-- Component HTML Template -->
 <div class="grade-selector-container">
   <div class="content-wrapper">
+
     <!-- Header -->
     <div class="header">
       <div class="icon-wrapper">
@@ -9,34 +9,58 @@
           <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
         </svg>
       </div>
-      <h2 class="title">free content</h2>
-      <p class="subtitle">Select Your Grade Level</p>
+      <h2 class="title">Free Content</h2>
+      <p class="subtitle">Select Your Subject</p>
     </div>
 
-    <!-- Selected Grade Alert -->
-    <div class="alert-container" *ngIf="SelectedGradeName">
+   <!-- Subject Selector -->
+<div class="subject-dropdown-wrapper mb-4">
+  <div class="subject-label">Choose a subject</div>
+
+  <div class="subject-select-box">
+    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M8 12l2 2 4-4"></path>
+    </svg>
+
+    <select class="subject-dropdown"
+            [(ngModel)]="selectedSubjectId"
+            (change)="onSubjectChange()">
+
+      <option value="0" disabled>Select a subject</option>
+
+      <option *ngFor="let subject of subjects" [value]="subject.id">
+        {{ subject.subjectName }}
+      </option>
+    </select>
+  </div>
+</div>
+
+
+    <!-- Selected Subject Alert -->
+    <div class="alert-container" *ngIf="selectedSubjectId">
       <div class="alert">
         <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
-        <span>Selected: {{ SelectedGradeName }}</span>
+        
       </div>
     </div>
 
     <!-- Grade Cards Grid -->
     <div class="grid">
-      <div class="card-wrapper" *ngFor="let grade of grades; let i = index" 
+      <div class="card-wrapper" *ngFor="let grade of grades; let i = index"
            [style.animation-delay.ms]="i * 100">
-        <div class="card" 
+        <div class="card"
              [class.selected]="SelectedGradeName === grade.gradeName"
              (click)="onSelectGrade(grade)">
           <div class="card-inner">
             <h5 class="grade-name">{{ grade.gradeName }}</h5>
-           
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>

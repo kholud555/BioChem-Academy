@@ -7,6 +7,7 @@ export interface CreateUnitDTO  {
   // isFree: boolean;
   // isPublished: boolean;
   termId: number;
+   subjectId:number;
 }
     
 

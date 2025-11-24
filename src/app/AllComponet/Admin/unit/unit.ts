@@ -2,203 +2,239 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { CreateUnitDTO, UnitDTO } from '../../../InterFace/unit-dto';
 import { UnitService } from '../../../service/unit-service';
+
 import { GradeDTO } from '../../../InterFace/grade-dto';
 import { TermDTO } from '../../../InterFace/term-dto';
+import { SubjectDTO } from '../../../InterFace/subject';
+
 import { GradeService } from '../../../service/grade-service';
 import { TermService } from '../../../service/term-service';
+import { SubjectService } from '../../../service/subject';
 
 
 @Component({
   selector: 'app-unit',
-  imports: [CommonModule , FormsModule],
   templateUrl: './unit.html',
-  styleUrl: './unit.css'
+  styleUrls: ['./unit.css'],
+  imports: [CommonModule, FormsModule],
+  standalone: true
 })
-export class Unit  implements OnInit  {
+export class Unit implements OnInit {
 
+  /** ------------ Data Lists ------------ **/
+  subjects: SubjectDTO[] = [];
   grades: GradeDTO[] = [];
   terms: TermDTO[] = [];
- units: UnitDTO[] = [];
+  units: UnitDTO[] = [];
 
-  selectedGradeId: number = 0;
-  selectedTermId: number = 0;
-  selectedTUnitId: number = 0;
-  
-
-  newUnit: CreateUnitDTO = {
+  /** ------------ Add Unit Model ------------ **/
+  addModel = {
+    subjectId: 0,
+    gradeId: 0,
+    termId: 0,
     title: '',
     description: '',
-    order: 1,
-   
+    order: 1
+  };
+
+  /** ------------ Filters ------------ **/
+  filter = {
+    subjectId: 0,
+    gradeId: 0,
     termId: 0
   };
+
+  /** ------------ Edit Mode ------------ **/
+  editId: number = 0;
+
   constructor(
+    private unitService: UnitService,
     private gradeService: GradeService,
     private termService: TermService,
-    private UnitService : UnitService
-  ) {}
+    private subjectService: SubjectService
+  ) { }
 
   ngOnInit(): void {
-    this.loadGrades();
+    this.loadSubjects();
   }
 
-  // تحميل المراحل الدراسية
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: (data) => {
-        this.grades = data;
-      },
-      error: (err) => console.error('Error loading grades:', err)
+  /** ------------ Load Subjects ------------ **/
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data,
+      error: err => console.error("Error loading subjects", err)
     });
   }
 
-  // عند تغيير المرحلة الدراسية
+  /** ------------ Add Unit Chain ------------ **/
+
+  onSubjectChange(): void {
+    if (this.addModel.subjectId > 0) {
+      this.gradeService.getGradeBySubjectId(this.addModel.subjectId).subscribe({
+        next: data => {
+          this.grades = data;
+          this.addModel.gradeId = 0;
+          this.terms = [];
+        },
+        error: err => console.error("Error loading grades", err)
+      });
+    }
+  }
+
   onGradeChange(): void {
-    if (this.selectedGradeId > 0) {
-      this.loadTermsByGrade(this.selectedGradeId);
-    } else {
-      this.terms = [];
-      this.selectedTermId = 0;
+    if (this.addModel.gradeId > 0) {
+      this.termService.getTermsByGrade(this.addModel.gradeId).subscribe({
+        next: data => {
+          this.terms = data;
+          this.addModel.termId = 0;
+        },
+        error: err => console.error("Error loading terms", err)
+      });
     }
   }
 
-  // تحميل التيرمات حسب المرحلة
-  loadTermsByGrade(gradeId: number): void {
-    this.termService.getTermsByGrade(gradeId).subscribe({
-      next: (data) => {
-        this.terms = data;
-        this.selectedTermId = 0; // إعادة ضبط القيمة المختارة
-      },
-      error: (err) => console.error('Error loading terms:', err)
-    });
-  }
-
-  // عند اختيار الترم
-  onTermChange(): void {
-    if (this.selectedTermId > 0){
-      this.loadUnits();
-    }
-    else{
-      this.units=[];
-     
-    
-    }
-   
-  }
-  // تحميل الوحدات الخاصة بالترم
-  
-  loadUnits(): void {
-    this.UnitService.getUnitsByTerm(this.selectedTermId).subscribe({
-      next: (data) => (this.units = data),
-      error: (err) => console.error('Error loading units:', err)
-    });
-  }
-
+  /** ------------ Add Unit ------------ **/
 
   addUnit(): void {
-    if (this.selectedTermId <= 0 || !this.newUnit.title.trim()) {
-      Swal.fire('Error', 'Please fill all required fields', 'error');
-    
+    if (
+      this.addModel.subjectId <= 0 ||
+      this.addModel.gradeId <= 0 ||
+      this.addModel.termId <= 0 ||
+      !this.addModel.title.trim()
+    ) {
+      Swal.fire("Error", "Please fill all required fields", "error");
       return;
     }
 
-    this.newUnit.termId = this.selectedTermId;
-    this.UnitService.addUnit(this.newUnit).subscribe({
-      next: (res) => {
-        Swal.fire('Success', 'Unit added successfully', 'success');
-        this.newUnit = { title: '', description: '', order: 1, termId: 0 };
-      this.loadUnits(); 
+    const payload: CreateUnitDTO = {
+      subjectId: this.addModel.subjectId,
+      termId: this.addModel.termId,
+      title: this.addModel.title,
+      description: this.addModel.description,
+      order: this.addModel.order
+    };
+
+    this.unitService.addUnit(payload).subscribe({
+      next: () => {
+        Swal.fire("Success", "Unit added successfully", "success");
+        this.resetAddForm();
+        this.loadUnits();
       },
-         error: (err) => {
-        const errorMessage =
-          err?.error?.message ||
-           err?.error?.detail || 
-          err?.message ||
-          'An unexpected error occurred while deleting the grade.';
-      
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: errorMessage,
-        });
-      
-        console.error('Error deleting grade:', err);
-      }
-      
+      error: err => this.showError(err)
     });
   }
-  
- enableEdit(unitId: number): void {
-    this.  selectedTUnitId = unitId;
+
+  resetAddForm(): void {
+    this.addModel = {
+      subjectId: 0,
+      gradeId: 0,
+      termId: 0,
+      title: '',
+      description: '',
+      order: 1
+    };
+  }
+
+  /** ------------ Filters for Units Table ------------ **/
+
+  onFilterSubjectChange(): void {
+    if (this.filter.subjectId > 0) {
+      this.gradeService.getGradeBySubjectId(this.filter.subjectId).subscribe({
+        next: data => {
+          this.grades = data;
+          this.filter.gradeId = 0;
+          this.terms = [];
+          this.units = [];
+        }
+      });
+    }
+  }
+
+  onFilterGradeChange(): void {
+    if (this.filter.gradeId > 0) {
+      this.termService.getTermsByGrade(this.filter.gradeId).subscribe({
+        next: data => {
+          this.terms = data;
+          this.filter.termId = 0;
+          this.units = [];
+        }
+      });
+    }
+  }
+
+  /** ------------ Load Units ------------ **/
+
+  loadUnits(): void {
+    if (this.filter.termId <= 0) {
+      this.units = [];
+      return;
+    }
+
+    this.unitService.getUnitsByTerm(this.filter.termId).subscribe({
+      next: data => this.units = data,
+      error: err => console.error("Error loading units", err)
+    });
+  }
+
+  /** ------------ Edit ------------ **/
+
+  enableEdit(id: number): void {
+    this.editId = id;
   }
 
   saveEdit(unit: UnitDTO): void {
-    this.UnitService.updateUnit(unit).subscribe({
+    this.unitService.updateUnit(unit).subscribe({
       next: () => {
-        Swal.fire('Updated', 'Unit updated successfully', 'success');
-        this.selectedTUnitId =0;
+        Swal.fire("Updated", "Unit updated successfully", "success");
+        this.editId = 0;
+        this.loadUnits();
       },
-         error: (err) => {
-        const errorMessage =
-          err?.error?.message ||
-           err?.error?.detail || 
-          err?.message ||
-          'An unexpected error occurred while deleting the grade.';
-      
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: errorMessage,
-        });
-      
-        console.error('Error deleting grade:', err);
-      }
-      
-   
+      error: err => this.showError(err)
     });
   }
 
   cancelEdit(): void {
-    this.selectedTUnitId = 0;
-    this.loadUnits(); // نرجع القيم القديمة
+    this.editId = 0;
+    this.loadUnits();
   }
 
-  // حذف الوحدة
+  /** ------------ Delete ------------ **/
+
   deleteUnit(id: number): void {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will delete the unit permanently.',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "This unit will be deleted permanently.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+      confirmButtonText: "Yes, delete it!"
+    }).then(result => {
       if (result.isConfirmed) {
-        this.UnitService.deleteUnit(id).subscribe({
+        this.unitService.deleteUnit(id).subscribe({
           next: () => {
-            Swal.fire('Deleted', 'Unit deleted successfully', 'success');
-            this.loadUnits();
+            Swal.fire("Deleted", "Unit deleted successfully", "success");
+            this.units = this.units.filter(u => u.id !== id);
+
+            
           },
-            error: (err) => {
-           const errorMessage =
-             err?.error?.message ||
-              err?.error?.detail || 
-             err?.message ||
-             'An unexpected error occurred while deleting the grade.';
-         
-           Swal.fire({
-             icon: 'error',
-             title: 'Error!',
-             text: errorMessage,
-           });
-         
-           console.error('Error deleting grade:', err);
-         }
-         
-      
+          error: err => this.showError(err)
         });
       }
     });
+  }
+
+  /** ------------ Error Helper ------------ **/
+
+  showError(err: any): void {
+    const msg =
+      err?.error?.message ||
+      err?.error?.detail ||
+      err?.message ||
+      "Unexpected error occurred";
+
+    Swal.fire("Error", msg, "error");
+    console.error(err);
   }
 }

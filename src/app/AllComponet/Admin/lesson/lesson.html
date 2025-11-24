@@ -1,17 +1,32 @@
-<!-- Manage Lessons -->
 <div class="container-custom">
-  <!-- Add New Lesson -->
+
+  <!-- Add Lesson -->
   <div class="card p-3 mt-4 border">
-    <h5>Add New Lesson</h5>
+    <h5 class="mb-3">Add New Lesson</h5>
+
+    <!-- Select Subject -->
+    <div class="mb-2">
+      <label>Select Subject</label>
+      <select 
+        class="form-control"
+        [(ngModel)]="selectedSubjectId"
+        (ngModelChange)="onSubjectChange()">
+
+        <option value="0" disabled>Select Subject</option>
+        <option *ngFor="let sub of subjects" [value]="sub.id">
+          {{ sub.subjectName }}
+        </option>
+      </select>
+    </div>
 
     <!-- Select Grade -->
     <div class="mb-2">
       <label>Select Grade</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedGradeId"
-        (ngModelChange)="onGradeChange()"
-      >
+        (ngModelChange)="onGradeChange()">
+
         <option value="0" disabled>Select Grade</option>
         <option *ngFor="let grade of grades" [value]="grade.id">
           {{ grade.gradeName }}
@@ -22,14 +37,14 @@
     <!-- Select Term -->
     <div class="mb-2">
       <label>Select Term</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedTermId"
-        (ngModelChange)="onTermChange()"
-      >
+        (ngModelChange)="onTermChange()">
+
         <option value="0" disabled>Select Term</option>
         <option *ngFor="let term of terms" [value]="term.id">
-          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+          {{ term.termOrder === 0 ? "First Term" : "Second Term" }}
         </option>
       </select>
     </div>
@@ -37,11 +52,11 @@
     <!-- Select Unit -->
     <div class="mb-2">
       <label>Select Unit</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedUnitId"
-        (ngModelChange)="onUnitChange()"
-      >
+        (ngModelChange)="onUnitChange()">
+
         <option value="0" disabled>Select Unit</option>
         <option *ngFor="let unit of units" [value]="unit.id">
           {{ unit.title }}
@@ -52,82 +67,82 @@
     <!-- Lesson Title -->
     <div class="mb-2">
       <label>Lesson Title</label>
-      <input
-        type="text"
+      <input 
+        type="text" 
         class="form-control"
         [(ngModel)]="newLesson.title"
-        placeholder="Enter Lesson Title"
-      />
+        placeholder="Enter Lesson Title">
     </div>
 
     <!-- Description -->
     <div class="mb-2">
-      <label>Description</label>
-      <textarea
+      <label>Description (optional)</label>
+      <textarea 
         class="form-control"
         [(ngModel)]="newLesson.description"
-        placeholder="Enter description (optional)"
-      ></textarea>
+        placeholder="Enter description"></textarea>
     </div>
 
     <!-- Order -->
     <div class="mb-2">
       <label>Order</label>
-      <input
-        type="number"
+      <input 
+        type="number" 
         class="form-control"
-        [(ngModel)]="newLesson.order"
         min="1"
-      />
+        [(ngModel)]="newLesson.order">
     </div>
-
-  
 
     <button class="btn btn-Action" (click)="addLesson()">Add Lesson</button>
   </div>
 
-  <!-- Update/Delete Lessons -->
-  <div class="card p-3 mt-4 border">
-    <h5>Update And Delete Lessons</h5>
 
-    <!-- Select Grade -->
+  <!-- Update & Delete Lessons -->
+  <div class="card p-3 mt-4 border">
+    <h5 class="mb-3">Update / Delete Lessons</h5>
+
+    <!-- Same Filters -->
+    <div class="mb-2">
+      <label>Select Subject</label>
+      <select 
+        class="form-control"
+        [(ngModel)]="selectedSubjectId"
+        (ngModelChange)="onSubjectChange()">
+        <option value="0" disabled>Select Subject</option>
+        <option *ngFor="let sub of subjects" [value]="sub.id">{{ sub.subjectName }}</option>
+      </select>
+    </div>
+
     <div class="mb-2">
       <label>Select Grade</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedGradeId"
-        (ngModelChange)="onGradeChange()"
-      >
+        (ngModelChange)="onGradeChange()">
         <option value="0" disabled>Select Grade</option>
-        <option *ngFor="let grade of grades" [value]="grade.id">
-          {{ grade.gradeName }}
-        </option>
+        <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
       </select>
     </div>
 
-    <!-- Select Term -->
     <div class="mb-2">
       <label>Select Term</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedTermId"
-        (ngModelChange)="onTermChange()"
-      >
+        (ngModelChange)="onTermChange()">
         <option value="0" disabled>Select Term</option>
         <option *ngFor="let term of terms" [value]="term.id">
-          {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+          {{ term.termOrder === 0 ? "First Term" : "Second Term" }}
         </option>
       </select>
     </div>
 
-    <!-- Select Unit -->
     <div class="mb-2">
       <label>Select Unit</label>
-      <select
+      <select 
         class="form-control"
         [(ngModel)]="selectedUnitId"
-        (ngModelChange)="onUnitChange()"
-      >
+        (ngModelChange)="onUnitChange()">
         <option value="0" disabled>Select Unit</option>
         <option *ngFor="let unit of units" [value]="unit.id">
           {{ unit.title }}
@@ -136,79 +151,64 @@
     </div>
 
     <!-- Lessons Table -->
-    <div *ngIf="lessons.length > 0" class="mt-4">
-      <h5>Lessons for Selected Unit</h5>
-      <table class="table table-hover table-bordered">
+    <div *ngIf="lessons.length > 0" class="mt-3">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Order</th>
-            <th>free</th>
-            <th>Actions</th>
+            <th class="text-center">Actions</th>
           </tr>
         </thead>
+
         <tbody>
           <tr *ngFor="let lesson of lessons">
+
             <!-- Edit Mode -->
-            <ng-container *ngIf="selectedLessonId === lesson.id; else viewMode">
-              <td><input class="form-control" [(ngModel)]="lesson.title" /></td>
-              <td><input class="form-control" [(ngModel)]="lesson.description" /></td>
-              <td><input type="number" class="form-control" [(ngModel)]="lesson.order" /></td>
-              
-              <td>
-                <div class="action-buttons">
-                  <button
-                    class="btn btn-success btn-sm me-1"
-                    (click)="saveEdit(lesson)"
-                  >
-                    <i class="bi bi-check-lg"></i>
-                  </button>
-                  <button
-                    class="btn btn-secondary btn-sm"
-                    (click)="cancelEdit()"
-                  >
-                    <i class="bi bi-x-lg"></i>
-                  </button>
-                </div>
+            <ng-container *ngIf="selectedLessonId === lesson.id; else viewRow">
+              <td><input class="form-control" [(ngModel)]="lesson.title"></td>
+              <td><input class="form-control" [(ngModel)]="lesson.description"></td>
+              <td><input type="number" class="form-control" [(ngModel)]="lesson.order"></td>
+
+              <td class="text-center">
+                <button class="btn btn-success btn-sm" (click)="saveEdit(lesson)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">
+                  <i class="bi bi-x-lg"></i>
+                </button>
               </td>
             </ng-container>
 
             <!-- View Mode -->
-            <ng-template #viewMode>
+            <ng-template #viewRow>
               <td>{{ lesson.title }}</td>
               <td>{{ lesson.description }}</td>
               <td>{{ lesson.order }}</td>
-              
-              <td>
-             
-  
 
-                <button
-                  class="btn-action btn-edit"
-                  (click)="enableEdit(lesson.id)"
-                >
+              <td class="text-center">
+                <button class="btn-action btn-edit" (click)="enableEdit(lesson.id)">
                   <i class="bi bi-pencil-square"></i>
                 </button>
-                <button
-                  class="btn-action btn-delete"
-                  (click)="deleteLesson(lesson.id)"
-                >
+                <button class="btn-action btn-delete" (click)="deleteLesson(lesson.id)">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </td>
             </ng-template>
+
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- No Lessons Message -->
+    <!-- No Lessons  -->
     <div
       *ngIf="selectedUnitId > 0 && lessons.length === 0"
-      class="alert alert-info mt-3"
-    >
-      No lessons found for the selected unit.
+      class="alert alert-info mt-3">
+      No lessons found for this unit.
     </div>
+
   </div>
+
 </div>

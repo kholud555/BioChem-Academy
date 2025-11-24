@@ -1,51 +1,59 @@
 <div class="container p-3">
-  <h3>Make Lesson Free</h3>
 
-  <!-- Select Grade -->
+  <!-- Subject Select -->
   <div class="mb-3">
-    <label>Select Grade</label>
-    <select class="form-control" (change)="onGradeChange($event)">
-      <option value="0" disabled selected>Select Grade</option>
+    <label for="subjectSelect" class="form-label fw-bold">Select Subject</label>
+    <select id="subjectSelect" class="form-select" [(ngModel)]="selectedSubjectId" (ngModelChange)="onSubjectChange()">
+      <option value="0" disabled>Select Subject</option>
+      <option *ngFor="let sub of subjects" [value]="sub.id">{{ sub.subjectName }}</option>
+    </select>
+  </div>
+
+  <!-- Grade Select -->
+  <div class="mb-3">
+    <label for="gradeSelect" class="form-label fw-bold">Select Grade</label>
+    <select id="gradeSelect" class="form-select" [(ngModel)]="selectedGradeId" (ngModelChange)="onGradeChange()">
+      <option value="0" disabled>Select Grade</option>
       <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
     </select>
   </div>
 
-  <!-- Select Term -->
+  <!-- Term Select -->
   <div class="mb-3">
-    <label>Select Term</label>
-    <select class="form-control" (change)="onTermChange($event)">
-      <option value="0" disabled selected>Select Term</option>
+    <label for="termSelect" class="form-label fw-bold">Select Term</label>
+    <select id="termSelect" class="form-select" [(ngModel)]="selectedTermId" (ngModelChange)="onTermChange()">
+      <option value="0" disabled>Select Term</option>
       <option *ngFor="let term of terms" [value]="term.id">
         {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
       </option>
     </select>
   </div>
 
-  <!-- Select Unit -->
+  <!-- Unit Select -->
   <div class="mb-3">
-    <label>Select Unit</label>
-    <select class="form-control" (change)="onUnitChange($event)">
-      <option value="0" disabled selected>Select Unit</option>
+    <label for="unitSelect" class="form-label fw-bold">Select Unit</label>
+    <select id="unitSelect" class="form-select" [(ngModel)]="selectedUnitId" (ngModelChange)="onUnitChange()">
+      <option value="0" disabled>Select Unit</option>
       <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
     </select>
   </div>
 
-  <!-- Select Lesson -->
-  <div class="mb-3">
-    <label>Select Lesson</label>
-    <select class="form-control" (change)="onLessonChange($event)">
+  <!-- Lesson Select -->
+  <div class="mb-3" *ngIf="units.length > 0">
+    <label for="lessonSelect" class="form-label fw-bold">Select Lesson</label>
+    <select id="lessonSelect" class="form-select" (change)="onLessonChange($event)">
       <option value="0" disabled selected>Select Lesson</option>
       <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
     </select>
   </div>
 
   <!-- Checkbox for Free -->
-  <div class="mb-3" *ngIf="selectedLessonId">
-    <label>
-      <input type="checkbox"
-             [checked]="isLessonFree(selectedLessonId)"
-             (change)="toggleLessonFree($event)" />
+  <div class="form-check mb-3" *ngIf="selectedLessonId">
+    <input class="form-check-input" type="checkbox" id="freeCheckbox"
+           [checked]="isLessonFree(selectedLessonId)" (change)="toggleLessonFree($event)">
+    <label class="form-check-label fw-bold" for="freeCheckbox">
       Make Lesson Free
     </label>
   </div>
+
 </div>

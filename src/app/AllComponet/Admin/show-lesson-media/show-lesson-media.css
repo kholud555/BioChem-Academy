@@ -1,56 +1,254 @@
-/* منع السحب والتحميل */
-video, img, audio {
-  -webkit-user-drag: none;
-  user-drag: none;
-  pointer-events: auto;
-}
 
-/* منع زر التحميل من Controls */
-video::-internal-media-controls-download-button {
-  display: none;
-}
 
-video::-webkit-media-controls-enclosure {
-  overflow: hidden;
-}
-#blackOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
-  z-index: 9999999;
-  -webkit-transition: opacity 0.2s ease-in-out;
-  -moz-transition: opacity 0.2s ease-in-out;
-  -ms-transition: opacity 0.2s ease-in-out;
-  -o-transition: opacity 0.2s ease-in-out;
-}
+  .lesson-media-page {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+  }
 
-/* شكل الكروت */
-.media-card {
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-  transition: 0.3s ease;
-}
+  .header-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
 
-.media-card:hover {
-  transform: scale(1.02);
-  -webkit-transform: scale(1.02);
-  -moz-transform: scale(1.02);
-  -ms-transform: scale(1.02);
-  -o-transform: scale(1.02);
-}
+  .icon-badge {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
 
-/* شكل الصور والفيديو */
-.media-content {
-  height: 200px;
-  object-fit: cover;
-}
+  .header-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .lesson-name {
+    font-size: 1.4rem;
+    color: #667eea;
+    font-weight: 500;
+  }
+
+  .lesson-media-container {
+    margin-top: 2rem;
+  }
+
+  .media-card-wrapper {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .media-card-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Video Styles */
+  .video-container {
+    width: 100%;
+    background: #000;
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+  }
+
+  .video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+  }
+
+  .badge-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  /* Image Styles */
+  .image-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .image-wrapper {
+    width: 100%;
+    height: 300px;
+    background: #f0f0f0;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .media-card-wrapper:hover .image-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+  }
+
+  .badge-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  }
+
+  /* Audio Styles */
+  .audio-container {
+    width: 100%;
+  }
+
+  .audio-wrapper {
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+
+  .audio-icon {
+    font-size: 2.5rem;
+    color: #667eea;
+  }
+
+  .audio-filename {
+    font-weight: 500;
+    color: #333;
+    word-break: break-word;
+  }
+
+  .audio-player {
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .audio-badge {
+    margin-top: 1rem;
+  }
+
+  .badge-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  /* Card Footer */
+  .card-footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+  }
+
+  .media-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .btn-action {
+    background: none;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .btn-action:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #764ba2;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state h5 {
+    color: #333;
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .lesson-media-page {
+      padding: 1rem;
+    }
+
+    .header-section {
+      padding: 1.5rem;
+    }
+
+    .icon-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 1.4rem;
+    }
+
+    .header-title {
+      font-size: 1.4rem;
+    }
+
+    .lesson-name {
+      font-size: 1.1rem;
+    }
+
+    .image-wrapper {
+      height: 250px;
+    }
+
+    .card-footer-info {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+  }
+
+  /* Accessibility */
+  .media-card-wrapper:focus-within {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+  }
+
+  /* Utility */
+  .media-content {
+    display: block;
+  }
+
 exam-card {
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

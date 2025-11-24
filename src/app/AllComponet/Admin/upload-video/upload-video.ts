@@ -6,12 +6,13 @@ import { TermService } from '../../../service/term-service';
 import { UnitService } from '../../../service/unit-service';
 import { LessonService } from '../../../service/lesson-service';
 import { UploadService } from '../../../service/upload-service';
-
+import { ToastrService } from 'ngx-toastr';
+import { SubjectService } from '../../../service/subject';
 import { GradeDTO } from '../../../InterFace/grade-dto';
 import { TermDTO } from '../../../InterFace/term-dto';
 import { UnitDTO } from '../../../InterFace/unit-dto';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
-import { ToastrService } from 'ngx-toastr';
+import { SubjectDTO } from '../../../InterFace/subject';
 
 @Component({
   selector: 'app-upload-video',
@@ -21,11 +22,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./upload-video.css'],
 })
 export class UploadVideo implements OnInit {
+  subjects: SubjectDTO[] = [];
   grades: GradeDTO[] = [];
   terms: TermDTO[] = [];
   units: UnitDTO[] = [];
   lessons: LessonDTO[] = [];
 
+  selectedSubjectId: number | null = null;
   selectedGradeId: number | null = null;
   selectedTermId: number | null = null;
   selectedUnitId: number | null = null;
@@ -37,6 +40,7 @@ export class UploadVideo implements OnInit {
   isUploading = false;
 
   constructor(
+    private subjectService: SubjectService,
     private gradeService: GradeService,
     private termService: TermService,
     private unitService: UnitService,
@@ -46,49 +50,90 @@ export class UploadVideo implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadGrades();
+    this.loadSubjects();
   }
 
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: (res) => (this.grades = res),
-      error: (err) => console.error('Error loading grades:', err),
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data,
+      error: err => console.error('Error loading subjects:', err)
     });
   }
 
-  onGradeChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedGradeId = Number(select.value);
+  onSubjectChange(subjectId: number): void {
+    this.selectedSubjectId = subjectId;
+    this.selectedGradeId = null;
+    this.selectedTermId = null;
+    this.selectedUnitId = null;
+    this.selectedLessonId = null;
+
+    this.grades = [];
     this.terms = [];
-    this.termService.getTermsByGrade(this.selectedGradeId!).subscribe({
-      next: (res) => (this.terms = res),
-    });
-  }
-
-  onTermChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedTermId = Number(select.value);
     this.units = [];
-    this.unitService.getUnitsByTerm(this.selectedTermId!).subscribe({
-      next: (res) => (this.units = res),
-    });
-  }
-
-  onUnitChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedUnitId = Number(select.value);
     this.lessons = [];
-    this.lessonService.getLessonsByUnit(this.selectedUnitId!).subscribe({
-      next: (res) => (this.lessons = res),
+
+    if (!subjectId) return;
+
+    this.gradeService.getGradeBySubjectId(subjectId).subscribe({
+      next: res => this.grades = res,
+      error: err => console.error(err)
     });
   }
 
-  onLessonChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedLessonId = Number(select.value);
+  onGradeChange(gradeId: number): void {
+    this.selectedGradeId = gradeId;
+    this.selectedTermId = null;
+    this.selectedUnitId = null;
+    this.selectedLessonId = null;
+
+    this.terms = [];
+    this.units = [];
+    this.lessons = [];
+
+    if (!gradeId) return;
+
+    this.termService.getTermsByGrade(gradeId).subscribe({
+      next: res => this.terms = res,
+      error: err => console.error(err)
+    });
   }
 
-  // ---------- upload logic ----------
+  onTermChange(termId: number): void {
+    this.selectedTermId = termId;
+    this.selectedUnitId = null;
+    this.selectedLessonId = null;
+
+    this.units = [];
+    this.lessons = [];
+
+    if (!termId) return;
+
+    this.unitService.getUnitsByTerm(termId).subscribe({
+      next: res => this.units = res,
+      error: err => console.error(err)
+    });
+  }
+
+  onUnitChange(unitId: number): void {
+    this.selectedUnitId = unitId;
+    this.selectedLessonId = null;
+
+    this.lessons = [];
+
+    if (!unitId) return;
+
+    this.lessonService.getLessonsByUnit(unitId).subscribe({
+      next: res => this.lessons = res,
+      error: err => console.error(err)
+    });
+  }
+
+  onLessonChange(lessonId: number): void {
+    this.selectedLessonId = lessonId;
+  }
+
+  // باقي الكود الخاص بالرفع مثل handleUpload و handleDrag و handleDrop ...
+// ---------- upload logic ----------
   async handleUpload(): Promise<void> {
     if (!this.selectedFile || !this.selectedLessonId) {
       this.toast.error('Please choose a file and select a lesson first', 'Missing data');
@@ -102,6 +147,7 @@ export class UploadVideo implements OnInit {
       // نحصل على presigned URL من الـ backend
       const res: any = await this.uploadService.getPresignedUrl(
         this.selectedFile,
+       this.getsubjectName(),
         this.getGradeName(),
         this.getTermName(),
         this.getUnitName(),
@@ -175,6 +221,9 @@ export class UploadVideo implements OnInit {
     return this.grades.find((g) => g.id === this.selectedGradeId)?.gradeName || 'Grade';
   }
 
+getsubjectName(): string {
+    return this.subjects.find((s) => s.id === this.selectedSubjectId)?.subjectName || 'subject';
+  }
   // رجعت string بدل any
   getTermName(): string {
   const termMap: { [key: number]: string } = {
@@ -189,3 +238,4 @@ export class UploadVideo implements OnInit {
     return this.units.find((u) => u.id === this.selectedUnitId)?.title || 'Unit';
   }
 }
+

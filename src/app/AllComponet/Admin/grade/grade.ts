@@ -1,111 +1,132 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { GradeDTO } from '../../../InterFace/grade-dto';
-import { GradeService } from '../../../service/grade-service';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+
+import { GradeService } from '../../../service/grade-service';
+import { SubjectService } from '../../../service/subject';
+import { CreatrGradedTO, GradeDTO } from '../../../InterFace/grade-dto';
+import { SubjectDTO } from '../../../InterFace/subject';
+
 @Component({
   selector: 'app-grade',
-  imports: [CommonModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './grade.html',
   styleUrl: './grade.css'
 })
 export class Grade implements OnInit {
-  grades: GradeDTO[] = [];
-  newGrAdeName: string = '';
-  SelectedGrade: GradeDTO | null = null;
-   editingGradeId: number | null = null; 
-editedGradeName: string = ''; 
-  constructor(private http: HttpClient , private gradeService:GradeService) { }
+
+   grades: GradeDTO[] = [];
+  subjects: SubjectDTO[] = [];
+
+  selectedSubject: number = 0;
+
+  newGrade: CreatrGradedTO = { gradeName: '', subjectId: 0 };
+
+  editingGradeId: number | null = null;
+  editedGradeName: string = '';
+  editedSubjectId: number = 0;
+
+  constructor(
+    private gradeService: GradeService,
+    private subjectService: SubjectService
+  ) {}
+
   ngOnInit(): void {
-    this.loadGrades();
+    this.loadSubjects();
   }
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe(
-      (data: GradeDTO[]) => {
-        this.grades = data;
-        
-      },
-      (error) => {
-        console.error('Error fetching grades:', error);
-      }
-    );
-  }
-  AddGrade(): void {
-    if (!this.newGrAdeName.trim()) return;
-      this.gradeService.AddGrade(this.newGrAdeName).subscribe({
 
-       next: () => {
-        this.loadGrades();
-        this.newGrAdeName = '';
-      },
-      error: (err) => console.error('Add failed', err)
+  // Load Subjects
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data,
+      error: err => console.error('Error loading subjects:', err)
     });
   }
-  
 
-  SelectGrade(grade: GradeDTO): void {
-    this.editingGradeId = grade.id;
-    this.editedGradeName = grade.gradeName;
-    this.SelectedGrade = { ...grade };
+  // When selecting subject → load grades of that subject only
+  onSubjectChange(): void {
+    if (this.selectedSubject > 0) {
+      this.gradeService.getGradeBySubjectId(this.selectedSubject).subscribe({
+        next: data => this.grades = data,
+        error: err => console.error('Error loading grades:', err)
+      });
+
+      this.newGrade.subjectId = this.selectedSubject;
+    } else {
+      this.grades = [];
+    }
   }
 
-  
-updateGrade(grade: GradeDTO): void {
-   grade.gradeName = this.editedGradeName;
-    this.gradeService.UpdareGrade(grade).subscribe({
+  // Add Grade
+  addGrade(): void {
+    if (!this.newGrade.gradeName || this.newGrade.subjectId === 0) {
+      Swal.fire('Error', 'Please enter grade name and select subject.', 'warning');
+      return;
+    }
+
+    this.gradeService.AddGrade(this.newGrade).subscribe({
       next: () => {
-        this.editingGradeId = null;
-        this.loadGrades();
+        Swal.fire('Success', 'Grade added successfully!', 'success');
+        this.newGrade = { gradeName: '', subjectId: this.selectedSubject };
+        this.onSubjectChange();
       },
-      error: (err) => console.error('Error updating grade:', err)
+      error: err => console.error(err)
     });
   }
-CancelEdit():void{
-  this.editingGradeId = null;
-}
- deleteGrade(id: number): void {
+
+  // Start Edit
+  startEdit(g: GradeDTO): void {
+    this.editingGradeId = g.id;
+    this.editedGradeName = g.gradeName;
+    this.editedSubjectId = g.subjectId;
+  }
+
+  cancelEdit(): void {
+    this.editingGradeId = null;
+    this.editedGradeName = '';
+    this.editedSubjectId = 0;
+  }
+
+  // Update Grade
+  updateGrade(): void {
+    if (!this.editedGradeName || this.editedSubjectId === 0) return;
+
+    const updated: GradeDTO = {
+      id: this.editingGradeId!,
+      gradeName: this.editedGradeName,
+      subjectId: this.editedSubjectId
+    };
+
+    this.gradeService.UpdareGrade(updated).subscribe({
+      next: () => {
+        Swal.fire('Updated!', 'Grade updated successfully!', 'success');
+        this.cancelEdit();
+        this.onSubjectChange();
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  // Delete
+  deleteGrade(id: number): void {
     Swal.fire({
       title: 'Are you sure?',
-      text: "This grade will be permanently deleted!",
+      text: 'This grade will be permanently deleted!',
       icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
+      showCancelButton: true
+    }).then(res => {
+      if (res.isConfirmed) {
         this.gradeService.DeleteGrade(id).subscribe({
           next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Deleted!',
-              text: 'Grade has been deleted.',
-              timer: 1500,
-              showConfirmButton: false
-            });
-            this.loadGrades();
+            Swal.fire('Deleted!', 'Grade deleted.', 'success');
+            this.onSubjectChange();
           },
-       error: (err) => {
-  const errorMessage =
-    err?.error?.message ||
-     err?.error?.detail || 
-    err?.message ||
-    'An unexpected error occurred while deleting the grade.';
-
-  Swal.fire({
-    icon: 'error',
-    title: 'Error!',
-    text: errorMessage,
-  });
-
-  console.error('Error deleting grade:', err);
-}
-
+          error: err => console.error(err)
         });
       }
     });
   }
+
 }

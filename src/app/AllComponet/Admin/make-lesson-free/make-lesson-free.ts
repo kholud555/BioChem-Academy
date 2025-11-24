@@ -1,82 +1,106 @@
-import { Component, NgModule } from '@angular/core';
-import { GradeDTO } from '../../../InterFace/grade-dto';
-import { UnitDTO } from '../../../InterFace/unit-dto';
-import { TermDTO } from '../../../InterFace/term-dto';
-import { LessonDTO } from '../../../InterFace/lesson-dto';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { GradeService } from '../../../service/grade-service';
 import { TermService } from '../../../service/term-service';
 import { UnitService } from '../../../service/unit-service';
 import { LessonService } from '../../../service/lesson-service';
-import { CommonModule } from '@angular/common';
+import { SubjectService } from '../../../service/subject';
 import { ToastrService } from 'ngx-toastr';
+import { GradeDTO } from '../../../InterFace/grade-dto';
+import { TermDTO } from '../../../InterFace/term-dto';
+import { UnitDTO } from '../../../InterFace/unit-dto';
+import { LessonDTO } from '../../../InterFace/lesson-dto';
+import { SubjectDTO } from '../../../InterFace/subject';
 
 @Component({
   selector: 'app-make-lesson-free',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule], // ✅ مهم
   templateUrl: './make-lesson-free.html',
-  styleUrl: './make-lesson-free.css'
+  styleUrls: ['./make-lesson-free.css']
 })
 export class MakeLessonFree {
- grades: GradeDTO[] = [];
+  subjects: SubjectDTO[] = [];
+  grades: GradeDTO[] = [];
   terms: TermDTO[] = [];
-  units:UnitDTO[] = [];
+  units: UnitDTO[] = [];
   lessons: LessonDTO[] = [];
 
+  selectedSubjectId = 0;
   selectedGradeId = 0;
   selectedTermId = 0;
   selectedUnitId = 0;
-
   selectedLessonId: number | null = null;
+
+  lessonFreeStatus: { [key: number]: boolean } = {};
+
   constructor(
-      private gradeService: GradeService,
-      private termService: TermService,
-      private unitService: UnitService,
-      private lessonService: LessonService,
-      private toast:ToastrService
-    ) {}
-  
-    ngOnInit(): void {
-      this.loadGrades();
-    }
-  
-    
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: (res) => (this.grades = res),
-      error: (err) => console.error('Error loading grades:', err),
+    private gradeService: GradeService,
+    private termService: TermService,
+    private unitService: UnitService,
+    private lessonService: LessonService,
+    private subjectService: SubjectService,
+    private toast: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadSubjects();
+  }
+
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data
     });
   }
 
-  onGradeChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedGradeId = Number(select.value);
-    this.terms = [];
-    this.termService.getTermsByGrade(this.selectedGradeId!).subscribe({
-      next: (res) => (this.terms = res),
-    });
-  }
-
-   onTermChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedTermId = Number(select.value);
-    this.units = [];
-    this.lessons = [];
+  onSubjectChange(): void {
+    this.selectedGradeId = 0;
+    this.selectedTermId = 0;
     this.selectedUnitId = 0;
     this.selectedLessonId = null;
+    this.grades = [];
+    this.terms = [];
+    this.units = [];
+    this.lessons = [];
 
-   this.unitService.getUnitsByTerm(this.selectedTermId).subscribe({
-  next: (res) => (this.units = res),
-});
-
+    this.gradeService.getGradeBySubjectId(this.selectedSubjectId).subscribe({
+      next: res => this.grades = res
+    });
   }
 
-  onUnitChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedUnitId = Number(select.value);
+  onGradeChange(): void {
+    this.selectedTermId = 0;
+    this.selectedUnitId = 0;
+    this.selectedLessonId = null;
+    this.terms = [];
+    this.units = [];
     this.lessons = [];
-    this.lessonService.getLessonsByUnit(this.selectedUnitId!).subscribe({
-      next: (res) => (this.lessons = res),
+
+    this.termService.getTermsByGrade(this.selectedGradeId).subscribe({
+      next: res => this.terms = res
     });
+  }
+
+  onTermChange(): void {
+    this.selectedUnitId = 0;
+    this.selectedLessonId = null;
+    this.units = [];
+    this.lessons = [];
+
+    this.unitService.getUnitsByTerm(this.selectedTermId).subscribe({
+      next: res => this.units = res
+    });
+  }
+
+  onUnitChange(): void {
+    this.selectedLessonId = null;
+    this.lessons = [];
+    if (this.selectedUnitId > 0) {
+      this.lessonService.getLessonsByUnit(this.selectedUnitId).subscribe({
+        next: res => this.lessons = res
+      });
+    }
   }
 
   onLessonChange(event: Event): void {
@@ -84,35 +108,34 @@ export class MakeLessonFree {
     this.selectedLessonId = Number(select.value);
   }
 
-  // المتغير لتخزين حالة الدروس Free (يمكن تملأها عند جلب الدروس)
-lessonFreeStatus: { [key: number]: boolean } = {};
+  isLessonFree(lessonId: number): boolean {
+    return this.lessonFreeStatus[lessonId] || false;
+  }
 
-toggleLessonFree(event: Event) {
+  toggleLessonFree(event: Event) {
+  if (!this.selectedLessonId) return;
+
   const checkbox = event.target as HTMLInputElement;
   const isFree = checkbox.checked;
 
-  if (!this.selectedLessonId) return;
+  // تحقق إذا كان الدرس بالفعل free
+  if (isFree && this.isLessonFree(this.selectedLessonId)) {
+    this.toast.info('This lesson is already free');
+    // ارجع حالة الـ checkbox إلى false
+    checkbox.checked = false;
+    return;
+  }
 
   this.lessonService.updateIsFree(this.selectedLessonId, isFree).subscribe({
     next: () => {
-      // تحديث الحالة محليًا
       this.lessonFreeStatus[this.selectedLessonId!] = isFree;
-     this.toast.success("done")
+      this.toast.success('Lesson updated');
     },
-    error: (err) => {
-      console.error('Error updating lesson free status:', err);
-     this.toast.error(err.message.detail,"failed")
-      // ارجاع الحالة السابقة إذا فشل التحديث
+    error: err => {
       checkbox.checked = !isFree;
+      this.toast.error('Problem updating lesson');
     }
   });
 }
 
-// دالة لعرض حالة الدرس عند التحميل
-isLessonFree(lessonId: number): boolean {
-  return this.lessonFreeStatus[lessonId] || false;
-}
-
-
-    
 }

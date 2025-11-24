@@ -25,6 +25,8 @@ import { QuestionService } from '../../../../service/question-service/question-s
 import { Observable } from 'rxjs';
 import { StudentExamResultDTO } from '../../../../InterFace/student-exam';
 import { StudentExamService } from '../../../../service/student-exam';
+import { SubjectDTO } from '../../../../InterFace/subject';
+import { SubjectService } from '../../../../service/subject';
 
 @Component({
   selector: 'app-create-exam',
@@ -45,8 +47,10 @@ export class CreateExam implements OnInit {
   choiceForm!: FormGroup;
   addedQuestion: HeaderQuestionDTO | null = null;
   questions: HeaderQuestionDTO[] = [];
+subjects: SubjectDTO[] = [];
+ selectedSubjectId: number = 0;
 
-  selectedGradeId: number | null = null;
+  selectedGradeId: number =0;
   selectedTermId: number | null = null;
   selectedUnitId: number | null = null;
   selectedLessonId: number | null = null;
@@ -73,12 +77,14 @@ export class CreateExam implements OnInit {
     private unitService: UnitService,
     private lessonService: LessonService,
     private questionService: QuestionService,
-    private StudentExam:StudentExamService
+    private StudentExam:StudentExamService,
+      private subjectService :SubjectService
   ) {}
 
   ngOnInit(): void {
+    this.loadSubjects();
    
-    this.loadGrades();
+   
     this.getExamsByLesson();
 
     this.examForm = this.fb.group({
@@ -106,39 +112,71 @@ export class CreateExam implements OnInit {
 
 
   }
-  
-
-  // ========== Loaders & Select handlers ==========
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: (res) => (this.grades = res),
-      error: (err) => console.error('Error loading grades:', err),
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data
     });
   }
 
-  onGradeChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedGradeId = Number(select.value);
-    this.terms = [];
-    this.termService.getTermsByGrade(this.selectedGradeId!).subscribe({
-      next: (res) => (this.terms = res),
-    });
-  }
-examResults:any;
-  loadResults(examId: number) {
-    
-    this.studentService.getExamResults(examId).subscribe({
+ // عند تغيير المادة
+onSubjectChange(event: Event): void {
+  const select = event.target as HTMLSelectElement;
+  this.selectedSubjectId = Number(select.value);
+
+  // إعادة تعيين القيم
+  this.grades = [];
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
+
+  this.selectedGradeId = 0;
+  this.selectedTermId = null;
+  this.selectedUnitId = null;
+  this.selectedLessonId = null;
+
+  if (this.selectedSubjectId) {
+    this.gradeService.getGradeBySubjectId(this.selectedSubjectId).subscribe({
       next: (res) => {
-        this.examResults = res;
-      
+        this.grades = res;
+        if (this.grades.length === 0) {
+          this.toastr.info('No grades found for this subject');
+        }
       },
       error: (err) => {
-        console.error('Error loading exam results:', err);
-       
-      
+        console.error(err);
+        this.toastr.info('Failed to load grades');
       }
     });
   }
+}
+
+// عند تغيير الصف
+onGradeChange(event: Event): void {
+  const select = event.target as HTMLSelectElement;
+  this.selectedGradeId = Number(select.value);
+
+  // إعادة تعيين القيم
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
+
+  this.selectedTermId = null;
+  this.selectedUnitId = null;
+  this.selectedLessonId = null;
+
+  if (this.selectedGradeId) {
+    this.termService.getTermsByGrade(this.selectedGradeId).subscribe({
+      next: (res) => this.terms = res,
+      error: (err) => {
+        console.error(err);
+        //this.toastr.error('Failed to load terms for selected grade');
+     
+      }
+    });
+  }
+}
+
+
 
   onTermChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
@@ -177,7 +215,7 @@ examResults:any;
   // ========== Exam CRUD ==========
   createExam() {
     if (this.examForm.invalid) {
-      this.toastr.error('Please fill all required fields correctly');
+      this.toastr.info('Please fill all required fields correctly');
       return;
     }
 
@@ -356,7 +394,7 @@ setTFAnswer(value: boolean) {
       },
       error: (err) => {
         console.error(err);
-        this.toastr.error("Error loading exams");
+        this.toastr.error("No Exams in this lesson");
       }
     });
   }

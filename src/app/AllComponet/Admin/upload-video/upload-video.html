@@ -1,38 +1,55 @@
 <div class="upload-form">
- 
-  <label>Grade:</label>
-  <select (change)="onGradeChange($event)">
-    <option [value]="null">Select Grade</option>
-    <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
-  </select>
 
- 
+  <!-- Subject -->
+  <div>
+    <label>📚 Subject</label>
+    <select [(ngModel)]="selectedSubjectId" (ngModelChange)="onSubjectChange($event)">
+      <option [value]="null">Select Subject</option>
+      <option *ngFor="let sub of subjects" [value]="sub.id">{{ sub.subjectName }}</option>
+    </select>
+  </div>
 
-  <!-- 📚 Select Unit -->
-  <label>Unit:</label>
-  <select (change)="onUnitChange($event)" [disabled]="!selectedTermId">
-    <option [value]="null">Select Unit</option>
-    <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
-  </select>
- <!-- 📅 Select Term -->
-  <label>Term:</label>
-  <select (change)="onTermChange($event)" [disabled]="!selectedGradeId">
-    <option [value]="null">Select Term</option>
-    <option *ngFor="let term of terms" [value]="term.id">
-      {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-    </option>
-  </select>
-  <!-- 🎓 Select Lesson -->
-  <label>Lesson:</label>
-  <select (change)="onLessonChange($event)" [disabled]="!selectedUnitId">
-    <option [value]="null">Select Lesson</option>
-    <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
-  </select>
+  <!-- Grade -->
+  <div>
+    <label>🏫 Grade</label>
+    <select [(ngModel)]="selectedGradeId" (ngModelChange)="onGradeChange($event)" [disabled]="!selectedSubjectId">
+      <option [value]="null">Select Grade</option>
+      <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
+    </select>
+  </div>
+
+  <!-- Term -->
+  <div>
+    <label>📘 Term</label>
+    <select [(ngModel)]="selectedTermId" (ngModelChange)="onTermChange($event)" [disabled]="!selectedGradeId">
+      <option [value]="null">Select Term</option>
+      <option *ngFor="let term of terms" [value]="term.id">
+        {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Unit -->
+  <div>
+    <label>📖 Unit</label>
+    <select [(ngModel)]="selectedUnitId" (ngModelChange)="onUnitChange($event)" [disabled]="!selectedTermId">
+      <option [value]="null">Select Unit</option>
+      <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
+    </select>
+  </div>
+
+  <!-- Lesson -->
+  <div>
+    <label>📂 Lesson</label>
+    <select [(ngModel)]="selectedLessonId" (ngModelChange)="onLessonChange($event)" [disabled]="!selectedUnitId">
+      <option [value]="null">Select Lesson</option>
+      <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
+    </select>
+  </div>
+
 </div>
 
-<hr />
-
-<!-- 🎥 Upload Video -->
+<!-- 🟦 Upload Area -->
 <div
   class="upload-area"
   [class.drag-active]="dragActive"
@@ -42,22 +59,19 @@
   (drop)="handleDrop($event)"
 >
   <p>🎬 Drag & drop your video here or <span class="browse">choose a file</span></p>
-  <input 
-  type="file" 
-  accept="video/*,image/*,application/pdf" 
-  (change)="onFileChange($event)" 
-/>
-
+  <input type="file" accept="video/*,image/*,application/pdf" (change)="onFileChange($event)" />
 </div>
 
-<!-- 📁 Selected File Info -->
+<!-- 📁 File Info -->
 <div *ngIf="selectedFile" class="file-info">
+
   <p>📁 {{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})</p>
 
   <div class="buttons">
     <button class="upload-btn" (click)="handleUpload()" [disabled]="isUploading || !selectedLessonId">
-      ⬆️ Upload Video
+      ⬆️ Upload
     </button>
+
     <button class="remove-btn" (click)="handleRemove()">🗑 Remove</button>
   </div>
 
@@ -65,4 +79,5 @@
     <p>Uploading: {{ uploadProgress }}%</p>
     <progress [value]="uploadProgress" max="100"></progress>
   </div>
+
 </div>

@@ -1,24 +1,29 @@
-
-  
- 
-<div class="course-container">
-  <h2 class="title">🎓 Available Grades</h2>
-
-  <!-- في حالة التحميل -->
-  <div *ngIf="grades.length === 0" class="loading">
-    <p>⏳ Loading grades...</p>
-  </div>
-
-  <!-- عرض الدرجات -->
-  <div class="grades-grid" *ngIf="grades.length > 0">
-    <div class="grade-card" *ngFor="let grade of grades">
-      <div class="grade-icon">🏫</div>
-      <div class="grade-info">
-        <h3> Grade {{ grade.gradeName }}</h3>
-       
+<div class="terms-container">
+  <h1>Subjects</h1>
+  <div class="terms-list">
+    <div *ngFor="let subject of subjects" class="term-item">
+      <div class="term-header" (click)="toggleSubject(subject)">
+        <span class="chevron-icon" [class.expanded]="isSubjectExpanded(subject.id)">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="term-title">{{ subject.subjectName }}</span>
       </div>
-      <button class="view-btn" (click)="onSelectGrade(grade)">View Details</button>
+
+      <div class="units-container" *ngIf="isSubjectExpanded(subject.id)" [@slideDown]>
+        <div *ngIf="getGradesForSubject(subject.id).length === 0" class="loading-message">
+          No grades found for this subject.
+        </div>
+        <div *ngFor="let grade of getGradesForSubject(subject.id)" class="unit-item">
+          <div class="unit-header">
+            <span class="unit-title">{{ grade.gradeName }}</span>
+            <button class="view-btn" (click)="onSelectGrade(grade)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-

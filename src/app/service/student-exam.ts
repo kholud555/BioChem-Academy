@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SubmitExamDTO, StudentExamDTO, StudentExamResultDTO } from '../InterFace/student-exam';
+import { SubmitExamDTO, StudentExamDTO, StudentExamResultDTO, SubmitExamFullDTO } from '../InterFace/student-exam';
 import { StudentService } from './Student/student-service';
 import { ExamResultsDTO } from '../InterFace/exam-dto';
 
@@ -50,5 +50,12 @@ export class StudentExamService {
       headers: this.getAuthHeaders()
     });
   }
+// StudentExamService
+submitFullExam(dto: SubmitExamFullDTO): Observable<StudentExamDTO> {
+  return this.http.post<StudentExamDTO>(this.baseUrl, dto, {
+    headers: this.getAuthHeaders()
+  });
+}
+
 
 }

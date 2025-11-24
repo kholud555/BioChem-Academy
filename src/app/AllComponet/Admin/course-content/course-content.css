@@ -1,91 +1,125 @@
-.course-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1.5rem;
+/* ------- Main Container ------- */
+.terms-container {
+  max-width: 800px;
+  margin: 40px auto;
   background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.terms-container h1 {
   text-align: center;
-}
-
-.title {
-  font-size: 1.8rem;
+  font-size: 28px;
+  margin-bottom: 25px;
   font-weight: 700;
-  color: #2a4d8f;
-  margin-bottom: 1.5rem;
+  color: #1d3557;
 }
 
-.loading p {
-  color: #555;
-  font-size: 1.1rem;
-  padding: 2rem 0;
+/* ------- Term Item ------- */
+.term-item {
+  margin-bottom: 15px;
+  background: #f8f9fc;
+  border-radius: 14px;
+  padding: 10px 14px;
+  transition: 0.3s ease;
+  border: 1px solid #e4e6ee;
 }
 
-/* 🧱 Grade Cards Grid */
-.grades-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+.term-item:hover {
+  background: #eef2ff;
 }
 
-/* 🎓 Grade Card */
-.grade-card {
-  background: #f8faff;
-  border: 1px solid #e1e8f0;
-  border-radius: 1rem;
-  padding: 1rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
+/* ------- Header Row (Term - Unit) ------- */
+.term-header,
+.unit-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 5px;
+  font-weight: 600;
+  color: #1d3557;
+  transition: 0.3s ease;
+  user-select: none;
+}
+
+.term-header:hover,
+.unit-header:hover {
+  color: #3a0ca3;
+}
+
+/* ------- Chevron Icon Animation ------- */
+.chevron-icon {
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+  display: flex;
   align-items: center;
 }
 
-.grade-card:hover {
-  background: #e9f0ff;
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+.chevron-icon.expanded {
+  transform: rotate(180deg);
 }
 
-.grade-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+/* ------- Nested Containers ------- */
+.units-container,
+.lessons-container {
+  margin-left: 35px;
+  padding-left: 15px;
+  border-left: 2px dashed #c9c9c9;
+  margin-top: 8px;
 }
 
-.grade-info h3 {
-  color: #2a4d8f;
-  font-size: 1.2rem;
-  margin: 0.3rem 0;
+/* ------- Unit Item ------- */
+.unit-item {
+  margin-bottom: 12px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  transition: 0.3s ease;
 }
 
-.grade-info p {
-  color: #777;
-  font-size: 0.9rem;
-  margin-bottom: 0.8rem;
+.unit-item:hover {
+  background: #f2f4ff;
 }
 
-.view-btn {
-  background: #4a90e2;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.6rem;
-  font-weight: 600;
+/* ------- Lessons ------- */
+.lesson-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 5px;
   cursor: pointer;
-  transition: 0.3s;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
-.view-btn:hover {
-  background: #357bd8;
+.lesson-item:hover {
+  background: #e7f0ff;
 }
 
-/* 📱 Responsive */
-@media (max-width: 600px) {
-  .title {
-    font-size: 1.5rem;
-  }
+.lesson-title {
+  font-size: 15px;
+  margin-left: 8px;
+  font-weight: 500;
+  color: #1d3557;
+}
 
-  .grade-card {
-    padding: 0.8rem;
-  }
+.lesson-title:hover {
+  color: #3a0ca3;
+}
+
+/* ------- Loading Messages ------- */
+.loading-message {
+  color: #888;
+  font-style: italic;
+  padding: 10px;
+}
+
+.loading-message.small {
+  font-size: 13px;
+}
+
+/* Small Chevron inside Units */
+.chevron-icon.small {
+  margin-right: 6px;
 }

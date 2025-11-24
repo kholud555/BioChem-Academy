@@ -32,6 +32,7 @@ import { ShowFreeMedia } from './AllComponet/show-free-media/show-free-media';
 
 import { CreateExam } from './AllComponet/Admin/exam/create-exam/create-exam';
 import { ExamDetails } from './AllComponet/Admin/exam/exam-details/exam-details';
+import { Subject } from './AllComponet/Admin/subject/subject';
 
 export const routes: Routes = [
     {path:"" ,component:MainHome},
@@ -64,6 +65,7 @@ export const routes: Routes = [
      {path:"ShowLessonMedia" ,component:ShowLessonMedia},
        {path:"MakeLessonFree" ,component:MakeLessonFree},
          {path:"createExam" ,component:CreateExam},
+         {path:"subject" , component:Subject},
 
            
          

@@ -1,62 +1,86 @@
 <div class="container-fluid py-4">
 
-  <!-- Selection Section -->
   <div class="card shadow-sm mb-4 border-0 rounded-3">
-    <div class="card-header bg-gradient text-white py-3">
-      <h5 class="mb-0"><i class="bi bi-funnel-fill me-2"></i>Select Exam Context</h5>
-    </div>
-    <div class="card-body p-4">
-      <div class="row g-3">
+  <div class="card-header bg-gradient text-white py-3">
+    <h5 class="mb-0"><i class="bi bi-funnel-fill me-2"></i>Select Exam Context</h5>
+  </div>
 
-        <!-- Grade Selection -->
-        <div class="col-md-6 col-lg-3">
-          <label class="form-label fw-semibold text-secondary">
-            <i class="bi bi-mortarboard-fill me-1"></i>Grade
-          </label>
-          <select class="form-select form-select-lg" (change)="onGradeChange($event)">
-            <option [value]="null">Choose Grade</option>
-            <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
-          </select>
-        </div>
+  <div class="card-body p-4">
+    <div class="row g-4">
 
-        <!-- Term -->
-        <div class="col-md-6 col-lg-3">
-          <label class="form-label fw-semibold text-secondary">
-            <i class="bi bi-calendar3 me-1"></i>Term
-          </label>
-          <select class="form-select form-select-lg" (change)="onTermChange($event)" [disabled]="!selectedGradeId">
-            <option [value]="null">Choose Term</option>
-            <option *ngFor="let term of terms" [value]="term.id">
-              {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Unit -->
-        <div class="col-md-6 col-lg-3">
-          <label class="form-label fw-semibold text-secondary">
-            <i class="bi bi-book-fill me-1"></i>Unit
-          </label>
-          <select class="form-select form-select-lg" (change)="onUnitChange($event)" [disabled]="!selectedTermId">
-            <option [value]="null">Choose Unit</option>
-            <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
-          </select>
-        </div>
-
-        <!-- Lesson -->
-        <div class="col-md-6 col-lg-3">
-          <label class="form-label fw-semibold text-secondary">
-            <i class="bi bi-journal-text me-1"></i>Lesson
-          </label>
-          <select class="form-select form-select-lg" (change)="onLessonChange($event)" [disabled]="!selectedUnitId">
-            <option [value]="null">Choose Lesson</option>
-            <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
-          </select>
-        </div>
-
+      <!-- SUBJECT -->
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label fw-semibold text-secondary">
+          <i class="bi bi-bookmark-fill me-1"></i>Subject
+        </label>
+        <select class="form-select form-select-lg" (change)="onSubjectChange($event)">
+          <option [value]="0">Choose Subject</option>
+          <option *ngFor="let sub of subjects" [value]="sub.id">
+            {{ sub.subjectName }}
+          </option>
+        </select>
       </div>
+
+      <!-- GRADE -->
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label fw-semibold text-secondary">
+          <i class="bi bi-mortarboard-fill me-1"></i>Grade
+        </label>
+        <select class="form-select form-select-lg" (change)="onGradeChange($event)"
+                [disabled]="grades.length === 0">
+          <option [value]="0">Choose Grade</option>
+          <option *ngFor="let grade of grades" [value]="grade.id">
+            {{ grade.gradeName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- TERM -->
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label fw-semibold text-secondary">
+          <i class="bi bi-calendar3 me-1"></i>Term
+        </label>
+        <select class="form-select form-select-lg" (change)="onTermChange($event)"
+                [disabled]="!selectedGradeId">
+          <option [value]="null">Choose Term</option>
+          <option *ngFor="let term of terms" [value]="term.id">
+            {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
+          </option>
+        </select>
+      </div>
+
+      <!-- UNIT -->
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label fw-semibold text-secondary">
+          <i class="bi bi-grid-3x3-gap-fill me-1"></i>Unit
+        </label>
+        <select class="form-select form-select-lg" (change)="onUnitChange($event)"
+                [disabled]="!selectedTermId">
+          <option [value]="null">Choose Unit</option>
+          <option *ngFor="let unit of units" [value]="unit.id">
+            {{ unit.title }}
+          </option>
+        </select>
+      </div>
+
+      <!-- LESSON -->
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label fw-semibold text-secondary">
+          <i class="bi bi-journal-text me-1"></i>Lesson
+        </label>
+        <select class="form-select form-select-lg" (change)="onLessonChange($event)"
+                [disabled]="!selectedUnitId">
+          <option [value]="null">Choose Lesson</option>
+          <option *ngFor="let lesson of lessons" [value]="lesson.id">
+            {{ lesson.title }}
+          </option>
+        </select>
+      </div>
+
     </div>
   </div>
+</div>
+
 
   <!-- Action Buttons -->
   <div class="text-center mb-4">
@@ -250,8 +274,7 @@
                 <div class="d-flex justify-content-between align-items-center mt-3">
                   <span class="badge bg-primary" (click)="viewExamDetails(exam.id)" >View Details</span>
                
-               <span class="badge bg-success" (click)="loadResults(exam.id)" >View Result</span>
-               
+              
                   <span class="badge bg-danger" (click)="deleteExam(exam.id)">Delete</span>
                 </div>
 
@@ -267,23 +290,6 @@
 
 
 
-</div>
-<div class="admin-exam-results">
-  <h2>Exam Results</h2>
-
-  
-  <div *ngIf="examResults">
-    <h4>{{ examResults.ExamTitle }} ({{ examResults.TotalStudents }} students)</h4>
-    <p>Average Score: {{ examResults.AverageScore | number:'1.0-0' }}</p>
-    <p>Highest Score: {{ examResults.HighestScore }}</p>
-    <p>Lowest Score: {{ examResults.LowestScore }}</p>
-
-    <div *ngFor="let student of examResults.StudentResults" class="card mb-2 shadow-sm p-3">
-      <h5>{{ student.studentName }}</h5>
-      <p>Score: {{ student.score }}</p>
-      <p>Submitted At: {{ student.submittedAt | date:'short' }}</p>
-    </div>
-  </div>
 </div>
 
 

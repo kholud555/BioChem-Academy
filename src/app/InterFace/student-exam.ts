@@ -27,7 +27,12 @@ export interface StudentExamResultDTO {
   timeLimit?: number;
 }
 
-interface SubmitExamFullDTO {
+// student-exam.ts
+export interface SubmitExamFullDTO {
   ExamId: number;
-  Answers: { QuestionId: number, AnswerId: number }[];
+  Answers: {
+    QuestionId: number;
+    AnswerId: number;
+  }[];
 }
+

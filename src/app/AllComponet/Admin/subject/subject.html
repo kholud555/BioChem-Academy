@@ -1,0 +1,72 @@
+<div class="content-card">
+  <div class="card-header-custom">
+    <h5><i class="bi bi-easel-fill"></i> Subject Management</h5>
+
+    <div class="d-flex">
+      <input
+        [(ngModel)]="newSubjectName"
+        type="text"
+        class="form-control me-2 mb-2"
+        placeholder="Enter new subject name"
+      />
+      <button class="btn btn-teal mb-2" (click)="addSubject()">
+        <i class="bi bi-plus-circle"></i> Add Subject
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let sub of subjects">
+
+          <!-- Edit Mode -->
+          <td *ngIf="editingSubjectId === sub.id">
+            <input
+              [(ngModel)]="editedSubjectName"
+              type="text"
+              class="form-control form-control-sm"
+            />
+          </td>
+
+          <!-- Normal Mode -->
+          <td *ngIf="editingSubjectId !== sub.id">
+            {{ sub.subjectName }}
+          </td>
+
+          <td>
+            <div class="action-buttons">
+
+              <ng-container *ngIf="editingSubjectId === sub.id; else normalActions">
+                <button class="btn btn-success btn-sm me-1" (click)="updateSubject(sub)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </ng-container>
+
+              <ng-template #normalActions>
+                <button class="btn-action btn-edit" (click)="selectSubject(sub)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn-action btn-delete" (click)="deleteSubject(sub.id)">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </ng-template>
+
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

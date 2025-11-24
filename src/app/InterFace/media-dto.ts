@@ -7,6 +7,15 @@ export interface MediaDTO {
   lessonId: number;
   duration?: number | null;
 }
+export interface MediaAdminDTO {
+  id: number;
+  fileName: string;
+  mediaType: string;
+  fileFormat: string;
+  duration?: number | null;
+  previewUrl: string;
+}
+
 
 export interface PresignRequestDTO {
   grade: string;

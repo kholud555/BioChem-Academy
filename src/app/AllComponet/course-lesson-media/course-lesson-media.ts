@@ -12,6 +12,8 @@ import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
 import { SubmitExamDTO } from '../../InterFace/student-exam';
 import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
+import { SubjectDTO } from '../../InterFace/subject';
+import { SubjectService } from '../../service/subject';
 @Component({
   selector: 'app-course-lesson-media',
   templateUrl: './course-lesson-media.html',
@@ -23,7 +25,8 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
   SelectedLessonId: number = 0;
   studentId: number | null = 0;
   mediaList: StudentAccessedMediaDTO[] = [];
-
+subjects: SubjectDTO[] = [];
+selectedTSubjecttId: number = 0;
   // Exams
   FinalResult:any;
   exams: any[] = [];
@@ -45,10 +48,12 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
     private router: Router,
     private examService: ExamService,
     private studentExamService: StudentExamService,
-    private location: Location
+    private location: Location,
+     private subjectService :SubjectService
   ) {}
 
   ngOnInit(): void {
+  
     document.addEventListener("keydown", this.disableKeys);
 
     const currentLesson = this.lessonService.getLesson();

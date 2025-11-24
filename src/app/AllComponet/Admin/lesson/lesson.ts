@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { GradeDTO } from '../../../InterFace/grade-dto';
 import { TermDTO } from '../../../InterFace/term-dto';
 import { UnitDTO } from '../../../InterFace/unit-dto';
+import { SubjectDTO } from '../../../InterFace/subject';
+import { SubjectService } from '../../../service/subject';
 
 @Component({
   selector: 'app-lesson',
@@ -19,22 +21,26 @@ import { UnitDTO } from '../../../InterFace/unit-dto';
   styleUrls: ['./lesson.css']
 })
 export class Lesson implements OnInit {
+
+  subjects: SubjectDTO[] = [];
   grades: GradeDTO[] = [];
   terms: TermDTO[] = [];
-  units:UnitDTO[] = [];
+  units: UnitDTO[] = [];
   lessons: LessonDTO[] = [];
 
+  // selected filters
+  selectedSubjectId = 0;
   selectedGradeId = 0;
   selectedTermId = 0;
   selectedUnitId = 0;
 
-  selectedLessonId: number | null = null; // ✅ لتحديد الدرس الجاري تعديله
+  selectedLessonId: number | null = null; 
 
   newLesson: CreateLessonDTO = {
     title: '',
     description: '',
     order: 1,
-    
+    subjectId: 0,
     unitId: 0
   };
 
@@ -42,136 +48,127 @@ export class Lesson implements OnInit {
     private gradeService: GradeService,
     private termService: TermService,
     private unitService: UnitService,
-    private lessonService: LessonService
+    private lessonService: LessonService,
+    private subjectService: SubjectService
   ) {}
 
   ngOnInit(): void {
-    this.loadGrades();
+    this.loadSubjects();
   }
 
-  // 🟢 تحميل الصفوف
-  loadGrades(): void {
-    this.gradeService.GetAllGrade().subscribe({
-      next: (res) => (this.grades = res),
-      error: (err) => console.error('Error loading grades:', err)
+  loadSubjects(): void {
+    this.subjectService.getAllSubjects().subscribe({
+      next: data => this.subjects = data
     });
   }
 
-  // 🔹 عند اختيار صف
+  onSubjectChange(): void {
+    this.grades = [];
+    this.terms = [];
+    this.units = [];
+    this.lessons = [];
+
+    this.selectedGradeId = 0;
+    this.selectedTermId = 0;
+    this.selectedUnitId = 0;
+
+    this.gradeService.getGradeBySubjectId(this.selectedSubjectId).subscribe({
+      next: res => this.grades = res
+    });
+  }
+
   onGradeChange(): void {
+    this.terms = [];
+    this.units = [];
+    this.lessons = [];
+    this.selectedTermId = 0;
+    this.selectedUnitId = 0;
+
     this.termService.getTermsByGrade(this.selectedGradeId).subscribe({
-      next: (res) => {
-        this.terms = res;
-        this.units = [];
-        this.lessons = [];
-        this.selectedTermId = 0;
-        this.selectedUnitId = 0;
-      }
+      next: res => this.terms = res
     });
   }
 
-  // 🔹 عند اختيار ترم
   onTermChange(): void {
+    this.units = [];
+    this.lessons = [];
+    this.selectedUnitId = 0;
+
     this.unitService.getUnitsByTerm(this.selectedTermId).subscribe({
-      next: (res) => {
-        this.units = res;
-        this.lessons = [];
-        this.selectedUnitId = 0;
-      }
+      next: res => this.units = res
     });
   }
 
-  // 🔹 عند اختيار وحدة
   onUnitChange(): void {
     if (this.selectedUnitId > 0) {
       this.lessonService.getLessonsByUnit(this.selectedUnitId).subscribe({
-        next: (res) => (this.lessons = res),
-        error: (err) => console.error('Error loading lessons:', err)
+        next: res => this.lessons = res
       });
     }
   }
 
-  // 🟩 إضافة درس جديد
   addLesson(): void {
     if (this.selectedUnitId === 0) {
-     Swal.fire('Error', 'PLEASE ADD UNIT FIRST', 'error');
-      
+      Swal.fire('Error', 'Select a unit first', 'error');
       return;
     }
 
     this.newLesson.unitId = this.selectedUnitId;
+    this.newLesson.subjectId = this.selectedSubjectId;
 
     this.lessonService.addLesson(this.newLesson).subscribe({
       next: (res) => {
-        this.lessons.push(res);
+        Swal.fire('Success', 'Lesson added successfully', 'success');
         this.newLesson = {
           title: '',
           description: '',
           order: 1,
-          
-          unitId: this.selectedUnitId
+          unitId: this.selectedUnitId,
+          subjectId: this.selectedSubjectId
         };
-       Swal.fire('Success', 'Unit added successfully.', 'success');
-       
+        this.onUnitChange();
       },
-      error: (err) =>
-       Swal.fire('Error', 'Failed to lesson term.', 'error')
-      
+      error: () => Swal.fire('Error', 'Failed to add lesson', 'error')
     });
   }
 
-  // 🗑️ حذف درس
   deleteLesson(id: number): void {
-    if (!confirm('Are you sure you want to delete this lesson?')) return;
+  Swal.fire({
+    icon: 'warning',
+    title: 'Confirm delete?',
+    showCancelButton: true
+  }).then(r => {
+    if (!r.isConfirmed) return;
 
     this.lessonService.deleteLesson(id).subscribe({
       next: () => {
-        this.lessons = this.lessons.filter((l) => l.id !== id);
-        
-      Swal.fire('Success', '🗑️ Lesson deleted successfully.', 'success');
-       
+        Swal.fire('Deleted', 'Lesson deleted', 'success');
+        // تحديث قائمة الدروس مباشرة بعد الحذف
+        this.lessons = this.lessons.filter(l => l.id !== id);
       },
-       error: (err) => {
-      const errorMessage =
-        err?.error?.message ||
-         err?.error?.detail || 
-        err?.message ||
-        'An unexpected error occurred while deleting the grade.';
-    
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: errorMessage,
-      });
-    
-      console.error('Error deleting grade:', err);
-    }
+      error: () => Swal.fire('Error', 'Delete failed', 'error')
     });
+  });
+}
+
+
+  enableEdit(id: number): void {
+    this.selectedLessonId = id;
   }
 
-  // ✏️ تفعيل وضع التعديل
-  enableEdit(lessonId: number): void {
-    this.selectedLessonId = lessonId;
-  }
-
-
-  // ✅ حفظ التعديل
   saveEdit(lesson: LessonDTO): void {
     this.lessonService.updateLesson(lesson).subscribe({
       next: () => {
+        Swal.fire('Updated', 'Lesson updated', 'success');
         this.selectedLessonId = null;
-       
+        this.onUnitChange();
       },
-      error: (err) =>
-        Swal.fire('Error', 'Failed ', err.message )
-      
-    
+      error: () => Swal.fire('Error', 'Update failed', 'error')
     });
   }
 
-  // ❌ إلغاء التعديل
   cancelEdit(): void {
     this.selectedLessonId = null;
-    this.onUnitChange(); // لإعادة تحميل البيانات الأصلية
+    this.onUnitChange();
   }
 }

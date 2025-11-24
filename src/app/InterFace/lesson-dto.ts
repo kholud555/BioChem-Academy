@@ -2,7 +2,7 @@ export interface CreateLessonDTO {
   title: string;
   description?: string;
   order: number;
- 
+ subjectId:number,
   unitId: number;
 }
 

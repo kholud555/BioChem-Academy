@@ -1,130 +1,112 @@
-
-  .hover-lift:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
-  }
-  
-  .card {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  .card-media {
-    border-radius: 12px 12px 0 0;
-  }
-  
-  audio {
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-}
-  
-  video {
-    border-radius: 8px;
-  }
-
-
-  .exam-section-title {
-  font-weight: 700;
-  font-size: 1.6rem;
-  margin-top: 40px;
+.page-title {
+  font-weight: 800;
+  font-size: 32px;
   margin-bottom: 20px;
-  color: #333;
+}
+
+.lesson-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #444;
+}
+
+.content-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+.content-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+}
+
+.card-media {
+  padding: 10px;
+  background: #f8f9fa;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.video-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.media-video {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
 }
 
 .exam-card {
+  padding: 20px;
+  background: white;
   border-radius: 14px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: .3s;
+}
+.exam-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.exam-title {
+  font-weight: 700;
+}
+.exam-desc {
+  color: #666;
+}
+
+.question-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+}
+
+.choices-list {
+  list-style: none;
+  padding: 0;
+}
+.choice-item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.result-card {
+  padding: 40px;
+  text-align: center;
+  border-radius: 20px;
   background: white;
 }
 
-.exam-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+.score-display {
+  font-size: 42px;
+  font-weight: bold;
+  color: #007bff;
 }
 
-.exam-icon {
-  font-size: 40px;
-  color: #4a6cf7;
+.percentage-display {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.exam-btn {
+.result-progress {
+  height: 25px;
   border-radius: 10px;
-  padding: 8px 16px;
-  font-weight: 600;
-}
-/* ========== Video Protection Styles ========== */
-
-/* Disable video download button */
-video::-webkit-media-controls-enclosure {
-  overflow: hidden;
+  margin-bottom: 20px;
 }
 
-video::-webkit-media-controls-panel {
-  width: calc(100% + 30px);
-}
-
-/* Hide download button in Chrome */
-video::-webkit-media-controls-download-button {
-  display: none !important;
-}
-
-/* Hide overflow menu (3 dots) */
-video::-webkit-media-controls-overflow-button {
-  display: none !important;
-}
-
-/* Prevent text/element selection */
-.protected-video {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: auto;
-}
-
-/* Overlay to prevent easy inspection */
-.video-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.video-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 40px; /* Leave space for controls */
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Disable drag */
-.protected-video {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
-
-/* Prevent selection on entire page */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Hide Picture-in-Picture button */
-video::-webkit-media-controls-picture-in-picture-button {
-  display: none !important;
-}
-
-/* Firefox specific */
-video::-moz-media-controls-download-button {
-  display: none !important;
+.result-msg {
+  font-size: 22px;
+  margin: 15px 0;
 }

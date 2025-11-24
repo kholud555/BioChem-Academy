@@ -3,14 +3,27 @@
   <div class="card p-3 mt-4 border">
     <h5>Add New Unit</h5>
 
+    <!-- Select Subject -->
+    <div class="mb-2">
+      <label>Select Subject</label>
+      <select 
+        class="form-control"
+        [(ngModel)]="addModel.subjectId"
+        (ngModelChange)="onSubjectChange()">
+        <option value="0" disabled>Select Subject</option>
+        <option *ngFor="let sub of subjects" [value]="sub.id">
+          {{ sub.subjectName }}
+        </option>
+      </select>
+    </div>
+
     <!-- Select Grade -->
     <div class="mb-2">
       <label>Select Grade</label>
       <select
         class="form-control"
-        [(ngModel)]="selectedGradeId"
-        (ngModelChange)="onGradeChange()"
-      >
+        [(ngModel)]="addModel.gradeId"
+        (ngModelChange)="onGradeChange()">
         <option value="0" disabled>Select Grade</option>
         <option *ngFor="let grade of grades" [value]="grade.id">
           {{ grade.gradeName }}
@@ -23,9 +36,7 @@
       <label>Select Term</label>
       <select
         class="form-control"
-        [(ngModel)]="selectedTermId"
-        (ngModelChange)="onTermChange()"
-      >
+        [(ngModel)]="addModel.termId">
         <option value="0" disabled>Select Term</option>
         <option *ngFor="let term of terms" [value]="term.id">
           {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
@@ -39,7 +50,7 @@
       <input
         type="text"
         class="form-control"
-        [(ngModel)]="newUnit.title"
+        [(ngModel)]="addModel.title"
         placeholder="Enter Unit Title"
       />
     </div>
@@ -49,7 +60,7 @@
       <label>Description</label>
       <textarea
         class="form-control"
-        [(ngModel)]="newUnit.description"
+        [(ngModel)]="addModel.description"
         placeholder="Enter description (optional)"
       ></textarea>
     </div>
@@ -60,29 +71,40 @@
       <input
         type="number"
         class="form-control"
-        [(ngModel)]="newUnit.order"
+        [(ngModel)]="addModel.order"
         min="1"
       />
     </div>
 
-    
-
-
     <button class="btn btn-Action" (click)="addUnit()">Add Unit</button>
   </div>
 
-  <!-- Update/Delete Section -->
-  <div class="card p-3 mt-4 border">
-    <h5>Update And Delete Unit</h5>
 
-    <!-- Select Grade -->
+  <!-- Update/Delete Table -->
+  <div class="card p-3 mt-4 border">
+    <h5>Units List</h5>
+
+    <!-- Filter Subject -->
     <div class="mb-2">
-      <label>Select Grade</label>
+      <label>Subject</label>
+      <select 
+        class="form-control"
+        [(ngModel)]="filter.subjectId"
+        (ngModelChange)="onFilterSubjectChange()">
+        <option value="0" disabled>Select Subject</option>
+        <option *ngFor="let sub of subjects" [value]="sub.id">
+          {{ sub.subjectName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Filter Grade -->
+    <div class="mb-2">
+      <label>Grade</label>
       <select
         class="form-control"
-        [(ngModel)]="selectedGradeId"
-        (ngModelChange)="onGradeChange()"
-      >
+        [(ngModel)]="filter.gradeId"
+        (ngModelChange)="onFilterGradeChange()">
         <option value="0" disabled>Select Grade</option>
         <option *ngFor="let grade of grades" [value]="grade.id">
           {{ grade.gradeName }}
@@ -90,14 +112,13 @@
       </select>
     </div>
 
-    <!-- Select Term -->
+    <!-- Filter Term -->
     <div class="mb-2">
-      <label>Select Term</label>
+      <label>Term</label>
       <select
         class="form-control"
-        [(ngModel)]="selectedTermId"
-        (ngModelChange)="onTermChange()"
-      >
+        [(ngModel)]="filter.termId"
+        (ngModelChange)="loadUnits()">
         <option value="0" disabled>Select Term</option>
         <option *ngFor="let term of terms" [value]="term.id">
           {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
@@ -105,81 +126,46 @@
       </select>
     </div>
 
-    <!-- Units Table -->
-    <div *ngIf="units.length > 0" class="mt-4">
-      <h5>Units for Selected Term</h5>
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Order</th>
-           
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let unit of units">
-            <!-- Edit Mode -->
-            <ng-container *ngIf="selectedTUnitId === unit.id; else viewMode">
-              <td><input class="form-control" [(ngModel)]="unit.title" /></td>
-              <td>
-                <input class="form-control" [(ngModel)]="unit.description" />
-              </td>
-              <td>
-                <input type="number" class="form-control" [(ngModel)]="unit.order" />
-              </td>
-              
-              <td>
-                <div class="action-buttons">
-                  <button
-                    class="btn btn-success btn-sm me-1"
-                    (click)="saveEdit(unit)"
-                  >
-                    <i class="bi bi-check-lg"></i>
-                  </button>
-                  <button
-                    class="btn btn-secondary btn-sm"
-                    (click)="cancelEdit()"
-                  >
-                    <i class="bi bi-x-lg"></i>
-                  </button>
-                </div>
-              </td>
-            </ng-container>
 
-            <!-- View Mode -->
-            <ng-template #viewMode>
-              <td>{{ unit.title }}</td>
-              <td>{{ unit.description }}</td>
-              <td>{{ unit.order }}</td>
-             
-              <td>
-                <button
-                  class="btn-action btn-edit"
-                  (click)="enableEdit(unit.id)"
-                >
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button
-                  class="btn-action btn-delete"
-                  (click)="deleteUnit(unit.id)"
-                >
-                  <i class="bi bi-trash-fill"></i>
-                </button>
-              </td>
-            </ng-template>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <!-- Units table -->
+    <table class="table table-bordered mt-3" *ngIf="units.length">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Order</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-    <!-- No Units Message -->
-    <div
-      *ngIf="selectedTermId > 0 && units.length === 0"
-      class="alert alert-info mt-3"
-    >
-      No units found for the selected term.
+      <tbody>
+        <tr *ngFor="let u of units">
+          <ng-container *ngIf="editId === u.id; else viewRow">
+            <td><input class="form-control" [(ngModel)]="u.title" /></td>
+            <td><input class="form-control" [(ngModel)]="u.description" /></td>
+            <td><input type="number" class="form-control" [(ngModel)]="u.order" /></td>
+
+            <td>
+              <button class="btn btn-success btn-sm" (click)="saveEdit(u)">✔</button>
+              <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">✖</button>
+            </td>
+          </ng-container>
+
+          <ng-template #viewRow>
+            <td>{{ u.title }}</td>
+            <td>{{ u.description }}</td>
+            <td>{{ u.order }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="enableEdit(u.id)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteUnit(u.id)">Delete</button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="units.length==0" class="alert alert-info mt-3">
+      No units found for selected filters.
     </div>
   </div>
 </div>

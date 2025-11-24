@@ -1,5 +1,7 @@
 <div class="access-control-container" dir="ltr">
+
   
+
   <!-- Student Info Header -->
   <div class="student-header" *ngIf="SelectedStudent">
     <h2>Access Control - {{ SelectedStudent.userName }}</h2>
@@ -15,7 +17,6 @@
     </div>
 
     <div class="summary-grid">
-      
       <!-- Granted Grades -->
       <div class="summary-card grades-card">
         <div class="card-header">
@@ -30,9 +31,7 @@
           <div class="permission-list">
             <div *ngFor="let grade of getGrantedGrades()" class="permission-item">
               <span class="item-name">{{ grade.gradeName }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Grade', grade.id)" title="Revoke">
-                ✕
-              </button>
+              <button class="quick-revoke" (click)="revokeSingle('Grade', grade.id)" title="Revoke">✕</button>
             </div>
           </div>
         </div>
@@ -46,17 +45,11 @@
           <span class="badge">{{ getGrantedTerms().length }}</span>
         </div>
         <div class="card-content">
-          <div *ngIf="getGrantedTerms().length === 0" class="empty-state">
-            No permissions granted
-          </div>
+          <div *ngIf="getGrantedTerms().length === 0" class="empty-state">No permissions granted</div>
           <div class="permission-list">
             <div *ngFor="let term of getGrantedTerms()" class="permission-item">
-              <span class="item-name">
-                {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-              </span>
-              <button class="quick-revoke" (click)="revokeSingle('Term', term.id)" title="Revoke">
-                ✕
-              </button>
+              <span class="item-name">{{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}</span>
+              <button class="quick-revoke" (click)="revokeSingle('Term', term.id)" title="Revoke">✕</button>
             </div>
           </div>
         </div>
@@ -70,15 +63,11 @@
           <span class="badge">{{ getGrantedUnits().length }}</span>
         </div>
         <div class="card-content">
-          <div *ngIf="getGrantedUnits().length === 0" class="empty-state">
-            No permissions granted
-          </div>
+          <div *ngIf="getGrantedUnits().length === 0" class="empty-state">No permissions granted</div>
           <div class="permission-list">
             <div *ngFor="let unit of getGrantedUnits()" class="permission-item">
               <span class="item-name">{{ unit.title }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Unit', unit.id)" title="Revoke">
-                ✕
-              </button>
+              <button class="quick-revoke" (click)="revokeSingle('Unit', unit.id)" title="Revoke">✕</button>
             </div>
           </div>
         </div>
@@ -92,15 +81,11 @@
           <span class="badge">{{ getGrantedLessons().length }}</span>
         </div>
         <div class="card-content">
-          <div *ngIf="getGrantedLessons().length === 0" class="empty-state">
-            No permissions granted
-          </div>
+          <div *ngIf="getGrantedLessons().length === 0" class="empty-state">No permissions granted</div>
           <div class="permission-list">
             <div *ngFor="let lesson of getGrantedLessons()" class="permission-item">
               <span class="item-name">{{ lesson.title }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Lesson', lesson.id)" title="Revoke">
-                ✕
-              </button>
+              <button class="quick-revoke" (click)="revokeSingle('Lesson', lesson.id)" title="Revoke">✕</button>
             </div>
           </div>
         </div>
@@ -113,11 +98,24 @@
   <div class="section-divider">
     <h3>🔐 Grant or Revoke Permissions</h3>
   </div>
+  <!-- Subject Selection -->
+  <!-- Subject Selection -->
+<div class="subject-selection mb-4">
+  <label for="subjectSelect" class="subject-label">📚 Select Subject:</label>
+  <div class="subject-dropdown-wrapper">
+    <select id="subjectSelect" [(ngModel)]="selectedSubjectId" (change)="onSubjectChange()" class="subject-dropdown">
+      <option [value]="0">-- All Subjects --</option>
+      <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.subjectName }}</option>
+    </select>
+    <span class="dropdown-icon">▾</span>
+  </div>
+</div>
 
-  <!-- Grades Section -->
+
+  <!-- Grades Accordion -->
   <div class="accordion-wrapper">
     <div *ngFor="let grade of grades" class="grade-section">
-      
+
       <!-- Grade Header -->
       <div class="section-header grade-header">
         <button class="toggle-btn" (click)="grade.isOpen = !grade.isOpen">
@@ -125,22 +123,13 @@
             <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </button>
-        
         <span class="section-title">{{ grade.gradeName }}</span>
-        
         <div class="action-buttons">
-          <button 
-            class="btn-grant" 
-            (click)="grantSingle('Grade', grade.id)"
-            [class.active]="permissions?.gradeIds?.includes(grade.id)">
-            <span>Grant</span>
-            <span class="icon">✓</span>
+          <button class="btn-grant" (click)="grantSingle('Grade', grade.id)" [class.active]="permissions?.gradeIds?.includes(grade.id)">
+            <span>Grant</span><span class="icon">✓</span>
           </button>
-          <button 
-            class="btn-revoke" 
-            (click)="revokeSingle('Grade', grade.id)">
-            <span>Revoke</span>
-            <span class="icon">🚫</span>
+          <button class="btn-revoke" (click)="revokeSingle('Grade', grade.id)">
+            <span>Revoke</span><span class="icon">🚫</span>
           </button>
         </div>
       </div>
@@ -148,7 +137,7 @@
       <!-- Terms Section -->
       <div class="nested-content" *ngIf="grade.isOpen">
         <div *ngFor="let term of getTermsForGrade(grade.id)" class="term-section">
-          
+
           <!-- Term Header -->
           <div class="section-header term-header">
             <button class="toggle-btn" (click)="term.isOpen = !term.isOpen">
@@ -156,25 +145,14 @@
                 <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </button>
-            
-            <span class="section-title">
-              {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
-            </span>
+            <span class="section-title">{{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}</span>
             <span class="calendar-icon">📅</span>
-            
             <div class="action-buttons">
-              <button 
-                class="btn-grant" 
-                (click)="grantSingle('Term', term.id)"
-                [class.active]="permissions?.termIds?.includes(term.id)">
-                <span>Grant</span>
-                <span class="icon">✓</span>
+              <button class="btn-grant" (click)="grantSingle('Term', term.id)" [class.active]="permissions?.termIds?.includes(term.id)">
+                <span>Grant</span><span class="icon">✓</span>
               </button>
-              <button 
-                class="btn-revoke" 
-                (click)="revokeSingle('Term', term.id)">
-                <span>Revoke</span>
-                <span class="icon">🚫</span>
+              <button class="btn-revoke" (click)="revokeSingle('Term', term.id)">
+                <span>Revoke</span><span class="icon">🚫</span>
               </button>
             </div>
           </div>
@@ -182,31 +160,20 @@
           <!-- Units Section -->
           <div class="nested-content" *ngIf="term.isOpen">
             <div *ngFor="let unit of getUnitsForTerm(term.id)" class="unit-section">
-              
-              <!-- Unit Header -->
               <div class="section-header unit-header">
                 <button class="toggle-btn" (click)="unit.isOpen = !unit.isOpen">
                   <svg [class.rotated]="unit.isOpen" width="16" height="16" viewBox="0 0 20 20" fill="none">
                     <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                   </svg>
                 </button>
-                
                 <span class="section-title">{{ unit.title }}</span>
                 <span class="book-icon">📚</span>
-                
                 <div class="action-buttons">
-                  <button 
-                    class="btn-grant" 
-                    (click)="grantSingle('Unit', unit.id)"
-                    [class.active]="permissions?.unitIds?.includes(unit.id)">
-                    <span>Grant</span>
-                    <span class="icon">✓</span>
+                  <button class="btn-grant" (click)="grantSingle('Unit', unit.id)" [class.active]="permissions?.unitIds?.includes(unit.id)">
+                    <span>Grant</span><span class="icon">✓</span>
                   </button>
-                  <button 
-                    class="btn-revoke" 
-                    (click)="revokeSingle('Unit', unit.id)">
-                    <span>Revoke</span>
-                    <span class="icon">🚫</span>
+                  <button class="btn-revoke" (click)="revokeSingle('Unit', unit.id)">
+                    <span>Revoke</span><span class="icon">🚫</span>
                   </button>
                 </div>
               </div>
@@ -214,38 +181,27 @@
               <!-- Lessons Section -->
               <div class="nested-content" *ngIf="unit.isOpen">
                 <div *ngFor="let lesson of getLessonsForUnit(unit.id)" class="lesson-section">
-                  
-                  <!-- Lesson Header -->
                   <div class="section-header lesson-header">
                     <span class="lesson-icon">📖</span>
                     <span class="section-title">{{ lesson.title }}</span>
-                    
                     <div class="action-buttons">
-                      <button 
-                        class="btn-grant" 
-                        (click)="grantSingle('Lesson', lesson.id)"
-                        [class.active]="permissions?.lessonIds?.includes(lesson.id)">
-                        <span>Grant</span>
-                        <span class="icon">✓</span>
+                      <button class="btn-grant" (click)="grantSingle('Lesson', lesson.id)" [class.active]="permissions?.lessonIds?.includes(lesson.id)">
+                        <span>Grant</span><span class="icon">✓</span>
                       </button>
-                      <button 
-                        class="btn-revoke" 
-                        (click)="revokeSingle('Lesson', lesson.id)">
-                        <span>Revoke</span>
-                        <span class="icon">🚫</span>
+                      <button class="btn-revoke" (click)="revokeSingle('Lesson', lesson.id)">
+                        <span>Revoke</span><span class="icon">🚫</span>
                       </button>
                     </div>
                   </div>
-                  
                 </div>
               </div>
-              
+
             </div>
           </div>
-          
+
         </div>
       </div>
-      
+
     </div>
   </div>
 

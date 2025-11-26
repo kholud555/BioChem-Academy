@@ -65,7 +65,7 @@ namespace Infrastructure.Data
 
                 if (question.Type == ExamTypeEnum.TrueFalseType && choicesCount >= 2)
 
-                    throw new InvalidOperationException("True or false question only has 2 answers");
+                    throw new ArgumentException("True or false question only has 2 answers");
             }
             
             var hasCorrectAnswer = question.QuestionChoices.Any(c => c.IsCorrect);

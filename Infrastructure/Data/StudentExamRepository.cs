@@ -60,6 +60,7 @@ namespace Infrastructure.Data
 
             await _context.StudentExams.AddAsync(newStudentExam);
             await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
 
             return await _context.StudentExams
                 .Include(se => se.Exam)

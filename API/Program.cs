@@ -175,7 +175,7 @@ namespace API
                     else
                     {
                         policy
-                        .WithOrigins("http://localhost:4200")
+                        .WithOrigins("https://biochemacademy.net", "http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -186,25 +186,31 @@ namespace API
 
             });
 
+            builder.Logging.ClearProviders();
+            builder.Logging.AddDebug();
+
+
             var app = builder.Build();
 
-            // Seed default roles before processing requests
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                await SeedRolesAndAdminAsync(services);
 
-            }
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
+
+            //test
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BioChem API V1");
+                c.RoutePrefix = "swagger"; // يعني هتفتح على: http://yoursite.com/swagger
+            });
+
             app.UseExceptionHandler();
 
-           //app.UseHttpsRedirection();
+           app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -218,44 +224,6 @@ namespace API
 
             app.Run();
        }
-
-        //Seeding Roles And Admin
-        private static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-
-            string[] roleNames = { "Admin", "Student" };
-            foreach (var roleName in roleNames)
-            {
-                if (!await roleManager.RoleExistsAsync(roleName))
-                {
-                    await roleManager.CreateAsync(new IdentityRole<int>(roleName));
-                }
-            }
-
-            var adminEmail = "BioChem_Academy111@gmail.com";
-            var adminUser = await userManager.FindByEmailAsync(adminEmail);
-            if (adminUser == null)
-            {
-                adminUser = new User
-                {
-                    UserName = "admin",
-                    Email = adminEmail,
-                    EmailConfirmed = true,
-                    Role = RoleEnum.Admin,
-                    CreatedAt = DateTime.Now,
-                };
-
-                var result = await userManager.CreateAsync(adminUser, "CL_na_$_#5");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(adminUser, "Admin");
-                }
-            }
-        }
-
-
     }
 
 }

@@ -15,6 +15,7 @@ import { UnitDTO } from '../../InterFace/unit-dto';
 import { LessonDTO } from '../../InterFace/lesson-dto';
 import { Profile } from '../../InterFace/register';
 import { NavBar } from "../nav-bar/nav-bar";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-courses',
@@ -50,7 +51,8 @@ export class Courses implements OnInit {
     private termService: TermService,
     private unitService: UnitService,
     private lessonService: LessonService,
-    private accessService: AccessControlService
+    private accessService: AccessControlService,
+     private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,10 @@ export class Courses implements OnInit {
    // جلب الدرس المختار
  
   }
+  goBack() {
+    this.location.back();
+  }
+
 
   // 🚀 تحميل البروفايل ثم الجريد ثم التيرمز
   loadInitialData() {

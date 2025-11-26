@@ -1,16 +1,31 @@
+// show-free-media.ts
 import { Component, OnInit, HostListener } from '@angular/core';
-import { FreeContentDTO } from '../../InterFace/media-dto';
 import { StudentService } from '../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { LessonService } from '../../service/lesson-service';
 import { GradeService } from '../../service/grade-service';
 import { CommonModule } from '@angular/common';
 import { NavBar } from "../nav-bar/nav-bar";
+import { Location } from '@angular/common';
 
-// Interface مع خاصية show لكل درس
-interface FreeContentViewModel extends FreeContentDTO {
-  show: boolean;
+// كل ملف من mediaOfFreeLesson
+export interface MediaFile {
+  fileName: string;
+  mediaType: 'Image' | 'Video' | 'Pdf';
+  fileFormat: string;
+  duration: number | null;
+  previewUrl: string;
+}
+
+
+// كل درس Free
+export interface FreeContentViewModel {
+  gradeName: string;
+  term: string;
+  unitName: string;
+  lessonName: string;
+  mediaOfFreeLesson: MediaFile[];
+  show: boolean; // خاصية للعرض
 }
 
 @Component({
@@ -22,48 +37,46 @@ interface FreeContentViewModel extends FreeContentDTO {
 export class ShowFreeMedia implements OnInit {
 
   @HostListener('document:contextmenu', ['$event'])
-  disableRightClick(event: MouseEvent) {
-    event.preventDefault();
-  }
+  disableRightClick(event: MouseEvent) { event.preventDefault(); }
 
   @HostListener('document:keydown', ['$event'])
   disableKeys(e: KeyboardEvent) {
-    // F12
     if (e.key === "F12") e.preventDefault();
-    // Ctrl+Shift+I
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") e.preventDefault();
-    // Ctrl+Shift+J
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") e.preventDefault();
-    // Ctrl+U
-    if (e.ctrlKey && e.key.toLowerCase() === "u") e.preventDefault();
-    // Ctrl+S
-    if (e.ctrlKey && e.key.toLowerCase() === "s") e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && (e.key.toLowerCase() === "i" || e.key.toLowerCase() === "j")) e.preventDefault();
+    if (e.ctrlKey && ["u","s"].includes(e.key.toLowerCase())) e.preventDefault();
   }
-  freeContents: FreeContentViewModel[] = [];
+
+  freeContents: any;
   loading = false;
   selectedGrade: string | null = null;
-  selectedLesson: FreeContentDTO | null = null; // الدرس المختار
+  selectedLesson: FreeContentViewModel | null = null;
 
   constructor(
     private student: StudentService,
     private toastr: ToastrService,
     private router: Router,
-    private lessonService: LessonService,
-    private gradeService: GradeService
+    private gradeService: GradeService,
+     private location: Location,
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.selectedGrade = this.gradeService.getGrade()?.gradeName || null;
     this.loadFreeContent();
   }
-
+goBack() {
+    this.location.back();
+  }
   loadFreeContent(): void {
     this.loading = true;
 
     this.student.getAllFreeContent().subscribe({
       next: (res) => {
+        console.log("Free content API result:", res);
+        console.log("selectedGrade =", this.selectedGrade);
+
+        // فلترة كل المحتوى اللي Free أو لكل الصف المختار
         this.freeContents = res
-          .filter(item => item.gradeName === this.selectedGrade)
+          .filter(item => !this.selectedGrade || item.gradeName?.toLowerCase() === this.selectedGrade?.toLowerCase())
           .map(item => ({ ...item, show: false }));
 
         this.loading = false;
@@ -77,20 +90,16 @@ export class ShowFreeMedia implements OnInit {
       error: (err) => {
         console.error('Error loading free content:', err);
         this.loading = false;
+        this.toastr.error("Failed to load free content");
       }
     });
   }
 
-  // اختيار درس
-  selectLesson(lesson: FreeContentDTO) {
+  selectLesson(lesson: FreeContentViewModel) {
     this.selectedLesson = lesson;
   }
 
-  // العودة لقائمة الدروس
   backToLessons() {
     this.selectedLesson = null;
   }
-
-  
-
 }

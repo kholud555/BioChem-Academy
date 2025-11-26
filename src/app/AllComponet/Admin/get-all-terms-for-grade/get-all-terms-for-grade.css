@@ -15,6 +15,14 @@
   font-weight: 700;
   color: #1d3557;
 }
+.back-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 /* ------- Term Item ------- */
 .term-item {

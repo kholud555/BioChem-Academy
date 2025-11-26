@@ -1,4 +1,6 @@
 <div class="terms-container">
+
+  <button class="back-btn" (click)="goBack()">← Back</button>
   <h1> Terms For Grade {{this.SelectedGrade?.gradeName}}</h1>
   <div class="terms-list">
     <div *ngFor="let term of terms" class="term-item">

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GradeService } from '../../service/grade-service';
 import { GradeDTO } from '../../InterFace/grade-dto';
 import { CommonModule } from '@angular/common';
-import { PixelService } from '../../services/pixel';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -33,7 +33,7 @@ export class Signup {
         Validators.pattern(/^01[0-9]{9}$/)
       ]),
       parentPhone: new FormControl('', [
-        Validators.required,
+       // Validators.required,
         Validators.pattern(/^01[0-9]{9}$/)
       ]),
       grade: new FormControl(''),
@@ -60,8 +60,9 @@ export class Signup {
     private register: StudentService,
     private router: Router,
     private toaster: ToastrService,
+     private location: Location,
     private gradeService: GradeService,
-    private pixelService :PixelService
+   
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +70,9 @@ export class Signup {
    
   }
 
+  goBack() {
+    this.location.back();
+  }
   loadGrades(): void {
     this.gradeService.GetAllGrade().subscribe(
       (data: GradeDTO[]) => {
@@ -115,7 +119,7 @@ export class Signup {
     if (this.RegisterForm.invalid) {
       this.toaster.error('Please fill all fields correctly');
       this.RegisterForm.markAllAsTouched();
-       this.pixelService.trackCompleteRegistration();
+     
 
       return;
     }

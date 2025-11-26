@@ -6,3 +6,10 @@ export interface StudentDto {
      phoneNumber :  string ,
      parentNumber :  string
 }
+export interface StudentExamResultDTO {
+  examId: number;
+  examTitle: string;
+  score: number;
+  submittedAt: string; // أو Date
+  maxScore: number;
+}

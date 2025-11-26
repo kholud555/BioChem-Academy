@@ -106,34 +106,45 @@ export class MakeLessonFree {
   onLessonChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.selectedLessonId = Number(select.value);
+    
   }
 
-  isLessonFree(lessonId: number): boolean {
-    return this.lessonFreeStatus[lessonId] || false;
+
+isLessonFree(lessonId: number): boolean {
+    const lesson = this.lessons.find(l => l.id === lessonId);
+    return lesson?.isFree ?? false;
   }
 
   toggleLessonFree(event: Event) {
   if (!this.selectedLessonId) return;
 
   const checkbox = event.target as HTMLInputElement;
-  const isFree = checkbox.checked;
+  const lesson = this.lessons.find(l => l.id === this.selectedLessonId);
+  if (!lesson) return;
 
-  // تحقق إذا كان الدرس بالفعل free
-  if (isFree && this.isLessonFree(this.selectedLessonId)) {
-    this.toast.info('This lesson is already free');
-    // ارجع حالة الـ checkbox إلى false
-    checkbox.checked = false;
+  const newStatus = checkbox.checked;
+
+  if (lesson.isFree === newStatus) {
+    this.toast.info('Lesson is already ' + (newStatus ? 'Free' : 'Not Free'));
+    checkbox.checked = lesson.isFree; // ارجع للحالة القديمة
     return;
   }
 
-  this.lessonService.updateIsFree(this.selectedLessonId, isFree).subscribe({
+  this.lessonService.updateIsFree(this.selectedLessonId, newStatus).subscribe({
     next: () => {
-      this.lessonFreeStatus[this.selectedLessonId!] = isFree;
-      this.toast.success('Lesson updated');
+      lesson.isFree = newStatus;
+      this.toast.success('Lesson status updated');
     },
-    error: err => {
-      checkbox.checked = !isFree;
-      this.toast.error('Problem updating lesson');
+    error: (err) => {
+      checkbox.checked = !newStatus;
+        const msg =
+        err?.error?.detail ||
+        err?.error?.title ||
+        err?.message ||
+        'Failed to revoke access';
+
+    this.toast.error(msg);
+    
     }
   });
 }

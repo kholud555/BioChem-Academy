@@ -12,8 +12,6 @@ import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
 import { SubmitExamDTO } from '../../InterFace/student-exam';
 import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
-import { SubjectDTO } from '../../InterFace/subject';
-import { SubjectService } from '../../service/subject';
 @Component({
   selector: 'app-course-lesson-media',
   templateUrl: './course-lesson-media.html',
@@ -25,8 +23,7 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
   SelectedLessonId: number = 0;
   studentId: number | null = 0;
   mediaList: StudentAccessedMediaDTO[] = [];
-subjects: SubjectDTO[] = [];
-selectedTSubjecttId: number = 0;
+
   // Exams
   FinalResult:any;
   exams: any[] = [];
@@ -48,12 +45,10 @@ selectedTSubjecttId: number = 0;
     private router: Router,
     private examService: ExamService,
     private studentExamService: StudentExamService,
-    private location: Location,
-     private subjectService :SubjectService
+    private location: Location
   ) {}
 
   ngOnInit(): void {
-  
     document.addEventListener("keydown", this.disableKeys);
 
     const currentLesson = this.lessonService.getLesson();
@@ -74,6 +69,20 @@ selectedTSubjecttId: number = 0;
         this.router.navigate(['/courses']);
         return;
       }
+      const savedStudentId = sessionStorage.getItem('studentId');
+if (savedStudentId) {
+  this.studentId = Number(savedStudentId);
+} else {
+  this.studentId = this.studentService.getuserId();
+  if (this.studentId) {
+    sessionStorage.setItem('studentId', this.studentId.toString());
+  } else {
+    // لو مفيش studentId، اعمل redirect للـ login
+    this.router.navigate(['/login']);
+    return;
+  }
+}
+
     }
 
     const savedStudentId = sessionStorage.getItem('studentId');
@@ -90,86 +99,93 @@ selectedTSubjecttId: number = 0;
   loadMediaForLesson(lessonId: number) {
     this.studentService.getMediaByLessonForStudent(lessonId).subscribe({
       next: (res) => this.mediaList = res,
+      
       error: (err) => console.error("Error loading media", err)
     });
   }
 
-  getExamsByLesson() {
-    this.examService.getExamsByLesson(this.SelectedLessonId).subscribe({
-      next: (res) => this.exams = res,
-      error: (err) => console.error("Error loading exams", err)
-    });
-  }
+  
 
-  disableRightClick(event: MouseEvent) { event.preventDefault(); }
-
+  
   disableKeys = (e: KeyboardEvent) => {
     if (["F12", "s", "u"].includes(e.key.toLowerCase())) e.preventDefault();
     if (e.ctrlKey && e.shiftKey && ["i", "j"].includes(e.key.toLowerCase())) e.preventDefault();
   }
 
-  ngOnDestroy() { document.removeEventListener("keydown", this.disableKeys); }
+  
 
-  // ======================= Exam Methods =========================
-  startExam(examId: number, examTitle: string) {
-    this.selectedExamId = examId;
-    this.selectedExamTitle = examTitle;
-    this.examAnswers = {};
-    this.showResult = false;
-    this.totalScore = 0;
+  getExamsByLesson() {
+this.examService.getExamsByLesson(this.SelectedLessonId).subscribe({
+next: (res) => this.exams = res,
+error: (err) => console.error("Error loading exams", err)
+});
+}
 
-    this.examService.getExamQuestions(examId).subscribe({
-      next: (res: QuestionsOfExamDTO[]) => {
-        this.examQuestions = res;
-        this.ExamStarted = true;
-        // Calculate max score
-        this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
-      },
-      error: (err) => console.error("Failed to load exam questions", err)
-    });
-  }
+disableRightClick(event: MouseEvent) { event.preventDefault(); }
 
-  selectAnswer(questionId: number, choiceId: number) {
-    this.examAnswers[questionId] = choiceId;
-  }
 
-  submitExam() {
-    if (!this.selectedExamId || this.submitting) return;
+ngOnDestroy() { document.removeEventListener("keydown", this.disableKeys); }
 
-    const answeredQuestions = Object.keys(this.examAnswers);
-    if (answeredQuestions.length === 0) {
-      alert('Please answer at least one question!');
-      return;
-    }
+// ======================= Exam Methods =========================
+startExam(examId: number, examTitle: string) {
+this.selectedExamId = examId;
+this.selectedExamTitle = examTitle;
+this.examAnswers = {};
+this.showResult = false;
+this.totalScore = 0;
 
-    this.submitting = true;
+this.examService.getExamQuestions(examId).subscribe({
+next: (res: QuestionsOfExamDTO[]) => {
+this.examQuestions = res;
+this.ExamStarted = true;
+this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
+},
+error: (err) => console.error("Failed to load exam questions", err)
+});
+}
 
-    // Create array of submit requests
-    const requests = answeredQuestions.map(qId => {
-      const dto: SubmitExamDTO = {
-        ExamId: this.selectedExamId!,
-        QuestionId: Number(qId),
-        AnswerId: this.examAnswers[Number(qId)]
-      };
-      return this.studentExamService.submitAnswer(dto);
-    });
+selectAnswer(questionId: number, choiceId: number) {
+this.examAnswers[questionId] = choiceId;
+}
 
-    // Send all requests and collect scores
-    forkJoin(requests).subscribe({
-      next: (results) => {
-        // Sum all scores from responses
-        this.totalScore = results.reduce((sum, r) => sum + (r.score || 0), 0);
-        this.ExamStarted = false;
-        this.showResult = true;
-        this.submitting = false;
-      },
-      error: (err) => {
-        console.error("Failed to submit exam", err);
-        this.submitting = false;
-        alert('Error submitting exam. Please try again.');
-      }
-    });
-  }
+async submitExam() {
+if (!this.selectedExamId || this.submitting) return;
+
+const answeredQuestions = Object.keys(this.examAnswers);
+if (answeredQuestions.length === 0) {
+alert('Please answer at least one question!');
+return;
+}
+
+this.submitting = true;
+this.totalScore = 0;
+
+for (const qId of answeredQuestions) {
+const dto: SubmitExamDTO = {
+ExamId: this.selectedExamId!,
+QuestionId: Number(qId),
+AnswerId: this.examAnswers[Number(qId)]
+};
+
+
+try {
+  const res = await this.studentExamService.submitAnswer(dto).toPromise();
+  this.totalScore += res?.score || 0;
+} catch (err) {
+  console.error('Failed to submit question', qId, err);
+  alert('Error submitting some answers. Please try again.');
+  this.submitting = false;
+  return;
+}
+ 
+
+}
+
+this.ExamStarted = false;
+this.showResult = true;
+this.submitting = false;
+}
+
 
   closeResult() {
 
@@ -182,4 +198,9 @@ selectedTSubjecttId: number = 0;
     if (this.maxScore === 0) return 0;
     return Math.round((this.totalScore / this.maxScore) * 100);
   }
+
+  goBack() {
+    this.location.back();
+  }
+
 }

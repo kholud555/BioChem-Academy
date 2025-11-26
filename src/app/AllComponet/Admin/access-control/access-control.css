@@ -11,7 +11,14 @@
  
   min-height: 100vh;
 }
-
+.back-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 .student-header {
   background: rgba(255, 255, 255, 0.95);
   padding: 20px 30px;

@@ -20,7 +20,7 @@ import { TermDTO } from '../../../InterFace/term-dto';
 import { UnitDTO } from '../../../InterFace/unit-dto';
 import { StudentDto } from '../../../InterFace/student-dto';
 import { SubjectDTO } from '../../../InterFace/subject';
-
+import { Location } from '@angular/common';
 interface ExtendedGradeDTO extends GradeDTO { isOpen?: boolean; }
 interface ExtendedTermDTO extends TermDTO { isOpen?: boolean; }
 interface ExtendedUnitDTO extends UnitDTO { isOpen?: boolean; }
@@ -46,7 +46,7 @@ export class AccessControl implements OnInit {
   selectedGradeId: number = 0;
   selectedTermId: number = 0;
   selectedUnitId: number = 0;
-
+ selectedLessontId: number = 0;
   loading = false;
 
   constructor(
@@ -58,7 +58,8 @@ export class AccessControl implements OnInit {
     private accessService: AccessControlService,
     private toastr: ToastrService,
     private studentService: StudentService,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+     private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +81,7 @@ export class AccessControl implements OnInit {
     if (this.grades.length === 0) this.loadGrades();
   }
 
+  
   // SessionStorage helpers
   saveToSession(key: string, data: any): void { sessionStorage.setItem(key, JSON.stringify(data)); }
   getFromSession<T>(key: string): T | null {
@@ -88,82 +90,119 @@ export class AccessControl implements OnInit {
   }
   removeFromSession(key: string): void { sessionStorage.removeItem(key); }
 
-  // Load subjects
-  loadSubjects(): void {
-    this.subjectService.getAllSubjects().subscribe({
-      next: data => this.subjects = data,
-      error: err => console.error('Error loading subjects:', err)
-    });
-  }
+  // Load All Grades
+loadGrades(): void {
+  this.grades = [];
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
 
-  onSubjectChange(): void {
-    this.grades = [];
-    this.terms = [];
-    this.units = [];
-    this.lessons = [];
-    this.selectedGradeId = 0;
-    this.selectedTermId = 0;
-    this.selectedUnitId = 0;
+  this.selectedGradeId = 0;
+  this.selectedTermId = 0;
+  this.selectedUnitId = 0;
+  this.selectedLessontId = 0;
 
-    if (this.selectedSubjectId > 0) {
-      this.gradeService.getGradeBySubjectId(this.selectedSubjectId).subscribe({
-        next: res => this.grades = res.map(g => ({ ...g, isOpen: false })),
-        error: err => console.error('Error loading grades for subject:', err)
-      });
-    } else {
-      this.loadGrades();
+  this.gradeService.GetAllGrade().subscribe({
+    next: res => {
+      this.grades = res.map(g => ({ ...g, isOpen: false }));
+    },
+    error: err => {
+      console.error('Error loading grades:', err);
+      this.toastr.error('Failed to load grades');
     }
+  });
+}
+
+// Load subjects
+loadSubjects(): void {
+  this.subjects = [];
+  this.subjectService.getAllSubjects().subscribe({
+    next: data => this.subjects = data,
+    error: err => console.error('Error loading subjects:', err)
+  });
+}
+
+// ------------------- SUBJECT --------------------
+onSubjectChange(subjectId: number): void {
+  this.selectedSubjectId = subjectId;
+
+  this.selectedGradeId = 0;
+  this.selectedTermId = 0;
+  this.selectedUnitId = 0;
+  this.selectedLessontId = 0;
+
+  this.grades = [];
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
+
+  if (!subjectId) return;
+
+  this.gradeService.getGradeBySubjectId(subjectId).subscribe({
+    next: res => this.grades = res.map(g => ({ ...g, isOpen: false })),
+    error: err => console.error(err)
+  });
+}
+
+// ------------------- GRADE --------------------
+onGradeChange(gradeId: number): void {
+  this.selectedGradeId = gradeId;
+  this.selectedTermId = 0;
+  this.selectedUnitId = 0;
+  this.selectedLessontId =0;
+
+  this.terms = [];
+  this.units = [];
+  this.lessons = [];
+
+  if (!gradeId) return;
+
+  this.termService.getTermsByGrade(gradeId).subscribe({
+    next: res => this.terms = res.map(t => ({ ...t, isOpen: false })),
+    error: err => console.error(err)
+  });
+}
+goBack() {
+    this.location.back();
   }
 
-  loadGrades(): void {
-    this.grades = [];
-    this.terms = [];
-    this.units = [];
-    this.lessons = [];
+// ------------------- TERM --------------------
+onTermChange(termId: number): void {
+  this.selectedTermId = termId;
+  this.selectedUnitId = 0;
+  this.selectedLessontId = 0;
 
-    this.saveToSession('grades', []);
-    this.saveToSession('terms', []);
-    this.saveToSession('units', []);
-    this.saveToSession('lessons', []);
+  this.units = [];
+  this.lessons = [];
 
-    this.gradeService.GetAllGrade().subscribe({
-      next: gradesRes => {
-        this.grades = gradesRes.map(g => ({ ...g, isOpen: false }));
-        this.saveToSession('grades', this.grades);
+  if (!termId) return;
 
-        for (const grade of this.grades) {
-          this.termService.getTermsByGrade(grade.id).subscribe(termsRes => {
-            for (const term of termsRes) {
-              if (!this.terms.some(t => t.id === term.id)) this.terms.push({ ...term, isOpen: false });
-            }
-            this.saveToSession('terms', this.terms);
+  this.unitService.getUnitsByTerm(termId).subscribe({
+    next: res => this.units = res.map(u => ({ ...u, isOpen: false })),
+    error: err => console.error(err)
+  });
+}
 
-            for (const term of termsRes) {
-              this.unitService.getUnitsByTerm(term.id).subscribe(unitsRes => {
-                for (const unit of unitsRes) {
-                  if (!this.units.some(u => u.id === unit.id)) this.units.push({ ...unit, isOpen: false });
-                }
-                this.saveToSession('units', this.units);
+// ------------------- UNIT --------------------
+onUnitChange(unitId: number): void {
+  this.selectedUnitId = unitId;
+  this.selectedLessontId = 0;
 
-                for (const unit of unitsRes) {
-                  this.lessonService.getLessonsByUnit(unit.id).subscribe(lessonsRes => {
-                    for (const lesson of lessonsRes) {
-                      if (!this.lessons.some(l => l.id === lesson.id)) this.lessons.push(lesson);
-                    }
-                    this.saveToSession('lessons', this.lessons);
-                  });
-                }
-              });
-            }
-          });
-        }
-      },
-      error: err => {
-        console.error('Error loading grades:', err.message);
-        this.toastr.error(err.error?.detail || 'Failed to load data', 'Error');
-      }
-    });
-  }
+  this.lessons = [];
+
+  if (!unitId) return;
+
+  this.lessonService.getLessonsByUnit(unitId).subscribe({
+    next: res => this.lessons = res,
+    error: err => console.error(err)
+  });
+}
+
+// ------------------- LESSON --------------------
+onLessonChange(lessonId: number): void {
+  this.selectedLessontId = lessonId;
+}
+
 
   // Load student permissions
   loadStudentPermissions(): void {
@@ -262,6 +301,8 @@ revokeSingle(type: 'Grade' | 'Term' | 'Unit' | 'Lesson', sectionId: number) {
   getGrantedTypeValue(type: 'Grade' | 'Term' | 'Unit' | 'Lesson'): number {
     switch(type) { case 'Grade': return 0; case 'Term': return 1; case 'Unit': return 2; case 'Lesson': return 3; default: return 6; }
   }
+
+
 
   // Display granted items
   getGrantedGrades(): ExtendedGradeDTO[] { return this.permissions?.gradeIds?.length ? this.grades.filter(g => this.permissions.gradeIds.includes(g.id)) : []; }

@@ -3,7 +3,7 @@ import { StudentService } from '../../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { StudentDto } from '../../../InterFace/student-dto';
+import { StudentDto, StudentExamResultDTO } from '../../../InterFace/student-dto';
 
 @Component({
   selector: 'app-getll-students',
@@ -16,7 +16,10 @@ export class GetllStudents {
   // SelectedStusent:StudentDto| null=null;
   // SelectedStusentName:string| null=null;
   // SelectedStusentGrade:string| null=null;
-  // SelectedStusentId:any|Number=0;
+  SelectedStusentId:any|Number=0;
+  studentResults: StudentExamResultDTO[] = [];
+showStudentResults: boolean = false;
+
   constructor(
     private studentService : StudentService,
     private toast : ToastrService,
@@ -26,6 +29,8 @@ export class GetllStudents {
   ngOnInit(): void {
     this.LoadAllStudent();
   }
+
+ 
   LoadAllStudent(){
     this.studentService.getAllStudent().subscribe({
       next:(res)=>{
@@ -42,8 +47,27 @@ export class GetllStudents {
 
   onSelectStudent(student:StudentDto){
     this.studentService.setStudent(student);
+    this.SelectedStusentId=student.id;
     this.router.navigate(['/AdmenBody/AccessControl']);
   }
+    
+viewStudentResults(student: StudentDto) {
+  if (!student || !student.id) return;
+
+  this.SelectedStusentId = student.id; // حفظ ID الطالب
+  this.studentService.getStudentResults(student.id).subscribe({
+    next: (res) => {
+      this.studentResults = res;
+      this.showStudentResults = true;
+      // هنا يمكنك فتح modal أو صفحة جديدة لعرض النتائج
+    },
+    error: (err) => {
+      console.error("Error fetching student results", err);
+     this.toast.info("error")
+    }
+  });
+}
+
 }
 
 

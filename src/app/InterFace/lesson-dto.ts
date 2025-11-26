@@ -8,4 +8,5 @@ export interface CreateLessonDTO {
 
 export interface LessonDTO extends CreateLessonDTO {
   id: number;
+    isFree: boolean;
 }

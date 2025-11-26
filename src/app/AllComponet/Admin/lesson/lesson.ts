@@ -128,7 +128,15 @@ export class Lesson implements OnInit {
         };
         this.onUnitChange();
       },
-      error: () => Swal.fire('Error', 'Failed to add lesson', 'error')
+      error: (err) => {
+          const msg =
+        err?.error?.detail ||
+        err?.error?.title ||
+        err?.message ||
+        'Failed to revoke access';
+
+     
+        Swal.fire('Error' , msg)}
     });
   }
 
@@ -146,7 +154,15 @@ export class Lesson implements OnInit {
         // تحديث قائمة الدروس مباشرة بعد الحذف
         this.lessons = this.lessons.filter(l => l.id !== id);
       },
-      error: () => Swal.fire('Error', 'Delete failed', 'error')
+      error: (err) => {
+          const msg =
+        err?.error?.detail ||
+        err?.error?.title ||
+        err?.message ||
+        'Failed to ';
+
+      
+        Swal.fire('Error', 'Delete failed', msg)}
     });
   });
 }

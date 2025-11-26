@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile, Register } from '../../InterFace/register';
 import { Login } from '../../InterFace/login';
-import { StudentDto } from '../../InterFace/student-dto';
+import { StudentDto, StudentExamResultDTO } from '../../InterFace/student-dto';
 import { FreeContentDTO, StudentAccessedMediaDTO } from '../../InterFace/media-dto';
 import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
 
@@ -120,15 +120,15 @@ loginStudent(loginData:Login) :Observable <any>{
 return this.http.put(`${this.BaseUrl}/UpdateStudentProfile` , data , {headers})
   }
 getMediaByLessonForStudent(lessonId: number): Observable<StudentAccessedMediaDTO[]> {
-  const headers = {
-    Authorization: `Bearer ${this.token}`
-  };
+  const token = sessionStorage.getItem('token'); // ✅ خذ التوكن وقت الطلب
+  const headers = { Authorization: `Bearer ${token}` };
 
   return this.http.get<StudentAccessedMediaDTO[]>(
     `${this.BaseUrl}/MediaAccessForStudent?lessonId=${lessonId}`,
     { headers }
   );
 }
+
 
 getAllFreeContent(): Observable<FreeContentDTO[]> {
     return this.http.get<FreeContentDTO[]>(`${this.BaseUrl}/GetAllFreeContent`);
@@ -138,6 +138,9 @@ getAllFreeContent(): Observable<FreeContentDTO[]> {
 getExamQuestionsByExamId(examId: number) {
   return this.http.get<QuestionsOfExamDTO[]>(`/api/Exam/GetQuestionOfExamByExamId?examId=${examId}`);
 }
-
+ // جلب كل نتائج الطالب
+  getStudentResults(studentId: number): Observable<StudentExamResultDTO[]> {
+    return this.http.get<StudentExamResultDTO[]>(`${this.BaseUrl}/GetStudentResults?studentId=${studentId}`);
+  }
 
 } 

@@ -44,11 +44,12 @@ export class LessonService {
     getLesson(): LessonDTO | null {
       return this.selectedLesson;
     }
+updateIsFree(lessonId: number, isFree: boolean) {
+  return this.http.put(
+    `${this.baseUrl}/UpdateIsFree?lessonId=${lessonId}&isFree=${isFree}`,
+    {}
+  );
+}
 
-     updateIsFree(lessonId: number, isFree: boolean): Observable<any> {
-    return this.http.put(
-      `${this.baseUrl}/UpdateIsFree?lessonId=${lessonId}&isFree=${isFree}`,
-      {} // لازم Body فاضي علشان PUT
-    );
-  }
+
 }

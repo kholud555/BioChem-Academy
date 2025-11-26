@@ -94,7 +94,14 @@
   font-weight: bold;
   color: #007bff;
 }
-
+.back-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 .percentage-display {
   font-size: 24px;
   margin-bottom: 20px;

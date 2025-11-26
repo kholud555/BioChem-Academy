@@ -12,6 +12,7 @@ import { UnitDTO } from '../../../InterFace/unit-dto';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -54,7 +55,8 @@ export class GetAllTermsForGrade implements OnInit {
     private gradeService: GradeService,
     private unitService: UnitService,
     private lessonService: LessonService,
-    private toast: ToastrService
+    private toast: ToastrService,
+     private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -153,7 +155,11 @@ export class GetAllTermsForGrade implements OnInit {
     return this.lessonsByUnit.get(unitId) || [];
   }
   GetSelectedOneLesson(lesson: LessonDTO) {
-    this.lessonService.setLesson(lesson);
+  sessionStorage.setItem('selectedLesson', JSON.stringify(lesson));
     this.router.navigate(['/AdmenBody/ShowLessonMedia']);
   }
+  goBack() {
+    this.location.back();
+  }
+
 }

@@ -5,6 +5,14 @@
     --primary-orange: #ff6b6b;
 }
 
+.back-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 /* Background */
 .signup-container {
     display: flex;

@@ -12,7 +12,14 @@
   gap: 20px;
   margin-top: 20px;
 }
-
+.back-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 /* Individual Video/Card */
 .video-card {
   flex: 0 1 auto;

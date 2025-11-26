@@ -4,6 +4,7 @@ import { StudentService } from '../../service/Student/student-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class Login {
   password:new FormControl(''),
 
   })
- constructor(private login:StudentService , private router:Router , private toast :ToastrService ){}
+ constructor(private login:StudentService , private router:Router , private toast :ToastrService ,  private location: Location, ){}
  
  
   onSubmit(){
@@ -51,5 +52,8 @@ this.login.loginStudent(this. LoginForm.value).subscribe({
 })
   
 }
+goBack() {
+    this.location.back();
+  }
 
 }

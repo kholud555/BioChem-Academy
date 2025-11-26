@@ -78,7 +78,9 @@ export interface StudentExamDTO {
   examTitle: string;
   studentId: number;
   studentName: string;
-}export interface ExamResultsDTO {
+}
+
+export interface ExamResultsDTO {
   examId: number;
   ExamTitle : string;
    TotalStudents: number;
@@ -101,4 +103,13 @@ export interface QuestionsOfExamDTO {
   type: ExamTypeEnum;
   mark: number;
   questionHeader: HeaderQuestionDTO
+}
+
+
+
+export interface SubmitExamDTO {
+  ExamId: number;
+  QuestionId: number;
+  AnswerId: number;
+  score?: number;  // يجب أن يكون هذا موجودًا إذا Backend يعتمد عليه
 }

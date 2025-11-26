@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { LessonForMediaDTO, MediaTypeEnum, FileFormatEnum, MediaAdminDTO } from '../InterFace/media-dto';
+import { MediaTypeEnum, FileFormatEnum, MediaAdminDTO, MediaDTO } from '../InterFace/media-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -94,9 +94,9 @@ async uploadToR2(
   }
 
   // 📦 عرض ملفات الدرس (صور / فيديو / PDF)
-  async getLessonMedia(lessonId: number): Promise<LessonForMediaDTO[]> {
+  async getLessonMedia(lessonId: number): Promise<MediaDTO[]> {
     const url = `${this.apiUrl}/GetLessonMedia?lessonId=${lessonId}`;
-    const res = await lastValueFrom(this.http.get<LessonForMediaDTO[]>(url));
+    const res = await lastValueFrom(this.http.get<MediaDTO[]>(url));
     return res;
   }
 

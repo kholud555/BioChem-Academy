@@ -1,9 +1,12 @@
 <div class="signup-container">
+
+ 
   <div class="floating-circle circle-1"></div>
   <div class="floating-circle circle-2"></div>
   <div class="floating-circle circle-3"></div>
-
+ 
   <form class="signup-form mt-5" [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
+    <button class="back-btn" (click)="goBack()">← Back</button>
     <h2 class="text-center mb-4">Sign up</h2>
 
     <!-- Name -->
@@ -19,7 +22,7 @@
     <!-- Student Phone -->
     <div class="form-group">
       <label for="studentPhone">Student Phone Number</label>
-      <input type="text" id="studentPhone" placeholder="01xxxxxxxxx" formControlName="phoneNumber" />
+      <input type="text" id="studentPhone" placeholder="" formControlName="phoneNumber" />
       <div *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid" class="error-message">
         Phone number is required and must be valid.
       </div>
@@ -28,7 +31,7 @@
     <!-- Parent Phone -->
     <div class="form-group">
       <label for="parentPhone">Parent Phone Number</label>
-      <input type="text" id="parentPhone" placeholder="01xxxxxxxxx" formControlName="parentPhone" />
+      <input type="text" id="parentPhone" placeholder="" formControlName="parentPhone" />
       <div *ngIf="f['parentPhone'].touched && f['parentPhone'].invalid" class="error-message">
         Parent phone is required and must be valid.
       </div>

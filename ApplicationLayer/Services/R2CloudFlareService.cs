@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Net;
 
 namespace Application.Services
 {
@@ -68,7 +69,7 @@ namespace Application.Services
         //Generates a temporary upload link for Admin To Upload Data to CloudFlare from Frontend
         public string GenerateUrlToUploadFiles (string filePathInBucket , int expireMinutes = 5)
         {
-            var lessonId = filePathInBucket.Split('/')[3];
+            var lessonId = filePathInBucket.Split('/')[4];
 
             var request = new GetPreSignedUrlRequest
             {
@@ -236,7 +237,6 @@ namespace Application.Services
         }
 
         // File: Services/ContentService.cs
-
         public async Task<IEnumerable<FreeContentDTO>> GetAllFreeContentAsync()
         {
            
@@ -269,13 +269,14 @@ namespace Application.Services
                 var parts = (sample.StorageKey ?? string.Empty)
                     .Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-                
-                var grade = parts.ElementAtOrDefault(0) ?? string.Empty;
-                var term = parts.ElementAtOrDefault(1) ?? string.Empty;
-                var unit = parts.ElementAtOrDefault(2) ?? string.Empty;
+                var subject = parts.ElementAtOrDefault(0) ?? string.Empty;
+                var grade = parts.ElementAtOrDefault(1) ?? string.Empty;
+                var term = parts.ElementAtOrDefault(2) ?? string.Empty;
+                var unit = parts.ElementAtOrDefault(3) ?? string.Empty;
 
                 return new FreeContentDTO
                 {
+                    SubjectName = subject,
                     GradeName = grade,
                     Term = term,
                     UnitName = unit,
@@ -292,6 +293,43 @@ namespace Application.Services
             }).ToList();
 
             return result;
+        }
+
+        private string GenerateUrlForHomeVideoUpload(string fileName, int expireMinutes = 5)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = _bucketName,
+                Key = fileName,
+                Verb = HttpVerb.PUT,
+                Expires = DateTime.UtcNow.AddMinutes(expireMinutes)
+            };
+
+            return _s3Client.GetPreSignedURL(request);
+        }
+        public async Task<string> UploadVideoInHome()
+        {
+            const string fileName = "MediaForHome.mp4";
+
+            var deleteResponse = await _s3Client.DeleteObjectAsync(_bucketName, fileName);
+
+            if (deleteResponse.HttpStatusCode != HttpStatusCode.OK &&
+                deleteResponse.HttpStatusCode != HttpStatusCode.NoContent)
+            {
+                throw new ArgumentException(
+                    $"Failed to delete existing file. Status: {deleteResponse.HttpStatusCode}");
+            }
+
+            return GenerateUrlForHomeVideoUpload(fileName);
+        }
+
+
+
+        public string ViewVideoInHome()
+        {
+            const string fileName = "MediaForHome.mp4";
+
+            return GenerateSignedUrlForViewing(fileName);
         }
 
 

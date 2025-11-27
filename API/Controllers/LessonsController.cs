@@ -27,7 +27,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Student")]
         [HttpGet("{unitId:int}")]
         public async Task<ActionResult<IEnumerable<LessonDTO>>> GetLessonsByUnit(int unitId)
         {
@@ -73,7 +73,7 @@ namespace API.Controllers
             if (!success) return NotFound("Lesson failed to delete");
             return NoContent();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateIsFree")]
         public async Task<IActionResult> UpdateIsFreeLesson (int lessonId , bool isFree)
         {

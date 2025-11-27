@@ -34,7 +34,7 @@ namespace API.Controllers
             return Ok();
         }
 
-     
+        
         [HttpGet("student/{studentId}")]
         public async Task<ActionResult<StudentPermissionsDTO>> GetStudentPermissions1q(int studentId , [FromQuery] bool IncludedNames = false)
         {

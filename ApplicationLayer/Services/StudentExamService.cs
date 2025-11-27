@@ -66,12 +66,12 @@ namespace Application.Services
             return await _studentExamRepo.SubmitExamAsync(studentExam);
         }
 
-        public async Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int userId)
+        public async Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int StudentId)
         {
-            if (userId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(userId), "StudentId must be greater than zero");
+            if (StudentId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(StudentId), "StudentId must be greater than zero");
 
-            var student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == userId);
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == StudentId);
             if (student == null)
                 throw new KeyNotFoundException("Student with this user id not found");
 
@@ -104,5 +104,24 @@ namespace Application.Services
 
             return 0;
         }
+
+       public async Task<StudentExam> GetExamByStudentIdAndExamId(int studentId, int examId)
+       {
+          
+            if (studentId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(studentId), "StudentId must be greater than zero");
+
+            if (examId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(examId), "ExamId must be greater than zero");
+
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == studentId);
+            if (student == null)
+                throw new KeyNotFoundException("Student with this user id not found");
+
+            var exam = await _examRepo.GetExamByIdAsync(examId);
+
+            var studentExam = await _studentExamRepo.GetExamByStudentIdAndExamId(studentId, examId);
+            return studentExam;
+       }
     }
 }

@@ -8,5 +8,7 @@ namespace Core.Interfaces
         Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int studentId);
         Task<IEnumerable<StudentExam>> GetExamResultsAsync(int examId);
         Task<bool> HasStudentSubmittedExamAsync(int studentId, int examId);
+
+        Task<StudentExam> GetExamByStudentIdAndExamId(int studentId, int examId);
     }
 }

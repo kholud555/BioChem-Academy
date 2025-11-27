@@ -8,6 +8,7 @@ namespace Application.DTOS
 {
     public class FreeContentDTO
     {
+        public string SubjectName { get; set; }
         public string GradeName { get; set; }
         public string Term { get; set; }
         public string UnitName { get; set; }

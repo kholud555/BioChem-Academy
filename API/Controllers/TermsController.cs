@@ -22,7 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Student")]
         [HttpGet("GetTermsByGrade")]
         public async Task<ActionResult<IEnumerable<TermDTO>>> GetTermsByGrade(int gradeId)
         {

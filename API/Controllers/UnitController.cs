@@ -20,6 +20,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin,Student")]
         [HttpGet("GetUnitsByTerms")]
         public async Task<ActionResult<IEnumerable<UnitDTO>>> GetUnitsByTermID(int termId)
         {

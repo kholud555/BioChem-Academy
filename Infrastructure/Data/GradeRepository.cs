@@ -74,5 +74,14 @@ namespace Infrastructure.Data
            return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<IEnumerable<Grade>> GetGradeBySubjectIdAsync (int subjectId)
+        {
+            var isSubjectExist = await _context.Subjects.AnyAsync(s => s.Id == subjectId);
+            if (!isSubjectExist) throw new KeyNotFoundException("Subject not found");
+
+            var grade = await _context.Grades.Where(g => g.SubjectId == subjectId).ToListAsync();
+            if (grade == null) throw new KeyNotFoundException("Grade not found");
+            return grade;
+        }
     }
 }

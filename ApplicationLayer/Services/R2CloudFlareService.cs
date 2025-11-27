@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Net;
 
 namespace Application.Services
 {
@@ -68,7 +69,7 @@ namespace Application.Services
         //Generates a temporary upload link for Admin To Upload Data to CloudFlare from Frontend
         public string GenerateUrlToUploadFiles (string filePathInBucket , int expireMinutes = 5)
         {
-            var lessonId = filePathInBucket.Split('/')[3];
+            var lessonId = filePathInBucket.Split('/')[4];
 
             var request = new GetPreSignedUrlRequest
             {
@@ -294,20 +295,43 @@ namespace Application.Services
             return result;
         }
 
-        public async Task<string>  UploadVideoInHome ()
+        private string GenerateUrlForHomeVideoUpload(string fileName, int expireMinutes = 5)
         {
-            var link = GenerateUrlToUploadFiles("MediaForHome");
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = _bucketName,
+                Key = fileName,
+                Verb = HttpVerb.PUT,
+                Expires = DateTime.UtcNow.AddMinutes(expireMinutes)
+            };
 
-            return link;
+            return _s3Client.GetPreSignedURL(request);
+        }
+        public async Task<string> UploadVideoInHome()
+        {
+            const string fileName = "MediaForHome.mp4";
+
+            var deleteResponse = await _s3Client.DeleteObjectAsync(_bucketName, fileName);
+
+            if (deleteResponse.HttpStatusCode != HttpStatusCode.OK &&
+                deleteResponse.HttpStatusCode != HttpStatusCode.NoContent)
+            {
+                throw new ArgumentException(
+                    $"Failed to delete existing file. Status: {deleteResponse.HttpStatusCode}");
+            }
+
+            return GenerateUrlForHomeVideoUpload(fileName);
         }
 
 
-        public async Task<string> ViewVideoInHome()
-        {
-            var link = GenerateSignedUrlForViewing("MediaForHome");
 
-            return link;
+        public string ViewVideoInHome()
+        {
+            const string fileName = "MediaForHome.mp4";
+
+            return GenerateSignedUrlForViewing(fileName);
         }
+
 
     }
 }

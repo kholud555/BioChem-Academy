@@ -115,7 +115,7 @@
            <td>
   <a
     class="access-button"
-   (click)="viewStudentResults(std)"
+   (click)="onSelectStudentResult(std)"
   >
     <i class="bi bi-shield-check"></i>
     <span> Result</span>
@@ -177,25 +177,4 @@
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="showStudentResults" class="mt-4 results-section">
-  <h3>Student Results</h3>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Exam Title</th>
-        <th>Score</th>
-        <th>Max Score</th>
-        <th>Percentage</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let result of studentResults">
-        <td>{{ result.examTitle }}</td>
-        <td>{{ result.score }}</td>
-        <td>{{ result.maxScore }}</td>
-        <td>{{ (result.score / result.maxScore * 100) | number:'1.0-0' }}%</td>
-      </tr>
-    </tbody>
-  </table>
 </div>

@@ -1,27 +1,15 @@
-
-
-
+// ✅ media-dto.ts
 export interface MediaDTO {
   id?: number;
-  mediaType: MediaTypeEnum;
+  mediaType: MediaTypeEnum;   // Enum مطابق للباك
   storageKey: string;
-  fileFormat: FileFormatEnum;
+  fileFormat: FileFormatEnum; // Enum مطابق للباك
   lessonId: number;
   duration?: number | null;
 }
 
-export interface MediaAdminDTO {
-  id: number;
-  fileName: string;
-  mediaType: string;
-  fileFormat: string;
-  duration?: number | null;
-  previewUrl: string;
-}
-
-
-
 export interface PresignRequestDTO {
+  subject :string,
   grade: string;
   term: string;
   unit: string;
@@ -29,6 +17,14 @@ export interface PresignRequestDTO {
   fileName: string;
 }
 
+export interface LessonForMediaDTO {
+  id: number;
+  fileName: string;
+  mediaType: string;  // backend بيرجع string زي "Video"
+  fileFormat: string; // نفس الكلام
+  duration?: number | null;
+  previewUrl: string;
+}
 
 export enum MediaTypeEnum {
   Video = 0,
@@ -42,8 +38,6 @@ export enum FileFormatEnum {
   Jpg = 2,
   Png = 3,
 }
-
-
 export interface StudentAccessedMediaDTO {
   fileName: string;
   mediaType: string;
@@ -51,9 +45,8 @@ export interface StudentAccessedMediaDTO {
   duration?: number;
   previewUrl: string;
 }
-
-
 export interface FreeContentDTO {
+  subjectName:string;
   gradeName: string;
   term: string;
   unitName: string;

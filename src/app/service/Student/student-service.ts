@@ -120,13 +120,14 @@ loginStudent(loginData:Login) :Observable <any>{
 return this.http.put(`${this.BaseUrl}/UpdateStudentProfile` , data , {headers})
   }
 getMediaByLessonForStudent(lessonId: number): Observable<StudentAccessedMediaDTO[]> {
-  const token = sessionStorage.getItem('token'); // ✅ خذ التوكن وقت الطلب
+  const token = sessionStorage.getItem('token'); 
   const headers = { Authorization: `Bearer ${token}` };
 
   return this.http.get<StudentAccessedMediaDTO[]>(
     `${this.BaseUrl}/MediaAccessForStudent?lessonId=${lessonId}`,
     { headers }
   );
+  // ملاحظة: التعامل مع الأخطاء نعمله في الكومبوننت عشان نتحكم بالـ UI
 }
 
 

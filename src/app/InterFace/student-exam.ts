@@ -28,9 +28,4 @@ export interface StudentExamResultDTO {
 }
 
 
-export interface SubmitExamFullDTO {
-  examId: number;
-  studentId: number;
-  score: number;
-}
 

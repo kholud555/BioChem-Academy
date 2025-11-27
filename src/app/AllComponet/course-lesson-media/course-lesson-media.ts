@@ -10,8 +10,9 @@ import { CommonModule } from '@angular/common';
 import { NavBar } from "../nav-bar/nav-bar";
 import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
 import { SubmitExamDTO } from '../../InterFace/student-exam';
-import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-course-lesson-media',
   templateUrl: './course-lesson-media.html',
@@ -19,25 +20,28 @@ import { Location } from '@angular/common';
   imports: [CommonModule, NavBar]
 })
 export class CourseLessonMedia implements OnInit, OnDestroy {
+
   SelectLesson: LessonDTO | null = null;
   SelectedLessonId: number = 0;
   studentId: number | null = 0;
   mediaList: StudentAccessedMediaDTO[] = [];
 
-  // Exams
-  FinalResult:any;
   exams: any[] = [];
+
   ExamStarted: boolean = false;
   selectedExamId: number | null = null;
+  selectedExamTitle: string = '';
+
   examQuestions: QuestionsOfExamDTO[] = [];
   examAnswers: { [questionId: number]: number } = {};
-  selectedExamTitle: string = '';
-  
-  // Result
+
   showResult: boolean = false;
   totalScore: number = 0;
   maxScore: number = 0;
   submitting: boolean = false;
+
+  // حالة الامتحانات لكل امتحان
+  examStatus: { [key: number]: { completed: boolean, score: number | null, percentage: number | null } } = {};
 
   constructor(
     private lessonService: LessonService,
@@ -45,153 +49,115 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
     private router: Router,
     private examService: ExamService,
     private studentExamService: StudentExamService,
-    private location: Location
+    private location: Location,
+    private toast: ToastrService,
   ) {}
 
   ngOnInit(): void {
-    document.addEventListener("keydown", this.disableKeys);
-
     const currentLesson = this.lessonService.getLesson();
     if (currentLesson) {
       this.SelectLesson = currentLesson;
       this.SelectedLessonId = currentLesson.id;
       sessionStorage.setItem('selectedLesson', JSON.stringify(this.SelectLesson));
       sessionStorage.setItem('selectedLessonId', this.SelectedLessonId.toString());
-    } else {
-      const storedLesson = sessionStorage.getItem('selectedLesson');
-      const storedLessonId = sessionStorage.getItem('selectedLessonId');
-      if (storedLesson) {
-        this.SelectLesson = JSON.parse(storedLesson) as LessonDTO;
-        this.SelectedLessonId = this.SelectLesson.id;
-      } else if (storedLessonId) {
-        this.SelectedLessonId = Number(storedLessonId);
-      } else {
-        this.router.navigate(['/courses']);
-        return;
-      }
-      const savedStudentId = sessionStorage.getItem('studentId');
-if (savedStudentId) {
-  this.studentId = Number(savedStudentId);
-} else {
-  this.studentId = this.studentService.getuserId();
-  if (this.studentId) {
-    sessionStorage.setItem('studentId', this.studentId.toString());
-  } else {
-    // لو مفيش studentId، اعمل redirect للـ login
-    this.router.navigate(['/login']);
-    return;
-  }
-}
-
     }
 
     const savedStudentId = sessionStorage.getItem('studentId');
-    if (savedStudentId) this.studentId = Number(savedStudentId);
-    else {
-      this.studentId = this.studentService.getuserId();
-      if (this.studentId) sessionStorage.setItem('studentId', this.studentId.toString());
-    }
+    this.studentId = savedStudentId ? Number(savedStudentId) : this.studentService.getuserId();
 
-    this.loadMediaForLesson(this.SelectedLessonId);
     this.getExamsByLesson();
+    this.loadMediaForLesson(this.SelectedLessonId);
   }
 
+  ngOnDestroy() {}
+
   loadMediaForLesson(lessonId: number) {
-    this.studentService.getMediaByLessonForStudent(lessonId).subscribe({
-      next: (res) => this.mediaList = res,
-      
-      error: (err) => console.error("Error loading media", err)
+  this.studentService.getMediaByLessonForStudent(lessonId).subscribe({
+    next: (res) => {
+      console.log(res)
+      this.mediaList = res || []; // لو رجع null أو undefined خليها مصفوفة فارغة
+      if(this.mediaList.length === 0) {
+        this.toast.info("لا توجد فيديوهات متاحة لهذا الدرس.");
+      }
+    },
+    error: (err) => {
+      console.error("Error loading media", err);
+      this.mediaList = []; // أفرغ المصفوفة
+      this.toast.error("حدث خطأ أثناء تحميل الفيديوهات، حاول لاحقًا.");
+    }
+  });
+}
+
+  getExamsByLesson() {
+    this.examService.getExamsByLesson(this.SelectedLessonId).subscribe({
+      next: (res) => {
+        this.exams = res;
+        this.exams.forEach(exam => {
+          this.examStatus[exam.id] = { completed: false, score: null, percentage: null };
+        });
+      },
+      error: (err) => console.error("Error loading exams", err)
     });
   }
 
-  
+  startExam(examId: number, examTitle: string) {
+    if (this.examStatus[examId]?.completed) {
+      this.toast.info("You already completed this exam.");
+      return;
+    }
 
-  
-  disableKeys = (e: KeyboardEvent) => {
-    if (["F12", "s", "u"].includes(e.key.toLowerCase())) e.preventDefault();
-    if (e.ctrlKey && e.shiftKey && ["i", "j"].includes(e.key.toLowerCase())) e.preventDefault();
+    this.selectedExamId = examId;
+    this.selectedExamTitle = examTitle;
+    this.examAnswers = {};
+    this.totalScore = 0;
+
+    this.examService.getExamQuestions(examId).subscribe({
+      next: (res: QuestionsOfExamDTO[]) => {
+        this.examQuestions = res;
+        this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
+        this.ExamStarted = true;
+      },
+      error: (err) => console.error("Failed to load exam questions", err)
+    });
   }
 
-  
+  selectAnswer(questionId: number, choiceId: number) {
+    this.examAnswers[questionId] = choiceId;
+  }
 
-  getExamsByLesson() {
-this.examService.getExamsByLesson(this.SelectedLessonId).subscribe({
-next: (res) => this.exams = res,
-error: (err) => console.error("Error loading exams", err)
-});
-}
+  async submitExam() {
+    if (!this.selectedExamId || !this.studentId) return;
 
-disableRightClick(event: MouseEvent) { event.preventDefault(); }
+    this.submitting = true;
+    this.totalScore = 0;
 
+    for (const qId of Object.keys(this.examAnswers)) {
+      const dto: SubmitExamDTO = {
+        ExamId: this.selectedExamId,
+        QuestionId: Number(qId),
+        AnswerId: this.examAnswers[Number(qId)]
+      };
 
-ngOnDestroy() { document.removeEventListener("keydown", this.disableKeys); }
+      try {
+        const res = await this.studentExamService.submitAnswer(dto).toPromise();
+        this.totalScore += res?.score || 0;
+      } catch (err) {
+        this.toast.error("Error submitting answers.");
+        this.submitting = false;
+        return;
+      }
+    }
 
-// ======================= Exam Methods =========================
-startExam(examId: number, examTitle: string) {
-this.selectedExamId = examId;
-this.selectedExamTitle = examTitle;
-this.examAnswers = {};
-this.showResult = false;
-this.totalScore = 0;
+    this.showResult = true;
+    this.submitting = false;
+    this.ExamStarted = false;
 
-this.examService.getExamQuestions(examId).subscribe({
-next: (res: QuestionsOfExamDTO[]) => {
-this.examQuestions = res;
-this.ExamStarted = true;
-this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
-},
-error: (err) => console.error("Failed to load exam questions", err)
-});
-}
-
-selectAnswer(questionId: number, choiceId: number) {
-this.examAnswers[questionId] = choiceId;
-}
-
-async submitExam() {
-if (!this.selectedExamId || this.submitting) return;
-
-const answeredQuestions = Object.keys(this.examAnswers);
-if (answeredQuestions.length === 0) {
-alert('Please answer at least one question!');
-return;
-}
-
-this.submitting = true;
-this.totalScore = 0;
-
-for (const qId of answeredQuestions) {
-const dto: SubmitExamDTO = {
-ExamId: this.selectedExamId!,
-QuestionId: Number(qId),
-AnswerId: this.examAnswers[Number(qId)]
-};
-
-
-try {
-  const res = await this.studentExamService.submitAnswer(dto).toPromise();
-  this.totalScore += res?.score || 0;
-} catch (err) {
-  console.error('Failed to submit question', qId, err);
-  alert('Error submitting some answers. Please try again.');
-  this.submitting = false;
-  return;
-}
- 
-
-}
-
-this.ExamStarted = false;
-this.showResult = true;
-this.submitting = false;
-}
-
-
-  closeResult() {
-
-   this.location.back(); // خطوة واحدة للخلف
-    this.location.back(); //
-    
+    const examId = this.selectedExamId;
+    this.examStatus[examId] = {
+      completed: true,
+      score: this.totalScore,
+      percentage: this.getPercentage()
+    };
   }
 
   getPercentage(): number {
@@ -203,4 +169,7 @@ this.submitting = false;
     this.location.back();
   }
 
+  disableRightClick(event: MouseEvent) {
+    event.preventDefault();
+  }
 }

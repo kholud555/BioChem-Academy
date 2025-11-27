@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { MediaTypeEnum, FileFormatEnum, MediaAdminDTO, MediaDTO } from '../InterFace/media-dto';
+import { LessonForMediaDTO, MediaTypeEnum, FileFormatEnum } from '../InterFace/media-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -31,19 +31,19 @@ export class UploadService {
   }
 async getPresignedUrl(
   file: File,
-  subject: string,
-  grade: string,
-  term: string,
-  unit: string,
+  subjectName: string,
+  gradeName: string,
+  termName: string,
+  unitName: string,
   lessonId: number
 ) {
   const body = {
-    Subject: subject,
-    Grade: grade,
-    Term: term,
-    Unit: unit,
-    LessonId: lessonId,
-    FileName: file.name
+    subject: subjectName,
+    grade: gradeName,
+    term: termName,
+    unit: unitName,
+    lessonId,
+    fileName: file.name,
   };
 
   const res: any = await lastValueFrom(
@@ -53,24 +53,38 @@ async getPresignedUrl(
   return res;
 }
 
-async uploadToR2(
-  file: File,
-  presignedUrl: string,
-  onProgress: (percent: number) => void
-): Promise<void> {
 
-  const res = await fetch(presignedUrl, {
-    method: 'PUT',
-    headers: { 'Content-Type': file.type },
-    body: file
-  });
 
-  // مفيش progress هنا ولكن الرفع هيبقى أسرع بـ 30%-40%
-  onProgress(100);
+  // 📤 رفع الملف (فيديو / صورة / PDF) إلى Cloudflare R2
+  async uploadToR2(
+    file: File,
+    presignedUrl: string,
+    onProgress: (percent: number) => void
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', presignedUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
 
-  if (!res.ok) throw new Error("Upload failed");
-}
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          onProgress(percent);
+        }
+      };
 
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve();
+        } else {
+          reject(xhr.responseText);
+        }
+      };
+
+      xhr.onerror = () => reject(xhr.statusText);
+      xhr.send(file);
+    });
+  }
 
   // ✅ بعد الرفع: إضافة بيانات الميديا في قاعدة البيانات
   async addMediaAfterUpload(file: File, storageKey: string, lessonId: number, duration?: number | null): Promise<void> {
@@ -94,11 +108,9 @@ async uploadToR2(
   }
 
   // 📦 عرض ملفات الدرس (صور / فيديو / PDF)
-  async getLessonMedia(lessonId: number): Promise<MediaDTO[]> {
+  async getLessonMedia(lessonId: number): Promise<LessonForMediaDTO[]> {
     const url = `${this.apiUrl}/GetLessonMedia?lessonId=${lessonId}`;
-    const res = await lastValueFrom(this.http.get<MediaDTO[]>(url));
+    const res = await lastValueFrom(this.http.get<LessonForMediaDTO[]>(url));
     return res;
   }
-
- 
 }

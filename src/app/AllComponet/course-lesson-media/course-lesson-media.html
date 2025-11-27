@@ -1,8 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <button class="back-btn" (click)="goBack()">← Back</button>
+
 <div class="container mt-4" (contextmenu)="disableRightClick($event)">
   <h2 class="text-center mb-4">Available Lesson Content</h2>
-  <h3>{{SelectLesson?.title}}</h3>
+  <h3>{{ SelectLesson?.title }}</h3>
 
   <!-- Media Section -->
   <div class="row g-4" *ngIf="!ExamStarted && !showResult && mediaList.length > 0">
@@ -10,7 +11,7 @@
       <div class="card h-100 shadow-sm custom-card">
         <div class="card-media p-2 video-container">
           <img *ngIf="media.mediaType === 'Image'" [src]="media.previewUrl" class="card-img-top" alt="Image" draggable="false" (dragstart)="$event.preventDefault()">
-          <video *ngIf="media.mediaType === 'Video'" class="w-100 protected-video" controls controlsList="nodownload noplaybackrate" disablePictureInPicture oncontextmenu="return false;" (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()" draggable="false">
+          <video *ngIf="media.mediaType === 'Video'" class="w-100 protected-video" controls controlsList="nodownload noplaybackrate" disablePictureInPicture (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()" draggable="false">
             <source [src]="media.previewUrl" type="video/mp4">
           </video>
           <img *ngIf="media.mediaType === 'Pdf'" src="assets/pdf-icon.png" class="img-fluid" alt="PDF">
@@ -31,22 +32,31 @@
 </div>
 
 <!-- Exams Section -->
-<div class="container mt-5">
-  <h2 class="text-center mb-4" *ngIf="!ExamStarted && !showResult">Exams</h2>
-  <div *ngIf="!ExamStarted && !showResult">
-    <div class="row g-3">
-      <div *ngFor="let exam of exams" class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm border-0 rounded-3 custom-card">
-          <div class="card-body d-flex flex-column justify-content-between">
-            <h5 class="card-title">{{ exam.title }}</h5>
-            <p class="card-text text-muted">Test your knowledge and skills! 🎯</p>
-            <button class="btn btn-primary mt-3" (click)="startExam(exam.id, exam.title)">Start Exam</button>
+<div class="container mt-5" *ngIf="!ExamStarted && !showResult">
+  <h2 class="text-center mb-4">Exams</h2>
+  <div class="row g-3">
+    <div *ngFor="let exam of exams" class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 rounded-3 custom-card">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title">{{ exam.title }}</h5>
+          <p class="card-text text-muted">Test your knowledge and skills! 🎯</p>
+
+          <!-- حالة الامتحان لو الطالب خلصه قبل -->
+          <div *ngIf="examStatus[exam.id]?.completed" class="alert alert-success mt-3 text-center">
+            <h5 class="mb-2">✔ You have already completed this exam.</h5>
+            <p *ngIf="examStatus[exam.id].score !== null" class="fw-bold mb-1">Your Score: {{ examStatus[exam.id].score }}</p>
+            <p *ngIf="examStatus[exam.id].percentage !== null" class="text-primary">Percentage: {{ examStatus[exam.id].percentage }}%</p>
           </div>
+
+          <button *ngIf="!examStatus[exam.id]?.completed" class="btn btn-primary mt-3"
+                  (click)="startExam(exam.id, exam.title)">
+            Start Exam
+          </button>
         </div>
       </div>
     </div>
-    <p *ngIf="exams.length === 0" class="text-muted text-center mt-3">No exams available.</p>
   </div>
+  <p *ngIf="exams.length === 0" class="text-muted text-center mt-3">No exams available.</p>
 </div>
 
 <!-- Exam Questions Section -->
@@ -56,7 +66,9 @@
     <p><strong>{{ question.questionHeader }}</strong> ({{ question.mark }} Mark)</p>
     <ul class="list-group">
       <li *ngFor="let choice of question.choicesOfQuestion" class="list-group-item">
-        <input type="radio" [name]="'q' + question.id" [value]="choice.id" (change)="selectAnswer(question.id, choice.id)" [checked]="examAnswers[question.id] === choice.id"/>
+        <input type="radio" [name]="'q' + question.id" [value]="choice.id"
+               (change)="selectAnswer(question.id, choice.id)"
+               [checked]="examAnswers[question.id] === choice.id"/>
         {{ choice.choiceText }}
       </li>
     </ul>
@@ -70,12 +82,12 @@
 <div *ngIf="showResult" class="card p-5 text-center shadow custom-card">
   <h2 class="text-success mb-3">🎉 Exam Completed!</h2>
   <h4 class="mb-4">{{ selectedExamTitle }}</h4>
-  
+
   <div class="display-4 fw-bold text-primary mb-3">{{ totalScore }} / {{ maxScore }}</div>
   <div class="fs-3 mb-3">Percentage: <strong>{{ getPercentage() }}%</strong></div>
 
   <div class="progress mb-4" style="height: 30px;">
-    <div class="progress-bar" 
+    <div class="progress-bar"
          [ngClass]="{
            'bg-success': getPercentage() >= 60,
            'bg-warning': getPercentage() >= 40 && getPercentage() < 60,
@@ -91,5 +103,5 @@
     <span *ngIf="getPercentage() < 60" class="text-danger">❌ You need more practice. Try Again!</span>
   </div>
 
-  <button class="btn btn-primary btn-lg" (click)="closeResult()">Back to course</button>
+  <button class="btn btn-primary btn-lg" (click)="goBack()">Back to course</button>
 </div>

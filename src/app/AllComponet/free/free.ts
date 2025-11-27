@@ -57,9 +57,14 @@ export class Free implements OnInit {
     });
   }
 
-  onSelectGrade(grade: GradeDTO) {
+  
+   onSelectGrade(grade: GradeDTO) {
     this.gradeService.setGrade(grade);
     this.SelectedGradeName = grade.gradeName;
+
+    // حفظ الصف في sessionStorage لعرضه في ShowFreeMedia
+    sessionStorage.setItem('selectedGrade', grade.gradeName);
+
     this.router.navigate(['ShowFreeMedia']);
   }
 }

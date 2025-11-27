@@ -4,8 +4,8 @@
   <div>
     <label>📚 Subject</label>
     <select [(ngModel)]="selectedSubjectId" (ngModelChange)="onSubjectChange($event)">
-      <option [value]="null">Select Subject</option>
-      <option *ngFor="let sub of subjects" [value]="sub.id">{{ sub.subjectName }}</option>
+      <option [ngValue]="null">Select Subject</option>
+      <option *ngFor="let sub of subjects" [ngValue]="sub.id">{{ sub.subjectName }}</option>
     </select>
   </div>
 
@@ -13,8 +13,8 @@
   <div>
     <label>🏫 Grade</label>
     <select [(ngModel)]="selectedGradeId" (ngModelChange)="onGradeChange($event)" [disabled]="!selectedSubjectId">
-      <option [value]="null">Select Grade</option>
-      <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.gradeName }}</option>
+      <option [ngValue]="null">Select Grade</option>
+      <option *ngFor="let grade of grades" [ngValue]="grade.id">{{ grade.gradeName }}</option>
     </select>
   </div>
 
@@ -22,8 +22,8 @@
   <div>
     <label>📘 Term</label>
     <select [(ngModel)]="selectedTermId" (ngModelChange)="onTermChange($event)" [disabled]="!selectedGradeId">
-      <option [value]="null">Select Term</option>
-      <option *ngFor="let term of terms" [value]="term.id">
+      <option [ngValue]="null">Select Term</option>
+      <option *ngFor="let term of terms" [ngValue]="term.id">
         {{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}
       </option>
     </select>
@@ -33,8 +33,8 @@
   <div>
     <label>📖 Unit</label>
     <select [(ngModel)]="selectedUnitId" (ngModelChange)="onUnitChange($event)" [disabled]="!selectedTermId">
-      <option [value]="null">Select Unit</option>
-      <option *ngFor="let unit of units" [value]="unit.id">{{ unit.title }}</option>
+      <option [ngValue]="null">Select Unit</option>
+      <option *ngFor="let unit of units" [ngValue]="unit.id">{{ unit.title }}</option>
     </select>
   </div>
 
@@ -42,8 +42,8 @@
   <div>
     <label>📂 Lesson</label>
     <select [(ngModel)]="selectedLessonId" (ngModelChange)="onLessonChange($event)" [disabled]="!selectedUnitId">
-      <option [value]="null">Select Lesson</option>
-      <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
+      <option [ngValue]="null">Select Lesson</option>
+      <option *ngFor="let lesson of lessons" [ngValue]="lesson.id">{{ lesson.title }}</option>
     </select>
   </div>
 

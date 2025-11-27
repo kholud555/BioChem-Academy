@@ -9,6 +9,18 @@
             animation: gradientShift 15s ease infinite;
         }
 
+.password-wrapper { position: relative; }
+.password-wrapper button {
+    position: absolute;
+    right: 12px;
+    top: 70%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }

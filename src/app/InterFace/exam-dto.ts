@@ -113,3 +113,16 @@ export interface SubmitExamDTO {
   AnswerId: number;
   score?: number;  // يجب أن يكون هذا موجودًا إذا Backend يعتمد عليه
 }
+export interface AdminStudentExamResult {
+  id: number;
+  studentName: string;
+  studentEmail: string;
+  score: number;
+  totalQuestions: number;
+  percentage: number;
+  submittedAt: string;
+  examId: number;
+  examTitle: string;
+  examDescription: string;
+  timeLimit: number;
+}

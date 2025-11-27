@@ -1,119 +1,171 @@
-.page-title {
-  font-weight: 800;
-  font-size: 32px;
-  margin-bottom: 20px;
+/* --------------------------------------
+   General Styling
+--------------------------------------- */
+body {
+  background: #f4f6f9;
+  font-family: 'Poppins', sans-serif;
 }
 
-.lesson-title {
-  font-size: 22px;
-  font-weight: 600;
-  color: #444;
+h2, h3, h4 {
+  font-weight: 700;
 }
 
-.content-card {
-  background: #fff;
-  border-radius: 16px;
+.custom-card {
+  border-radius: 18px !important;
   overflow: hidden;
+  transition: all 0.3s ease;
+  background: #ffffff;
+}
+
+.custom-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* --------------------------------------
+   Back Button
+--------------------------------------- */
+.back-btn {
+  background: linear-gradient(45deg, #6c757d, #343a40);
+  color: white;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  margin: 20px;
+  cursor: pointer;
   transition: 0.3s ease;
 }
-.content-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+.back-btn:hover {
+  transform: translateX(-4px);
+  background: linear-gradient(45deg, #343a40, #000);
 }
 
+/* --------------------------------------
+   Media Cards
+--------------------------------------- */
+.video-container,
 .card-media {
-  padding: 10px;
-  background: #f8f9fa;
+  background: #f1f3f5;
   height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.media-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.video-wrapper {
-  width: 100%;
-  height: 100%;
-}
-.media-video {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
-
-.exam-card {
-  padding: 20px;
-  background: white;
   border-radius: 14px;
-  transition: .3s;
+  overflow: hidden;
 }
+
+.card-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.card-img-top,
+.media-video,
+img,
+video {
+  border-radius: 14px;
+}
+
+/* --------------------------------------
+   Exams Section
+--------------------------------------- */
+.exam-card {
+  border-radius: 18px;
+  padding: 22px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
 .exam-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .exam-title {
+  font-size: 20px;
   font-weight: 700;
-}
-.exam-desc {
-  color: #666;
+  color: #222;
 }
 
-.question-card {
+.exam-desc {
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* --------------------------------------
+   Question Cards
+--------------------------------------- */
+.question-card,
+.card.list-group-item {
   background: #fff;
   padding: 20px;
-  border-radius: 14px;
+  border-radius: 16px;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.07);
 }
 
-.choices-list {
-  list-style: none;
-  padding: 0;
-}
-.choice-item {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
+.list-group-item {
+  border: none !important;
+  padding: 12px 15px !important;
+  font-size: 15px;
 }
 
+/* --------------------------------------
+   Result Section
+--------------------------------------- */
 .result-card {
   padding: 40px;
   text-align: center;
-  border-radius: 20px;
+  border-radius: 22px;
   background: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
 }
 
 .score-display {
-  font-size: 42px;
-  font-weight: bold;
+  font-size: 48px;
+  font-weight: 800;
   color: #007bff;
 }
-.back-btn {
-  background: #444;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+
 .percentage-display {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-.result-progress {
-  height: 25px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.progress {
+  height: 30px;
+  border-radius: 12px;
+}
+
+.progress-bar {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .result-msg {
   font-size: 22px;
-  margin: 15px 0;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+/* --------------------------------------
+   Buttons
+--------------------------------------- */
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(45deg, #007bff, #0056d2);
+  border: none;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(45deg, #0056d2, #003c99);
+}
+
+.btn-success {
+  border-radius: 12px !important;
+  font-weight: 600;
+  padding: 10px 20px;
 }

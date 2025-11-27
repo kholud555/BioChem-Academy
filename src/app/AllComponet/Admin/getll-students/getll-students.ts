@@ -50,23 +50,12 @@ showStudentResults: boolean = false;
     this.SelectedStusentId=student.id;
     this.router.navigate(['/AdmenBody/AccessControl']);
   }
-    
-viewStudentResults(student: StudentDto) {
-  if (!student || !student.id) return;
+onSelectStudentResult(student:StudentDto){
+    this.studentService.setStudent(student);
+    this.SelectedStusentId=student.id;
+    this.router.navigate(['/AdmenBody/result']);
+  }
 
-  this.SelectedStusentId = student.id; // حفظ ID الطالب
-  this.studentService.getStudentResults(student.id).subscribe({
-    next: (res) => {
-      this.studentResults = res;
-      this.showStudentResults = true;
-      // هنا يمكنك فتح modal أو صفحة جديدة لعرض النتائج
-    },
-    error: (err) => {
-      console.error("Error fetching student results", err);
-     this.toast.info("error")
-    }
-  });
-}
 
 }
 

@@ -17,6 +17,7 @@ export class ExamService {
   getExamsByLesson(lessonId: number): Observable<ExamDTO[]> {
     return this.http.get<ExamDTO[]>(`${this.baseUrl}/GetExamsByLessonId?lessonId=${lessonId}`);
   }
+  
 
   
   getExamById(id: number): Observable<ExamDetailsDTO> {

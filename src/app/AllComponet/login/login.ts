@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
   styleUrl: './login.css'
 })
 export class Login {
+  showConfirmPassword = false;
   LoginForm:FormGroup= new FormGroup({
      email:new FormControl(''),
   password:new FormControl(''),
@@ -54,6 +55,10 @@ this.login.loginStudent(this. LoginForm.value).subscribe({
 }
 goBack() {
     this.location.back();
+  }
+  
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
 }

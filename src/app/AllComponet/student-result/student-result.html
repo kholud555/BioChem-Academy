@@ -1,1 +1,36 @@
-<p>student-result works!</p>
+<div class="student-results-container">
+  <h2>Student Exam Results</h2>
+<h5> Name :{{SelectedStudent?.userName}}</h5>
+<h6> Grade :{{SelectedStudent?.grade}}</h6>
+  <!-- Loader -->
+  <div *ngIf="loading" class="loader">
+    Loading results...
+  </div>
+
+  <!-- Table -->
+  <table *ngIf="!loading && studentResults.length" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Exam Name</th>
+        <th>Score</th>
+        <th>Total Questions</th>
+        <th>Percentage</th>
+        <th>Exam Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of studentResults">
+        <td>{{ result.examTitle }}</td>
+        <td>{{ result.score }}</td>
+        <td>{{ result.totalQuestions }}</td>
+        <td>{{ result.percentage | number:'1.0-2' }}%</td>
+        <td>{{ result.submittedAt | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && studentResults.length === 0">
+    No results found for this student.
+  </div>
+</div>

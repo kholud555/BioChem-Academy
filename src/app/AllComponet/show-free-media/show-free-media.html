@@ -43,7 +43,8 @@
     </div>
 
    <!-- عرض الفيديوهات بعد اختيار درس -->
-<div *ngIf="selectedLesson" class="videos-grid" (contextmenu)="$event.preventDefault()">
+<div *ngIf="selectedLesson" class="videos-grid" >
+ 
   <button (click)="backToLessons()" class="btn-primary btn">← Back to Lessons</button>
 
   <div class="videos-row">

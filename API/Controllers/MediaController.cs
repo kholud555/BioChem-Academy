@@ -59,6 +59,20 @@ namespace API.Controllers
             return Ok(mediaList);
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("UploadVideoForHome")]
+        public  IActionResult UploadVideoForHome ()
+        {
+            var link = _r2.UploadVideoInHome();
+            return Ok(link);
+        }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("ViewVideoForHome")]
+        public IActionResult ViewVideoForHome()
+        {
+            var link = _r2.ViewVideoInHome();
+            return Ok(link);
+        }
     }
 }

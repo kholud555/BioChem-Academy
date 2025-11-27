@@ -105,5 +105,14 @@ namespace Infrastructure.Data
             return await _context.StudentExams
                 .AnyAsync(se => se.StudentId == studentId && se.ExamId == examId);
         }
+         
+        public async Task<StudentExam> GetExamByStudentIdAndExamId (int studentId, int examId)
+        {
+            var studentExam = await _context.StudentExams.FirstOrDefaultAsync(se => se.StudentId == studentId && se.ExamId == examId);
+            if (studentExam == null) throw new KeyNotFoundException("This Student does not have this exam");
+
+
+            return studentExam;
+        }
     }
 }

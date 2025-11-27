@@ -13,7 +13,7 @@ namespace Core.Entities
         [Key, ForeignKey("User")]
         public int Id { get; set; }
         public string Grade { get; set; }
-        public string ParentPhone { get; set; }
+        public string? ParentPhone { get; set; } 
         public int UserId { get; set; }
         public User User { get; set; }
         public ICollection<AccessControl> AccessControls { get; set; } = new List<AccessControl>();

@@ -236,7 +236,6 @@ namespace Application.Services
         }
 
         // File: Services/ContentService.cs
-
         public async Task<IEnumerable<FreeContentDTO>> GetAllFreeContentAsync()
         {
            
@@ -269,13 +268,14 @@ namespace Application.Services
                 var parts = (sample.StorageKey ?? string.Empty)
                     .Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-                
-                var grade = parts.ElementAtOrDefault(0) ?? string.Empty;
-                var term = parts.ElementAtOrDefault(1) ?? string.Empty;
-                var unit = parts.ElementAtOrDefault(2) ?? string.Empty;
+                var subject = parts.ElementAtOrDefault(0) ?? string.Empty;
+                var grade = parts.ElementAtOrDefault(1) ?? string.Empty;
+                var term = parts.ElementAtOrDefault(2) ?? string.Empty;
+                var unit = parts.ElementAtOrDefault(3) ?? string.Empty;
 
                 return new FreeContentDTO
                 {
+                    SubjectName = subject,
                     GradeName = grade,
                     Term = term,
                     UnitName = unit,
@@ -294,6 +294,20 @@ namespace Application.Services
             return result;
         }
 
+        public async Task<string>  UploadVideoInHome ()
+        {
+            var link = GenerateUrlToUploadFiles("MediaForHome");
+
+            return link;
+        }
+
+
+        public async Task<string> ViewVideoInHome()
+        {
+            var link = GenerateSignedUrlForViewing("MediaForHome");
+
+            return link;
+        }
 
     }
 }

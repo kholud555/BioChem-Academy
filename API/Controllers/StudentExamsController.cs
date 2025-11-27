@@ -3,6 +3,7 @@ using Application.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -56,7 +57,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("{studentId:int}")]
+        [HttpGet("GetStudentResultForAdmin")]
         public async Task<ActionResult<IEnumerable<StudentExamResultDTO>>> GetStudentResults(int studentId)
         {
             var results = await _studentExamService.GetStudentResultsAsync(studentId);
@@ -65,7 +66,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("exam/{examId:int}")]
+        [HttpGet("GetExamResultsForAllStudentsStatics")]
         public async Task<ActionResult<ExamResultsDTO>> GetExamResults(int examId)
         {
             var results = await _studentExamService.GetExamResultsAsync(examId);
@@ -89,6 +90,15 @@ namespace API.Controllers
 
             return Ok(examResultsDto);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetExamByStudentAndExamId")]
+        public async Task<ActionResult<StudentExamDTO>> GetExamByStudentAndExamId (int studentId , int examId)
+        {
+            var studentExam = await _studentExamService.GetExamByStudentIdAndExamId(studentId, examId);
+            var dto = _mapper.Map<StudentExamDTO>(studentExam);
+            return Ok(dto);
+        }
+
     }
 }
 

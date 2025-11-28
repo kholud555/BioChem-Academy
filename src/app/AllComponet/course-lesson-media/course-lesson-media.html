@@ -17,7 +17,19 @@
           <div class="card h-100 shadow-sm custom-card">
             <div class="card-media p-2 video-container">
               <img *ngIf="media.mediaType === 'Image'" [src]="media.previewUrl" class="card-img-top" alt="Image" draggable="false" (dragstart)="$event.preventDefault()">
-              <video *ngIf="media.mediaType === 'Video'" class="w-50 protected-video" controls controlsList="nodownload noplaybackrate" disablePictureInPicture (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()" draggable="false">
+               <video 
+                 *ngIf="media.mediaType === 'Video'" 
+  crossorigin="anonymous"
+  class="w-100 protected-video" 
+  controls 
+  controlsList="nodownload noplaybackrate" 
+  disablePictureInPicture
+              (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()" draggable="false">
+               
+              
+             
+>
+
                 <source [src]="media.previewUrl" type="video/mp4">
               </video>
               <img *ngIf="media.mediaType === 'Pdf'" src="assets/pdf-icon.png" class="img-fluid" alt="PDF">

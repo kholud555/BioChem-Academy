@@ -20,7 +20,7 @@
   <div class="lesson-media-container">
     <div class="row g-4">
       <!-- Video Card -->
-      <div *ngFor="let media of lessonMedia" [ngClass]="'col-md-6 col-lg-' + (media.mediaType.toLowerCase() === 'video' ? '12' : '6')">
+      <div *ngFor="let media of lessonMedia" [ngClass]="'col-md-4 col-lg-' + (media.mediaType.toLowerCase() === 'video' ? '12' : '6')">
         <div class="media-card-wrapper" [ngClass]="'media-' + media.mediaType.toLowerCase()">
           
           <!-- Video Media -->
@@ -80,6 +80,15 @@
           <div class="card-footer-info">
             <small class="text-muted">{{ media.fileName }}</small>
             <div class="media-actions">
+             <button 
+  class="delete-btn" 
+  [disabled]="deleting"
+  (click)="deleteMediaWithUIUpdate(media.id)">
+  🗑 Delete
+</button>
+
+  
+
               
              
             </div>

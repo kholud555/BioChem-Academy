@@ -44,12 +44,25 @@ showStudentResults: boolean = false;
       }
     })
   }
-
-  onSelectStudent(student:StudentDto){
+onSelectStudent(student: StudentDto) {
+    // تحديث الـ service
     this.studentService.setStudent(student);
-    this.SelectedStusentId=student.id;
+
+    // تحديث الـ component state
+    this.SelectedStusentId = student;
+    this.SelectedStusentId = student.id;
+
+    // حفظ في session لتفادي بيانات قديمة عند إعادة تحميل الصفحة
+    sessionStorage.setItem('selectedStudent', JSON.stringify(student));
+
+    // تنظيف الـ permissions القديمة
+    sessionStorage.removeItem('permissions');
+    
+    // إعادة توجيه للصفحة
     this.router.navigate(['/AdmenBody/AccessControl']);
-  }
+}
+
+
 onSelectStudentResult(student:StudentDto){
     this.studentService.setStudent(student);
     this.SelectedStusentId=student.id;

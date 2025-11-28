@@ -1,36 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeVideoService } from '../../service/home-video';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-video-for-teacher',
   templateUrl: './video-for-teacher.html',
+  imports:[CommonModule],
   styleUrls: ['./video-for-teacher.css']
 })
 export class VideoForTeacher implements OnInit {
-  videoUrl: SafeResourceUrl | null = null;
+  
 
   constructor(
     private homeVideoService: HomeVideoService,
     private sanitizer: DomSanitizer
   ) {}
+videoUrl: SafeResourceUrl | null = null;
 
-  ngOnInit(): void {
-   // this.loadVideo();
-  }
-
-  // loadVideo(): void {
-  //   this.homeVideoService.getVideoUrl().subscribe({
-  //     next: (url: string) => {
-  //       console.log('Raw Video URL:', url);
-  //       // تحويل الرابط إلى SafeResourceUrl
-  //       this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  //     },
-  //     error: err => console.error('Failed to load video', err)
-  //   });
-  // }
-
-  disableRightClick(event: MouseEvent): void {
-    event.preventDefault();
-  }
+ngOnInit() {
+  this.homeVideoService.getHomeVideoUrl().subscribe({
+    next: (url) => {
+      // تجاوز سياسة أمان Angular
+      this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      console.log("Video URL:", url); // جرب الرابط هنا
+    },
+    error: (err) => console.error("Failed to load video:", err)
+  });
+}
 }

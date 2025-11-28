@@ -44,7 +44,19 @@ export interface StudentAccessedMediaDTO {
   fileFormat: string;
   duration?: number;
   previewUrl: string;
+  
 }
+
+export interface AdemdMediaDTO {
+  id:number;
+  fileName: string;
+  mediaType: string;
+  fileFormat: string;
+  duration?: number;
+  previewUrl: string;
+  
+}
+
 export interface FreeContentDTO {
   subjectName:string;
   gradeName: string;

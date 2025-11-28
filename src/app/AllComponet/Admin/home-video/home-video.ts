@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeVideoService } from '../../../service/home-video';
 import {  HttpEventType } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-video',
@@ -12,33 +13,32 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home-video.css']
 })
 export class HomeVideoComponent  {
-   progress = 0;
-  http: any;
+//constructor(private homeVideoService: HomeVideoService , private toast :ToastrService) {}
 
-  constructor(private  uploadService: HomeVideoService) {}
-
-    async upload(event: any) {
+ 
+  constructor(private homeVideoService: HomeVideoService) {}
+ 
+  async upload(event: any) {
     const file = event.target.files[0];
-
     if (!file) return;
 
-    if (!file.type.startsWith('video/')) {
-      alert('اختاري فيديو فقط');
-      return;
-    }
+    try {
+      // 1) Get presigned URL
+      const url = await this.homeVideoService.getPresignedUrl().toPromise();
+      console.log("Presigned URL:", url);
 
-    // أولاً: نجيب الـ Presigned URL
-    const presignedUrl = await this.http
-      .post('http://localhost:5292/api/Media/UploadVideoForHome', null, { responseType: 'text' })
-      .toPromise();
+      // 2) Upload to R2
+      const uploadRes = await this.homeVideoService.uploadFileToR2(url!, file);
 
-    // ثانياً: نرفع الفيديو مباشرة إلى R2
-    const uploadResult = await this.uploadService.uploadFileToR2(presignedUrl!, file);
+      if (uploadRes.ok) {
+        alert("تم رفع الفيديو بنجاح");
+      } else {
+        alert("حدث خطأ أثناء الرفع");
+      }
 
-    if (uploadResult.ok) {
-      alert('تم رفع الفيديو بنجاح');
-    } else {
-      alert('خطأ أثناء رفع الفيديو');
+    } catch (error) {
+      console.error(error);
+      alert("Error: " + error);
     }
   }
 }

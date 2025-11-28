@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div class="free-content-container">
-<button class="back-btn" (click)="goBack()">← Back</button>
+
   <!-- Header -->
   <div class="content-header">
     <h1 class="main-title">Free Content</h1>
@@ -43,8 +43,7 @@
     </div>
 
    <!-- عرض الفيديوهات بعد اختيار درس -->
-<div *ngIf="selectedLesson" class="videos-grid" >
- 
+<div *ngIf="selectedLesson" class="videos-grid" (contextmenu)="$event.preventDefault()">
   <button (click)="backToLessons()" class="btn-primary btn">← Back to Lessons</button>
 
   <div class="videos-row">
@@ -54,7 +53,7 @@
 
       <!-- فيديو -->
       <video *ngIf="media.mediaType=='Video'" class="media-content" controls
-             controlsList="nodownload nofullscreen noremoteplayback"
+             controlsList="nodownload  noremoteplayback"
              (contextmenu)="$event.preventDefault()"
              (dragstart)="$event.preventDefault()">
         <source [src]="media.previewUrl" type="video/mp4">

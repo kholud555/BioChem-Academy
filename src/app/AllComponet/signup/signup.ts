@@ -30,11 +30,12 @@ export class Signup {
       ]),
       phoneNumber: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^01[0-9]{9}$/)
+        Validators.pattern(/^((\+20|0)?(10|11|12|15)\d{8}|(\+968)?[79]\d{7})$/)
+        //"^((\+20|0)?(10|11|12|15)\d{8}|(\+968)?[79]\d{7})$"
       ]),
       parentPhone: new FormControl('', [
        // Validators.required,
-        Validators.pattern(/^01[0-9]{9}$/)
+        Validators.pattern(/^((\+20|0)?(10|11|12|15)\d{8}|(\+968)?[79]\d{7})$/)
       ]),
       grade: new FormControl(''),
       email: new FormControl('', [

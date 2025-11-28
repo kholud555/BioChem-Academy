@@ -1,5 +1,22 @@
 
+.lesson-media-container {
+  display: flex;
+  flex-wrap: wrap; /* يسمح للبطاقات بالانتقال لسطر جديد عند الحاجة */
+  gap: 1rem;       /* المسافة بين كل بطاقة وأخرى */
+}
 
+.media-card-wrapper {
+  flex: 1 1 300px; /* كل بطاقة تأخذ على الأقل 300px وتكبر حسب الفراغ */
+  max-width: 350px; /* لتجنب أن تصبح كبيرة جدًا */
+}
+
+  .media-card-wrapper {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
   .lesson-media-page {
     padding: 2rem;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -13,6 +30,20 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.delete-btn {
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background: #d93636;
+}
+
   .header-section {
     background: white;
     padding: 2rem;
@@ -47,13 +78,6 @@
     margin-top: 2rem;
   }
 
-  .media-card-wrapper {
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
 
   .media-card-wrapper:hover {
     transform: translateY(-5px);

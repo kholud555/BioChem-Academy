@@ -11,7 +11,7 @@ export class UploadService {
 
   constructor(private http: HttpClient) {}
 
-  // 🧩 تحديد نوع الميديا بناءً على الامتداد
+  // تحديد نوع الميديا بناءً على امتداد الملف
   private detectMediaType(file: File): { mediaType: MediaTypeEnum; fileFormat: FileFormatEnum } {
     const ext = file.name.split('.').pop()?.toLowerCase();
 
@@ -29,33 +29,34 @@ export class UploadService {
         throw new Error(`Unsupported file type: ${ext}`);
     }
   }
-async getPresignedUrl(
-  file: File,
-  subjectName: string,
-  gradeName: string,
-  termName: string,
-  unitName: string,
-  lessonId: number
-) {
-  const body = {
-    subject: subjectName,
-    grade: gradeName,
-    term: termName,
-    unit: unitName,
-    lessonId,
-    fileName: file.name,
-  };
 
-  const res: any = await lastValueFrom(
-    this.http.post(`${this.apiUrl}/presign-upload`, body)
-  );
+  // الحصول على presigned URL للرفع
+  async getPresignedUrl(
+    file: File,
+    subjectName: string,
+    gradeName: string,
+    termName: string,
+    unitName: string,
+    lessonId: number
+  ) {
+    const body = {
+      subject: subjectName,
+      grade: gradeName,
+      term: termName,
+      unit: unitName,
+      lessonId,
+      fileName: file.name,
+      contentType: file.type
+    };
 
-  return res;
-}
+    const res: any = await lastValueFrom(
+      this.http.post(`${this.apiUrl}/presign-upload`, body)
+    );
 
+    return res; // يجب أن يحتوي على presignedUrl و storageKey
+  }
 
-
-  // 📤 رفع الملف (فيديو / صورة / PDF) إلى Cloudflare R2
+  // رفع الملف إلى Cloudflare R2 باستخدام presigned URL
   async uploadToR2(
     file: File,
     presignedUrl: string,
@@ -86,33 +87,42 @@ async getPresignedUrl(
     });
   }
 
-  // ✅ بعد الرفع: إضافة بيانات الميديا في قاعدة البيانات
-  async addMediaAfterUpload(file: File, storageKey: string, lessonId: number, duration?: number | null): Promise<void> {
-    const { mediaType, fileFormat } = this.detectMediaType(file);
+ async addMediaAfterUpload(
+  file: File,
+  storageKey: string,
+  lessonId: number,
+  duration?: number | null
+): Promise<string> {
+  const { mediaType, fileFormat } = this.detectMediaType(file);
 
-    const dto = {
-      mediaType,
-      storageKey,
-      duration: mediaType === MediaTypeEnum.Video ? duration ?? 0 : null,
-      fileFormat,
-      lessonId,
-    };
+  const dto = {
+    mediaType,
+    storageKey,
+    duration: mediaType === MediaTypeEnum.Video ? duration ?? 0 : null,
+    fileFormat,
+    lessonId,
+  };
 
-    await lastValueFrom(this.http.post(`${this.apiUrl}/AddMediaAfterUpload`, dto));
-  }
+  const res: any = await lastValueFrom(
+    this.http.post(`${this.apiUrl}/AddMediaAfterUpload`, dto)
+  );
 
-  // ❌ حذف ملف
+  // تحويل storageKey إلى رابط URL مباشر للعرض
+  const bucketBaseUrl = 'https://<your-bucket-name>.r2.cloudflarestorage.com/';
+  return `${bucketBaseUrl}${storageKey}`;
+}
+
+
+  // حذف ملف
   async deleteMedia(mediaId: number): Promise<void> {
     const url = `${this.apiUrl}/DeleteMedia?mediaId=${mediaId}`;
     await lastValueFrom(this.http.delete(url));
   }
 
-  // 📦 عرض ملفات الدرس (صور / فيديو / PDF)
+  // الحصول على ملفات درس محدد (صور / فيديو / PDF)
   async getLessonMedia(lessonId: number): Promise<LessonForMediaDTO[]> {
     const url = `${this.apiUrl}/GetLessonMedia?lessonId=${lessonId}`;
     const res = await lastValueFrom(this.http.get<LessonForMediaDTO[]>(url));
     return res;
   }
-
-
 }

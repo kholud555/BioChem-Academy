@@ -17,10 +17,11 @@
 
         <div class="video-container">
   <div class="video-wrapper">
-   <video controls controlsList="nodownload">
-  <source [src]="videoUrl" type="video/mp4">
-  Your browser does not support the video tag.
+  <video *ngIf="videoUrl" width="100%" controls>
+  <source [src]="videoUrl" type="video/mp4" />
+  متصفحك لا يدعم تشغيل الفيديو.
 </video>
+
 
     <div class="video-overlay">
       <div class="video-info">

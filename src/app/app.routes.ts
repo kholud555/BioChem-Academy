@@ -53,7 +53,7 @@ export const routes: Routes = [
 {path:"AdmenBody",component:Body,
     canActivate:[authGuard],
     children:[
-        { path: '', redirectTo: 'HomeVideo', pathMatch: 'full' },
+        { path: '', redirectTo: 'UploadVideo', pathMatch: 'full' },
 {path:"UploadVideo" , component:UploadVideo},
  {path:"student",component:Student},
  {path:"grade",component:Grade},

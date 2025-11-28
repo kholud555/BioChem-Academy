@@ -158,50 +158,56 @@ export class UploadVideo implements OnInit {
     this.selectedLessonId = lessonId;
   }
 
-  // ------------------- upload logic -------------------
   async handleUpload(): Promise<void> {
-    this.updateNames();
+  this.updateNames();
 
-    if (!this.selectedFile || !this.selectedLessonId) {
-      this.toast.error('Please choose a file and select a lesson first', 'Missing data');
-      return;
-    }
-
-    this.isUploading = true;
-    this.uploadProgress = 0;
-
-    try {
-      const res: any = await this.uploadService.getPresignedUrl(
-        this.selectedFile,
-        this.subjectName,
-        this.gradeName,
-        this.termName,
-        this.unitName,
-        this.selectedLessonId
-      );
-
-      const presignedUrl = res?.presignedUrl ?? res?.presignUrl ?? res?.url;
-      const storageKey = res?.storageKey ?? res?.key;
-
-      if (!presignedUrl || !storageKey) {
-        throw new Error('Invalid presigned response from server');
-      }
-
-      await this.uploadService.uploadToR2(this.selectedFile, presignedUrl, (percent) => {
-        this.uploadProgress = percent;
-      });
-
-      await this.uploadService.addMediaAfterUpload(this.selectedFile, storageKey, this.selectedLessonId, null);
-
-      this.toast.success('Upload success', 'Done');
-      this.handleRemove();
-    } catch (error) {
-      console.error('Upload failed:', error);
-      this.toast.error('Upload failed', 'Error');
-    } finally {
-      this.isUploading = false;
-    }
+  if (!this.selectedFile || !this.selectedLessonId) {
+    this.toast.error('Please choose a file and select a lesson first', 'Missing data');
+    return;
   }
+
+  this.isUploading = true;
+  this.uploadProgress = 0;
+
+  try {
+    const res: any = await this.uploadService.getPresignedUrl(
+      this.selectedFile,
+      this.subjectName,
+      this.gradeName,
+      this.termName,
+      this.unitName,
+      this.selectedLessonId
+    );
+
+    const presignedUrl = res?.presignedUrl ?? res?.presignUrl ?? res?.url;
+    const storageKey = res?.storageKey ?? res?.key;
+
+    if (!presignedUrl || !storageKey) {
+      throw new Error('Invalid presigned response from server');
+    }
+
+    await this.uploadService.uploadToR2(this.selectedFile, presignedUrl, (percent) => {
+      this.uploadProgress = percent;
+    });
+
+    // 🔗 الحصول على رابط الفيديو مباشرة
+    const videoUrl = await this.uploadService.addMediaAfterUpload(
+      this.selectedFile,
+      storageKey,
+      this.selectedLessonId,
+      null
+    );
+
+    console.log('Video URL:', videoUrl); // استخدم هذا الرابط للعرض مباشرة
+    this.toast.success('Upload success', 'Done');
+    this.handleRemove();
+  } catch (error) {
+    console.error('Upload failed:', error);
+    this.toast.error('Upload failed', 'Error');
+  } finally {
+    this.isUploading = false;
+  }
+}
 
   handleDrag(event: DragEvent, type: string): void {
     event.preventDefault();

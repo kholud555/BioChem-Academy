@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LessonDTO } from '../../../InterFace/lesson-dto';
-import { StudentAccessedMediaDTO } from '../../../InterFace/media-dto';
+import { AdemdMediaDTO, StudentAccessedMediaDTO } from '../../../InterFace/media-dto';
 import { CommonModule } from '@angular/common';
 import { UploadService } from '../../../service/upload-service';
 import { Location } from '@angular/common';
@@ -15,7 +15,8 @@ export class ShowLessonMedia implements OnInit, OnDestroy {
 
   SelectLesson: LessonDTO | null = null;
   lessonName: string | null = null;
-  lessonMedia: StudentAccessedMediaDTO[] = [];
+  lessonMedia: AdemdMediaDTO[] = [];
+  deleting: boolean = false;
 
   constructor(private uploadService: UploadService  ,  private location: Location,) {}
 
@@ -60,9 +61,34 @@ export class ShowLessonMedia implements OnInit, OnDestroy {
       //console.log("ADMIN MEDIA (Promise):", res);
      
      
-      this.lessonMedia = res as unknown as StudentAccessedMediaDTO[];
+      this.lessonMedia = res as unknown as AdemdMediaDTO[];
     } catch (err) {
       console.error('Failed to load lesson media', err);
     }
   }
+
+  async deleteMediaWithUIUpdate(mediaId: number) {
+  if (!confirm("هل أنت متأكد من حذف الملف؟")) return;
+
+  try {
+    this.deleting = true;
+
+    // استدعاء الخدمة لحذف الملف من السيرفر
+    await this.uploadService.deleteMedia(mediaId);
+
+    // إزالة العنصر من المصفوفة عشان يختفي من الشاشة
+    this.lessonMedia = this.lessonMedia.filter(m => m.id !== mediaId);
+
+    alert("تم حذف الملف بنجاح ✔");
+
+  } catch (err) {
+    console.error("Delete error:", err);
+   
+  } finally {
+    this.deleting = false;
+  }
 }
+
+
+}
+

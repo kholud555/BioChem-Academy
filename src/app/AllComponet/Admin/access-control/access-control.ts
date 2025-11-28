@@ -62,24 +62,23 @@ export class AccessControl implements OnInit {
      private location: Location,
   ) {}
 
-  ngOnInit(): void {
-    this.loadSubjects();
+ ngOnInit(): void {
+  this.loadSubjects();
 
-    this.SelectedStudent = this.getFromSession<StudentDto>('selectedStudent');
-    this.permissions = this.getFromSession<any>('permissions');
-    this.grades = this.getFromSession<ExtendedGradeDTO[]>('grades') || [];
-    this.terms = this.getFromSession<ExtendedTermDTO[]>('terms') || [];
-    this.units = this.getFromSession<ExtendedUnitDTO[]>('units') || [];
-    this.lessons = this.getFromSession<LessonDTO[]>('lessons') || [];
+  this.SelectedStudent = this.getFromSession<StudentDto>('selectedStudent');
+  this.permissions = this.getFromSession<any>('permissions');
+  this.grades = this.getFromSession<ExtendedGradeDTO[]>('grades') || [];
+  this.terms = this.getFromSession<ExtendedTermDTO[]>('terms') || [];
+  this.units = this.getFromSession<ExtendedUnitDTO[]>('units') || [];
+  this.lessons = this.getFromSession<LessonDTO[]>('lessons') || [];
 
-    if (!this.SelectedStudent) {
-      this.SelectedStudent = this.studentService.getStudent();
-      if (this.SelectedStudent) this.saveToSession('selectedStudent', this.SelectedStudent);
-    }
-
-    if (this.SelectedStudent && !this.permissions) this.loadStudentPermissions();
-    if (this.grades.length === 0) this.loadGrades();
+  if (!this.SelectedStudent) {
+    this.SelectedStudent = this.studentService.getStudent();
+    if (this.SelectedStudent) this.saveToSession('selectedStudent', this.SelectedStudent);
   }
+
+  if (this.SelectedStudent && !this.permissions) this.loadStudentPermissions();
+}
 
   
   // SessionStorage helpers
@@ -202,43 +201,73 @@ onUnitChange(unitId: number): void {
 onLessonChange(lessonId: number): void {
   this.selectedLessontId = lessonId;
 }
+// تحميل Permissions وتحديث القوائم
+loadStudentPermissions(): void {
+  if (!this.SelectedStudent?.id) return;
 
+  this.loading = true;
+  this.accessService.getStudentPermissions(this.SelectedStudent.id, true).subscribe({
+    next: res => {
+      this.permissions = {
+        gradeIds: res.grantedGrade || [],
+        termIds: res.grantedTerms || [],
+        unitIds: res.grantedUnits || [],
+        lessonIds: res.grantedLessons || []
+      };
+      this.saveToSession('permissions', this.permissions);
 
-  // Load student permissions
-  loadStudentPermissions(): void {
-    if (!this.SelectedStudent?.id) return;
+      // تحميل القوائم الخاصة بالـ permissions تلقائي
+      this.reloadListsForPermissions().then(() => {
+        this.loading = false;
+      });
+    },
+    error: err => {
+      console.error('Error loading permissions:', err);
+      this.toastr.error(err.error?.detail || 'Error loading permissions');
+      this.loading = false;
+    }
+  });
+}
 
-    this.accessService.getStudentPermissions(this.SelectedStudent.id, true).subscribe({
-      next: res => {
-        this.permissions = {
-          gradeIds: res.grantedGrade || [],
-          termIds: res.grantedTerms || [],
-          unitIds: res.grantedUnits || [],
-          lessonIds: res.grantedLessons || []
-        };
-        this.saveToSession('permissions', this.permissions);
-      },
-      error: err => {
-        console.error('Error loading permissions:', err.message);
-        this.toastr.error(err.message.detail || '', 'Error');
-      }
-    });
+// إعادة تحميل القوائم المرتبطة بالـ permissions
+reloadListsForPermissions(): Promise<void> {
+  const gradeIds = this.permissions.gradeIds || [];
+  const termIds = this.permissions.termIds || [];
+  const unitIds = this.permissions.unitIds || [];
+  const lessonIds = this.permissions.lessonIds || [];
+
+  const promises: Promise<any>[] = [];
+
+  // تحميل Grades إذا موجودة Permissions
+  if (gradeIds.length) {
+    promises.push(new Promise<void>((resolve) => {
+      this.gradeService.GetAllGrade().subscribe({
+        next: res => { this.grades = res.map(g => ({ ...g, isOpen: false })); resolve(); },
+        error: err => { console.error(err); resolve(); }
+      });
+    }));
   }
+
+  // تحميل Terms, Units, Lessons بنفس الطريقة...
+  // يمكنك إضافة forkJoin إذا تحب طريقة أكثر Angular-way
+
+  return Promise.all(promises).then(() => {});
+}
 
   // Filters
   getTermsForGrade(gradeId: number): ExtendedTermDTO[] {
-    return this.terms.filter(t => t.gradeId === gradeId && 
-      (this.selectedSubjectId === 0 || t.subjectId === this.selectedSubjectId));
+ return this.terms.filter(t => t.gradeId === gradeId);
+
   }
 
   getUnitsForTerm(termId: number): ExtendedUnitDTO[] {
-    return this.units.filter(u => u.termId === termId && 
-      (this.selectedSubjectId === 0 || u.subjectId === this.selectedSubjectId));
+    return this.units.filter(u => u.termId === termId );
+      
   }
 
   getLessonsForUnit(unitId: number): LessonDTO[] {
-    return this.lessons.filter(l => l.unitId === unitId && 
-      (this.selectedSubjectId === 0 || l.subjectId === this.selectedSubjectId));
+    return this.lessons.filter(l => l.unitId === unitId );
+     
   }
 
   // Grant / Revoke

@@ -1,14 +1,5 @@
 
 
-  :root {
-    --primary-teal: #17a2b8;
-    --primary-orange: #ff6b35;
-    --hover-teal: #138496;
-    --hover-orange: #ff8c5f;
-    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    --hover-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
-  }
 
   * {
     box-sizing: border-box;
@@ -346,6 +337,7 @@
     gap: 10px;
     width: 100%;
     padding: 14px 24px;
+    margin-top: 5px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     text-decoration: none;

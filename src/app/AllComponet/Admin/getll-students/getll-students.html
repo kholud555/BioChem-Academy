@@ -34,16 +34,17 @@
             <th>
               <div class="header-cell">
                 <i class="bi bi-phone"></i>
-                <span>student Number</span>
+                <span>Student Number</span>
               </div>
             </th>
 
-             <th>
+            <th>
               <div class="header-cell">
                 <i class="bi bi-phone"></i>
-                <span>parent Number</span>
+                <span>Parent Number</span>
               </div>
             </th>
+
             <th>
               <div class="header-cell">
                 <i class="bi bi-sliders"></i>
@@ -53,12 +54,13 @@
 
             <th>
               <div class="header-cell">
-                <i class="bi bi-sliders"></i>
-                <span></span>Result
+                <i class="bi bi-clipboard-check"></i>
+                <span>Result</span>
               </div>
             </th>
           </tr>
         </thead>
+
         <tbody>
           <tr *ngFor="let std of students" class="data-row">
             <td>
@@ -68,20 +70,21 @@
                 </div>
                 <div class="student-details">
                   <span class="student-name">{{ std.userName }}</span>
-                 
-               
                 </div>
               </div>
             </td>
+
             <td>
               <div class="email-wrapper">
                 <i class="bi bi-envelope"></i>
                 <span>{{ std.email }}</span>
               </div>
             </td>
+
             <td>
               <span class="grade-pill">{{ std.grade }}</span>
             </td>
+
             <td>
               <div class="phone-wrapper">
                 <i class="bi bi-telephone"></i>
@@ -89,70 +92,52 @@
               </div>
             </td>
 
+            <td>
+              <div class="phone-wrapper">
+                <i class="bi bi-telephone-fill"></i>
+                <span>{{ std.parentNumber }}</span>
+              </div>
+            </td>
 
             <td>
-               <div class="info-row">
-          <div class="info-label">
-            <i class="bi bi-telephone-fill"></i>
-           
-          </div>
-          <div class="info-value">{{ std.parentNumber }}</div>
-        </div>
+              <a class="access-button" (click)="onSelectStudent(std)">
+                <i class="bi bi-shield-check"></i>
+                <span>Access</span>
+              </a>
             </td>
-           <td>
-  <a
-    class="access-button"
-    (click)="onSelectStudent(std)"
-  >
-    <i class="bi bi-shield-check"></i>
-    <span> Access</span>
-  </a>
 
-  <!-- NEW Result Button -->
-  
-</td>
-
-           <td>
-  <a
-    class="access-button"
-   (click)="onSelectStudentResult(std)"
-  >
-    <i class="bi bi-shield-check"></i>
-    <span> Result</span>
-  </a>
-
-  <!-- NEW Result Button -->
-  
-</td>
+            <td>
+              <a class="access-button" (click)="onSelectStudentResult(std)">
+                <i class="bi bi-clipboard-check"></i>
+                <span>Result</span>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
+
   <!-- Mobile Card View -->
   <div class="mobile-cards">
     <div *ngFor="let std of students" class="student-card">
+
       <div class="card-header">
         <div class="student-avatar-large">
           <span>{{ std.userName?.charAt(0)?.toUpperCase() || 'S' }}</span>
         </div>
+
         <div class="card-student-info">
           <h3 class="card-student-name">{{ std.userName }}</h3>
-       
+          <p class="card-student-email">{{ std.email }}</p>
         </div>
+
         <span class="card-grade-badge">{{ std.grade }}</span>
       </div>
-      
+
       <div class="card-body">
-        <div class="info-row">
-          <div class="info-label">
-            <i class="bi bi-envelope-fill"></i>
-            <span>Email</span>
-          </div>
-          <div class="info-value">{{ std.email }}</div>
-        </div>
-        
+
         <div class="info-row">
           <div class="info-label">
             <i class="bi bi-telephone-fill"></i>
@@ -161,20 +146,28 @@
           <div class="info-value">{{ std.phoneNumber }}</div>
         </div>
 
-          
+        <div class="info-row">
+          <div class="info-label">
+            <i class="bi bi-telephone-inbound"></i>
+            <span>Parent</span>
+          </div>
+          <div class="info-value">{{ std.parentNumber }}</div>
+        </div>
 
-        
       </div>
-      
+
       <div class="card-footer">
-        <a
-          class="card-action-btn"
-          (click)="onSelectStudent(std)"
-          >
+        <a class="card-action-btn" (click)="onSelectStudent(std)">
           <i class="bi bi-shield-check"></i>
           <span>Manage Access</span>
         </a>
+
+        <a class="card-action-btn result-btn" (click)="onSelectStudentResult(std)">
+          <i class="bi bi-clipboard-check"></i>
+          <span>View Result</span>
+        </a>
       </div>
+
     </div>
   </div>
 </div>

@@ -1,1 +1,33 @@
-<p>video-for-teacher works!</p>
+
+    <div class="video-section  m-4 mx-4">
+        <div class="decorative-elements">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+
+        <div class="section-header">
+            <h1 class="section-title">
+              Watch This Video
+           </h1>
+            <p class="section-subtitle">
+          Enjoy a unique and captivating viewing experience
+          </p>
+        </div>
+
+        <div class="video-container">
+  <div class="video-wrapper">
+   <video controls controlsList="nodownload">
+  <source [src]="videoUrl" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+    <div class="video-overlay">
+      <div class="video-info">
+        <h3></h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>

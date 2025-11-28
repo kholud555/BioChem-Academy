@@ -23,7 +23,7 @@ export class ExamService {
   getExamById(id: number): Observable<ExamDetailsDTO> {
     return this.http.get<ExamDetailsDTO>(`${this.baseUrl}/GetExamById?id=${id}`);
   }
-
+ 
   
   createExam(dto: CreateExamDTO): Observable<ExamDTO> {
     return this.http.post<ExamDTO>(`${this.baseUrl}/Add Exam`, dto);

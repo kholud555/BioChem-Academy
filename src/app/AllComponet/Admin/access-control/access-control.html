@@ -4,96 +4,10 @@
 
   <!-- Student Info Header -->
   <div class="student-header" *ngIf="SelectedStudent">
-    <h2>Access Control - {{ SelectedStudent.userName }}</h2>
+    <h2>Access Control  {{ SelectedStudent.userName }}  - Grade : {{SelectedStudent.grade}}</h2>
   </div>
 
-  <!-- Current Permissions Display -->
-  <div class="permissions-summary" *ngIf="permissions">
-    <div class="summary-header">
-      <h3>📋 Current Student Permissions</h3>
-      <button class="refresh-btn" (click)="loadStudentPermissions()">
-        <span>🔄</span> Refresh
-      </button>
-    </div>
-
-    <div class="summary-grid">
-      <!-- Granted Grades -->
-      <div class="summary-card grades-card">
-        <div class="card-header">
-          <span class="card-icon">🎓</span>
-          <span class="card-title">Grades</span>
-          <span class="badge">{{ getGrantedGrades().length }}</span>
-        </div>
-        <div class="card-content">
-          <div *ngIf="getGrantedGrades().length === 0" class="empty-state">
-            No permissions granted
-          </div>
-          <div class="permission-list">
-            <div *ngFor="let grade of getGrantedGrades()" class="permission-item">
-              <span class="item-name">{{ grade.gradeName }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Grade', grade.id)" title="Revoke">✕</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Granted Terms -->
-      <div class="summary-card terms-card">
-        <div class="card-header">
-          <span class="card-icon">📅</span>
-          <span class="card-title">Terms</span>
-          <span class="badge">{{ getGrantedTerms().length }}</span>
-        </div>
-        <div class="card-content">
-          <div *ngIf="getGrantedTerms().length === 0" class="empty-state">No permissions granted</div>
-          <div class="permission-list">
-            <div *ngFor="let term of getGrantedTerms()" class="permission-item">
-              <span class="item-name">{{ term.termOrder === 0 ? 'First Term' : 'Second Term' }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Term', term.id)" title="Revoke">✕</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Granted Units -->
-      <div class="summary-card units-card">
-        <div class="card-header">
-          <span class="card-icon">📚</span>
-          <span class="card-title">Units</span>
-          <span class="badge">{{ getGrantedUnits().length }}</span>
-        </div>
-        <div class="card-content">
-          <div *ngIf="getGrantedUnits().length === 0" class="empty-state">No permissions granted</div>
-          <div class="permission-list">
-            <div *ngFor="let unit of getGrantedUnits()" class="permission-item">
-              <span class="item-name">{{ unit.title }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Unit', unit.id)" title="Revoke">✕</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Granted Lessons -->
-      <div class="summary-card lessons-card">
-        <div class="card-header">
-          <span class="card-icon">📖</span>
-          <span class="card-title">Lessons</span>
-          <span class="badge">{{ getGrantedLessons().length }}</span>
-        </div>
-        <div class="card-content">
-          <div *ngIf="getGrantedLessons().length === 0" class="empty-state">No permissions granted</div>
-          <div class="permission-list">
-            <div *ngFor="let lesson of getGrantedLessons()" class="permission-item">
-              <span class="item-name">{{ lesson.title }}</span>
-              <button class="quick-revoke" (click)="revokeSingle('Lesson', lesson.id)" title="Revoke">✕</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
+  
   <!-- Section Divider -->
   <div class="section-divider">
     <h3>🔐 Grant or Revoke Permissions</h3>

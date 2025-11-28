@@ -34,7 +34,7 @@ import { CreateExam } from './AllComponet/Admin/exam/create-exam/create-exam';
 import { ExamDetails } from './AllComponet/Admin/exam/exam-details/exam-details';
 import { Subject } from './AllComponet/Admin/subject/subject';
 import { StudentResult } from './AllComponet/student-result/student-result';
-import { HomeVideo } from './AllComponet/Admin/home-video/home-video';
+import { HomeVideoComponent } from './AllComponet/Admin/home-video/home-video';
 
 export const routes: Routes = [
     {path:"" ,component:MainHome},
@@ -69,7 +69,7 @@ export const routes: Routes = [
          {path:"createExam" ,component:CreateExam},
          {path:"subject" , component:Subject},
            {path:"result" , component:StudentResult},
-           {path:"HomeVideo" , component:HomeVideo},
+            {path:"HomeVideo" , component:HomeVideoComponent},
        
 
            

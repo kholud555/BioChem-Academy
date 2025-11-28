@@ -25,7 +25,7 @@ export class StudentResult implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.SelectedStudent = this.getFromSession<StudentDto>('selectedStudent');
+  //  this.SelectedStudent = this.getFromSession<StudentDto>('selectedStudent');
 if (!this.SelectedStudent) {
       this.SelectedStudent = this.student.getStudent();
      // if (this.SelectedStudent) this.saveToSession('selectedStudent', this.SelectedStudent);
@@ -41,10 +41,10 @@ if (!this.SelectedStudent) {
 
   
 
-  getFromSession<T>(key: string): T | null {
-    const value = sessionStorage.getItem(key);
-    return value ? (JSON.parse(value) as T) : null;
-  }
+  // getFromSession<T>(key: string): T | null {
+  //   const value = sessionStorage.getItem(key);
+  //   return value ? (JSON.parse(value) as T) : null;
+  // }
 
   fetchResults() {
     if (!this.studentId) return;

@@ -14,7 +14,7 @@
         <th>Exam Name</th>
         <th>Score</th>
         <th>Total Questions</th>
-        <th>Percentage</th>
+      
         <th>Exam Date</th>
       </tr>
     </thead>
@@ -23,7 +23,8 @@
         <td>{{ result.examTitle }}</td>
         <td>{{ result.score }}</td>
         <td>{{ result.totalQuestions }}</td>
-        <td>{{ result.percentage | number:'1.0-2' }}%</td>
+        
+      
         <td>{{ result.submittedAt | date:'short' }}</td>
       </tr>
     </tbody>

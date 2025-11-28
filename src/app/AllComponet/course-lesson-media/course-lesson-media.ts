@@ -9,9 +9,10 @@ import { ExamService } from '../../services/exam/exam-service';
 import { CommonModule } from '@angular/common';
 import { NavBar } from "../nav-bar/nav-bar";
 import { QuestionsOfExamDTO } from '../../InterFace/exam-dto';
-import { SubmitExamDTO } from '../../InterFace/student-exam';
+import { StudentExamResultDTO, SubmitExamDTO } from '../../InterFace/student-exam';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-course-lesson-media',
@@ -40,7 +41,6 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
   maxScore: number = 0;
   submitting: boolean = false;
 
-  // حالة الامتحانات لكل امتحان
   examStatus: { [key: number]: { completed: boolean, score: number | null, percentage: number | null } } = {};
 
   constructor(
@@ -72,21 +72,19 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   loadMediaForLesson(lessonId: number) {
-  this.studentService.getMediaByLessonForStudent(lessonId).subscribe({
-    next: (res) => {
-      console.log(res)
-      this.mediaList = res || []; // لو رجع null أو undefined خليها مصفوفة فارغة
-      if(this.mediaList.length === 0) {
-        this.toast.info("لا توجد فيديوهات متاحة لهذا الدرس.");
+    this.studentService.getMediaByLessonForStudent(lessonId).subscribe({
+      next: (res) => {
+        this.mediaList = res || [];
+        if(this.mediaList.length === 0) {
+          this.toast.info("لا توجد فيديوهات متاحة لهذا الدرس.");
+        }
+      },
+      error: (err) => {
+        console.error("Error loading media", err);
+        this.mediaList = [];
       }
-    },
-    error: (err) => {
-      console.error("Error loading media", err);
-      this.mediaList = []; // أفرغ المصفوفة
-      this.toast.error("حدث خطأ أثناء تحميل الفيديوهات، حاول لاحقًا.");
-    }
-  });
-}
+    });
+  }
 
   getExamsByLesson() {
     this.examService.getExamsByLesson(this.SelectedLessonId).subscribe({
@@ -100,11 +98,70 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
     });
   }
 
-  startExam(examId: number, examTitle: string) {
-    if (this.examStatus[examId]?.completed) {
-      this.toast.info("You already completed this exam.");
+  // ✅ تحقق من الامتحان مسبقاً باستخدام localStorage ثم الباك
+  checkExamBeforeStart(examId: number, examTitle: string) {
+    if (!this.studentId) return;
+
+    // تحقق من localStorage أولاً
+    const completedExams = JSON.parse(localStorage.getItem('completedExams') || '{}');
+    if (completedExams[examId]) {
+      const result = completedExams[examId];
+      this.toast.info("You already completed this exam (LocalStorage).");
+      this.examStatus[examId] = {
+        completed: true,
+        score: result.score,
+        percentage: result.percentage
+      };
+      this.selectedExamId = examId;
+      this.selectedExamTitle = examTitle;
+      this.totalScore = result.score;
+      this.maxScore = result.maxScore;
+      this.showResult = true;
+      this.ExamStarted = false;
       return;
     }
+
+    // إذا لم يوجد في localStorage، تحقق من الباك
+    this.studentExamService.getMyResults().subscribe({
+      next: (res: StudentExamResultDTO[]) => {
+        const existingResult = res.find(r => r.examId === examId);
+
+        if (existingResult) {
+          this.toast.info("You already completed this exam.");
+          this.examStatus[examId] = {
+            completed: true,
+            score: existingResult.score,
+            percentage: Math.round((existingResult.score / existingResult.totalQuestions) * 100)
+          };
+
+          this.selectedExamId = examId;
+          this.selectedExamTitle = examTitle;
+          this.totalScore = existingResult.score;
+          this.maxScore = existingResult.totalQuestions;
+          this.showResult = true;
+          this.ExamStarted = false;
+
+          // حفظ في localStorage
+          completedExams[examId] = {
+            score: existingResult.score,
+            percentage: Math.round((existingResult.score / existingResult.totalQuestions) * 100),
+            maxScore: existingResult.totalQuestions
+          };
+          localStorage.setItem('completedExams', JSON.stringify(completedExams));
+
+        } else {
+          this.startExam(examId, examTitle);
+        }
+      },
+      error: (err) => {
+        console.error("Error fetching student results", err);
+        this.startExam(examId, examTitle);
+      }
+    });
+  }
+
+  startExam(examId: number, examTitle: string) {
+    if (this.examStatus[examId]?.completed) return;
 
     this.selectedExamId = examId;
     this.selectedExamTitle = examTitle;
@@ -116,6 +173,7 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
         this.examQuestions = res;
         this.maxScore = res.reduce((sum, q) => sum + q.mark, 0);
         this.ExamStarted = true;
+        this.showResult = false;
       },
       error: (err) => console.error("Failed to load exam questions", err)
     });
@@ -127,6 +185,12 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
 
   async submitExam() {
     if (!this.selectedExamId || !this.studentId) return;
+
+    // تحقق صارم لمنع إعادة الإرسال
+    if (this.examStatus[this.selectedExamId]?.completed) {
+      this.toast.info("You already submitted this exam.");
+      return;
+    }
 
     this.submitting = true;
     this.totalScore = 0;
@@ -148,16 +212,25 @@ export class CourseLessonMedia implements OnInit, OnDestroy {
       }
     }
 
-    this.showResult = true;
-    this.submitting = false;
-    this.ExamStarted = false;
-
     const examId = this.selectedExamId;
     this.examStatus[examId] = {
       completed: true,
       score: this.totalScore,
       percentage: this.getPercentage()
     };
+
+    // حفظ النتيجة في localStorage
+    const completedExams = JSON.parse(localStorage.getItem('completedExams') || '{}');
+    completedExams[examId] = {
+      score: this.totalScore,
+      percentage: this.getPercentage(),
+      maxScore: this.maxScore
+    };
+    localStorage.setItem('completedExams', JSON.stringify(completedExams));
+
+    this.showResult = true;
+    this.submitting = false;
+    this.ExamStarted = false;
   }
 
   getPercentage(): number {

@@ -19,11 +19,12 @@ namespace API
         
        public static async Task Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             //Add Filers To Controllers
            builder.Services.AddControllers(option => option.Filters.Add<ValidateModelAttribute>());
-          
+
             //Register AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
@@ -186,8 +187,8 @@ namespace API
 
             });
 
-            builder.Logging.ClearProviders();
-            builder.Logging.AddDebug();
+            //builder.Logging.ClearProviders();
+            //builder.Logging.AddDebug();
 
 
             var app = builder.Build();

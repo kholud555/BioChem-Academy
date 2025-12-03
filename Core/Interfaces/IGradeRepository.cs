@@ -9,6 +9,7 @@ namespace Core.Interfaces
 {
     public interface IGradeRepository
     {
+        Task<IEnumerable<Grade>> GetDistinctGrades();
         Task<Grade> GetGradeByIdAsync (int id);
 
         Task<Grade> CreateGradeAsync(string gradeName, int subjectId);

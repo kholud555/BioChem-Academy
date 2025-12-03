@@ -59,15 +59,14 @@ namespace API.Controllers
             return Ok(mediaList);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("UploadVideoForHome")]
         public async  Task<IActionResult> UploadVideoForHome ()
         {
             var link = await _r2.UploadVideoInHome();
             return Ok(link);
         }
-
-        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpGet("ViewVideoForHome")]
         public  IActionResult ViewVideoForHome()
         {

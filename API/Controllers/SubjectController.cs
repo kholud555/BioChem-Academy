@@ -2,6 +2,7 @@
 using Application.Services;
 using AutoMapper;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<SubjectDTO>> GetSubjectById(int id)
         {
@@ -27,7 +29,7 @@ namespace API.Controllers
             var dto = _mapper.Map<SubjectDTO>(subject);
             return Ok(dto);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddSubject")]
         public async Task<ActionResult> AddSubject (string subjectName)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             var dto = _mapper.Map<IEnumerable<SubjectDTO>>(subjects);
             return Ok(dto);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPatch("Update subject")]
         public async Task<ActionResult> UpdateSubject(SubjectDTO dto)
         {
@@ -57,7 +59,7 @@ namespace API.Controllers
             var existGrade = await _service.UpdateSubjectAsync(subject);
             return Ok(dto);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSubject(int id)
         {

@@ -18,6 +18,8 @@ namespace Application.Services
            _repo = repo;
         }
 
+        public async Task<IEnumerable<Grade>> GetDistinctGrades()
+        => await _repo.GetDistinctGrades();
 
         private void CheckIdValidation  (int id)
         {

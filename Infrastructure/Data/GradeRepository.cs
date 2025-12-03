@@ -20,6 +20,14 @@ namespace Infrastructure.Data
             return grade;
         }
 
+        public async Task<IEnumerable<Grade>> GetDistinctGrades()
+        {
+            var grades = await _context.Grades.GroupBy(g => g.GradeName).Select(g => g.First()).ToListAsync();
+
+            if (grades.Count == 0) throw new KeyNotFoundException(nameof(grades));
+
+            return grades;
+        }
         public async Task<IEnumerable<Grade>> GetAllGradesAsync ()
         {
            var grades = await _context.Grades.ToListAsync();

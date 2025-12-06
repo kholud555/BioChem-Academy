@@ -322,16 +322,12 @@ namespace Application.Services
 
             return GenerateUrlForHomeVideoUpload(fileName);
         }
-
-
-
         public string ViewVideoInHome()
         {
             const string fileName = "MediaForHome.mp4";
 
             return GenerateSignedUrlForViewing(fileName);
         }
-
 
     }
 }

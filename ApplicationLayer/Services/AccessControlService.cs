@@ -126,5 +126,71 @@ namespace Application.Services
 
             return result;
         }
+
+        public async Task<AcademicStructureDTO> GetAcademicStructureBySubjectAndGradeNameAsync(int subjectId, string gradeName, CancellationToken cancellationToken = default)
+        {
+
+            var dto = await _context.Grades.AsNoTracking()
+                      .Where(g => g.GradeName == gradeName && g.SubjectId == subjectId)
+                      .Select(g => new AcademicStructureDTO
+                      {
+                          GradeName = gradeName,
+                          firstTerm = g.Terms
+                          .Where(t => t.TermOrder == TermEnum.TermOne)
+                          .OrderBy(t => t.TermOrder)
+                          .Select(t => new TermStructureDTO
+                          {
+                              TermName = t.TermOrder.ToString(),
+                              units = t.Units
+                              .OrderBy(u => u.Order)
+                              .Select(u => new UnitStructureDTO
+                              {
+                                  UnitName = u.Title,
+                                  Lessons = u.Lessons
+                                  .OrderBy(l => l.Order)
+                                  .Select(l => new LessonDTO
+                                  {
+                                      Id = l.Id,
+                                      Title = l.Title,
+                                      Order = l.Order,
+                                      Description = l.Description,
+                                      UnitId = l.UnitId
+
+                                  }).ToList()
+                              }).ToList()
+                          }).ToList(),
+
+
+                          SecondTerm = g.Terms
+                          .Where(t => t.TermOrder == TermEnum.TermTwo)
+                          .OrderBy(t => t.TermOrder)
+                          .Select(t => new TermStructureDTO
+                          {
+                              TermName = t.TermOrder.ToString(),
+                              units = t.Units
+                              .OrderBy(u => u.Order)
+                              .Select(u => new UnitStructureDTO
+                              {
+                                  UnitName = u.Title,
+                                  Lessons = u.Lessons
+                                  .OrderBy(l => l.Order)
+                                  .Select(l => new LessonDTO
+                                  {
+                                      Id = l.Id,
+                                      Title = l.Title,
+                                      Order = l.Order,
+                                      Description = l.Description,
+                                      UnitId = l.UnitId
+
+                                  }).ToList()
+                              }).ToList()
+                          }).ToList()
+                      }).FirstOrDefaultAsync(cancellationToken);
+
+            if (dto == null)
+                throw new KeyNotFoundException($"Grade '{gradeName}' not found for subject {subjectId}");
+
+            return dto;
+        }
     }
 }

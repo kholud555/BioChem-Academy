@@ -21,5 +21,6 @@ namespace Core.Interfaces
         Task<IEnumerable<Grade>> GetAllGradesAsync();
 
         Task<IEnumerable<Grade>> GetGradeBySubjectIdAsync(int subjectId);
+
     }
 }

@@ -1,25 +1,29 @@
-﻿using Core.Entities;
+﻿using Application.DTOS;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Services
 {
     public class GradeService 
     {
-        private readonly IGradeRepository _repo;
-        public GradeService(IGradeRepository repo)
+        private readonly IGradeRepository _gradeRepo;
+
+        public GradeService(IGradeRepository gradeRepo)
         {
-           _repo = repo;
+            _gradeRepo = gradeRepo;
         }
 
         public async Task<IEnumerable<Grade>> GetDistinctGrades()
-        => await _repo.GetDistinctGrades();
+        => await _gradeRepo.GetDistinctGrades();
 
         private void CheckIdValidation  (int id)
         {
@@ -32,14 +36,14 @@ namespace Application.Services
         public async Task<Grade> GetGradeByIdAsync(int id)
         {
             CheckIdValidation(id);
-            return await _repo.GetGradeByIdAsync(id);
+            return await _gradeRepo.GetGradeByIdAsync(id);
         }
         public async Task<Grade> CreateGradeAsync(string gradeName , int subjectId)
         {
 
             if(String.IsNullOrWhiteSpace(gradeName)) throw new ArgumentNullException(nameof(gradeName), "Grade should not be null");
 
-            return await _repo.CreateGradeAsync(gradeName , subjectId);
+            return await _gradeRepo.CreateGradeAsync(gradeName , subjectId);
             
         }
 
@@ -57,7 +61,7 @@ namespace Application.Services
             if (String.IsNullOrWhiteSpace(grade.GradeName))
                 throw new ArgumentNullException(nameof(grade.GradeName),"Grade name should not be null");
 
-            var isUpdated = await _repo.UpdateGradeNameAsync(grade);
+            var isUpdated = await _gradeRepo.UpdateGradeNameAsync(grade);
             if(!isUpdated) 
                 throw new KeyNotFoundException($"Grade with ID {grade.Id} not found.");
 
@@ -68,18 +72,21 @@ namespace Application.Services
         {
             CheckIdValidation(id);
 
-           return await _repo.DeleteGradeAsync(id);
+           return await _gradeRepo.DeleteGradeAsync(id);
         }
 
         public async Task<IEnumerable<Grade>> GetAllGradeAsync ()
-        => await _repo.GetAllGradesAsync();
+        => await _gradeRepo.GetAllGradesAsync();
 
         public async Task<IEnumerable<Grade>> GetGradeBySubjectIdAsync(int subjectId)
         {
             if (subjectId <= 0)
                 throw new ArgumentOutOfRangeException("Invalid Subject ID");
 
-            return await _repo.GetGradeBySubjectIdAsync(subjectId);
+            return await _gradeRepo.GetGradeBySubjectIdAsync(subjectId);
         }
+
+
+        
     }
 }

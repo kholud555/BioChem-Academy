@@ -138,5 +138,8 @@ namespace API.Controllers
             var questionsList = await _service.GetExamQuestionByExamIdAsync(examId);
             return Ok(questionsList);
         }
+
+
+       
     }
 }

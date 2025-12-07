@@ -42,5 +42,13 @@ namespace API.Controllers
             return Ok(studentPermissions);
         }
 
+        [Authorize(Roles = "Student")]
+        [HttpGet("StructureOfGrade")]
+        public async  Task<ActionResult<AcademicStructureDTO>> StructureOfGradeForStudent (int subjectId , string gradeName)
+        {
+            var dto = await _service.GetAcademicStructureBySubjectAndGradeNameAsync(subjectId, gradeName);
+            return Ok(dto);
+        }
+
     }
 }

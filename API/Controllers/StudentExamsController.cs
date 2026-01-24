@@ -46,12 +46,12 @@ namespace API.Controllers
         {
             
             var studentIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(studentIdClaim) || !int.TryParse(studentIdClaim, out int studentId))
+            if (string.IsNullOrEmpty(studentIdClaim) || !int.TryParse(studentIdClaim, out int userId))
             {
                 return Unauthorized("Invalid student identity");
             }
 
-            var results = await _studentExamService.GetStudentResultsAsync(studentId);
+            var results = await _studentExamService.GetStudentResultsAsync(userId);
             var dto = _mapper.Map<IEnumerable<StudentExamResultDTO>>(results);
             return Ok(dto);
         }

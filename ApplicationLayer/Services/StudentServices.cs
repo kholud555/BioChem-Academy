@@ -55,7 +55,7 @@ namespace Application.Services
             {
                 var newUser = new User()
                 {
-                    UserName = studentModel.UserName,
+                    UserName = studentModel.UserName.Trim().Replace(" ", "_"),
                     Email = studentModel.Email,
                     PhoneNumber = studentModel.PhoneNumber,
                     Role = RoleEnum.Student,

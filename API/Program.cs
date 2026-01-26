@@ -188,8 +188,8 @@ namespace API
 
             });
 
-            builder.Logging.ClearProviders();
-            builder.Logging.AddDebug();
+            //builder.Logging.ClearProviders();
+            //builder.Logging.AddDebug();
 
 
             var app = builder.Build();

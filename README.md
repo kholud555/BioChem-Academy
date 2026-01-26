@@ -117,11 +117,7 @@ The app implements **Access Control** to manage which student can access specifi
 
 ## 🎥 Demo
 
-A live demo will be available soon.
-
-(Link coming here once deployment is complete)
-
----
+https://biochemacademy.net/
 
 ## 🔄 Ongoing Enhancements
 

@@ -53,14 +53,14 @@ namespace Application.Services
         #endregion
 
         //Creates a temporary(signed) URL for viewing or streaming a file to student
-        private string GenerateSignedUrlForViewing (string filePathInBucket , int expireMinutes = 5)
+        private string GenerateSignedUrlForViewing (string filePathInBucket , int expireHours = 1)
         {
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = _bucketName,
                 Key = filePathInBucket,
                 Verb = HttpVerb.GET,
-                Expires = DateTime.UtcNow.AddMinutes(expireMinutes)
+                Expires = DateTime.UtcNow.AddHours(expireHours)
             };
 
             return _s3Client.GetPreSignedURL(request);

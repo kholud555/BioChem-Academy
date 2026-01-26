@@ -40,7 +40,7 @@ namespace Application.Services
                 throw new ArgumentOutOfRangeException(nameof(dto.ExamId), "ExamId must be greater than zero");
 
             if (UserId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(UserId), "StudentId must be greater than zero");
+                throw new ArgumentOutOfRangeException(nameof(UserId), "userId must be greater than zero");
 
             if (dto.AnswerId <= 0)
                 throw new ArgumentException("AnswerId must be greater than zero", nameof(dto.AnswerId));
@@ -66,16 +66,24 @@ namespace Application.Services
             return await _studentExamRepo.SubmitExamAsync(studentExam);
         }
 
-        public async Task<IEnumerable<StudentExam>> GetStudentResultsAsync(int StudentId)
-        {
-            if (StudentId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(StudentId), "StudentId must be greater than zero");
+        public async Task<IEnumerable<StudentExam>> GetStudentResultsByUserIdAsync(int userId)
+        { 
+            if (userId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(userId), "userId must be greater than zero");
 
-            var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == StudentId);
+             var student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == userId);
             if (student == null)
                 throw new KeyNotFoundException("Student with this user id not found");
 
             return await _studentExamRepo.GetStudentResultsAsync(student.Id);
+        }
+
+        public async Task< IEnumerable<StudentExam>> GetStudentResultByStudentIdAsync(int studentId)
+        {
+            if (studentId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(studentId), "userId must be greater than zero");
+
+            return await _studentExamRepo.GetStudentResultsAsync(studentId);
         }
 
         public async Task<IEnumerable<StudentExam>> GetExamResultsAsync(int examId)
@@ -109,7 +117,7 @@ namespace Application.Services
        {
           
             if (studentId <= 0)
-                throw new ArgumentOutOfRangeException(nameof(studentId), "StudentId must be greater than zero");
+                throw new ArgumentOutOfRangeException(nameof(studentId), "userId must be greater than zero");
 
             if (examId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(examId), "ExamId must be greater than zero");

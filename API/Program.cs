@@ -130,6 +130,7 @@ namespace API
             {
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
+                options.User.AllowedUserNameCharacters = null;
 
             })
                 .AddEntityFrameworkStores<StoreContext>()
@@ -187,8 +188,8 @@ namespace API
 
             });
 
-            builder.Logging.ClearProviders();
-            builder.Logging.AddDebug();
+            //builder.Logging.ClearProviders();
+            //builder.Logging.AddDebug();
 
 
             var app = builder.Build();

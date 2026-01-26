@@ -24,6 +24,6 @@ namespace Application.DTOS
         [Range(1, int.MaxValue, ErrorMessage = "UnitId must be a positive number")]
         public int UnitId { get; set; }
     
-
-}
+        public bool IsFree   { get; set; }
+   }
 }

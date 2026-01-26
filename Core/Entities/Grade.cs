@@ -9,7 +9,7 @@ namespace Core.Entities
     public class Grade : BaseEntity
     {
         public required string GradeName { get; set; }
-        public int? SubjectId { get; set; }
+        public int SubjectId { get; set; }
         public Subject Subject { get; set; }
         public ICollection<Term> Terms { get; set; } = new List<Term>();
         public ICollection<AccessControl> AccessControls { get; set; } = new List<AccessControl>();
